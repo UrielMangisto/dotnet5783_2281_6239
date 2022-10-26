@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stage0", "Stage0\Stage0.csproj", "{B861FC64-65FB-4D86-B3B5-02C5006375A3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C0759FB9-BCF1-4E6C-BD46-6C65DCF2E75F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{79DAE114-F57A-464D-A4CB-6DA51B480316}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
