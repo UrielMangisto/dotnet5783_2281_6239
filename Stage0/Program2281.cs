@@ -14,6 +14,7 @@ namespace Stage0 // Note: actual namespace depends on the project name.
         static partial void Wellcome6239();
         private static void Wellcome2281()
         {
+
             string name;
             Console.Write("Enter your name: ");
             name = Console.ReadLine();
