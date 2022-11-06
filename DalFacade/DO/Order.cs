@@ -1,9 +1,4 @@
 ﻿
-
-using System.Diagnostics;
-using System.Xml.Linq;
-using static DO.Enums;
-
 namespace DO;
 /// <summary>
 /// Hear is the struct of the order,
