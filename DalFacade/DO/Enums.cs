@@ -1,8 +1,8 @@
 ﻿
 
 namespace DO;
-
-public struct Enums
+public enum Category { };
+/*public struct Enums
 {
-    enum Category {  };
-}
+    public enum Category {  };
+}*/
