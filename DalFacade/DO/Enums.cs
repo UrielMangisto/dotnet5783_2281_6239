@@ -1,7 +1,7 @@
 ﻿
 
 namespace DO;
-public enum Category { };
+public enum Category {אקשן,פנטזיה,רומנטיקה,ילדים,קומיקס };
 /*public struct Enums
 {
     public enum Category {  };
