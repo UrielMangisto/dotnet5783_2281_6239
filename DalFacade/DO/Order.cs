@@ -5,7 +5,11 @@ using System.Xml.Linq;
 using static DO.Enums;
 
 namespace DO;
-
+/// <summary>
+/// Hear is the struct of the order,
+/// it's ID number, Costumer Name, Costumer Email,Costumer Adress,
+/// Order Date, Ship Date and the Delivery Date.
+/// </summary>
 public struct Order
 {
     public int ID { get; set; }
@@ -16,7 +20,7 @@ public struct Order
     public DateTime ShipDate { get; set; }  
     public DateTime DeliveryDate { get; set; }
     public override string ToString() => $@"
-    Product ID={ID}: {CostumerName}, 
+    Order ID={ID}: {CostumerName}, 
     CostumerEmail - {CostumerEmail}
    	CostumerAdress {CostumerAdress}
    	OrderDate {OrderDate}
