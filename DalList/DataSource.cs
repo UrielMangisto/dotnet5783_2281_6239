@@ -1,25 +1,37 @@
-﻿
-using DO;
-
+﻿using DO;
 namespace Dal;
-
+/// <summary>
+/// Those fields and methods are declaring the data
+/// of the store and the access into the data. 
+/// </summary>
 internal static class DataSource
 {
-
     static readonly Random R = new Random(); 
+
+    static int currentSizeProduct = 0;
+    static int currentSizeOrder = 0;
+    static int currentSizeOrderItem = 0;
+
     static internal Product[] products = new Product[50];
-   
-    static int currentSize = 0;
+    static internal Order[] orders = new Order[100];
+    static internal OrderItem[] orderItems = new OrderItem[200];
+
     internal static void addProductsToTheArray(Product p)
     {
-        //if (something == (products.Length - 1))
+        //if (currentSizeProduct == (products.Length - 1))
         //    Console.WriteLine("the array is full");
-        products[currentSize++] = p;
+        products[currentSizeProduct++] = p;
     }
-
-    static internal Order[] orders = new Order[100];
-    private static void addOrderToTheArray(Order order) { orders[order.ID] = order; }
-    static internal OrderItem[] orderitems = new OrderItem[200];
-    private static void addItemToTheArray(OrderItem item) { orderitems[item.ID] = item;}
+    private static void addOrderToTheArray(Order order)
+    {
+        //if (currentSizeOrder == (orders.Length - 1))
+        //    Console.WriteLine("the array is full");
+        orders[currentSizeOrder++] = order;
+    }
+    private static void addItemToTheArray(OrderItem item)
+    {  //if (currentSizeOrderItem == (orderItems.Length - 1))
+        //    Console.WriteLine("the array is full");
+        orderItems[currentSizeOrderItem++] = item;
+    }
     private static void s_Initialize() { }
 }
