@@ -14,13 +14,20 @@ internal static class DataSource
     static internal Order[] orders = new Order[100];
     static internal OrderItem[] orderItems = new OrderItem[200];
 
-    internal static void addProductsToTheArray(Product p)
+    public static void addProductsToTheArray()
     {
-        //if (currentSizeProduct == (products.Length - 1))
-        //    Console.WriteLine("the array is full");
-        products[currentSizeProduct++] = p;
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 769988, InStock = 7, Name = "Harry Poter 1", Price = 130.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 784848, InStock = 3, Name = "Harry Poter 2", Price = 120.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 939345, InStock = 5, Name = "Harry Poter 3", Price = 110.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 923844, InStock = 2, Name = "Harry Poter 4", Price = 110.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 493934, InStock = 0, Name = "Harry Poter 5", Price = 100.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 847922, InStock = 4, Name = "Harry Poter 6", Price = 100.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 759329, InStock = 12, Name = "Harry Poter 7", Price = 90.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 843902, InStock = 0, Name = "Harry Poter 8", Price = 160.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Comics, ID = 123455, InStock = 25, Name = "Spiderman", Price = 60.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Comics, ID = 541235, InStock = 18, Name = "Superman", Price = 70.0 };
     }
-    private static void addOrderToTheArray()
+    public static void addOrderToTheArray()
     {
         DateTime dateOfStart = DateTime.Now - new TimeSpan(365, 0, 0, 0);
         for (int i = 0; i < 20; i++)
@@ -51,16 +58,39 @@ internal static class DataSource
             orders[Config.currentSizeOrder++] = order;
         }
     }
-    private static void addItemToTheArray(OrderItem item)
+
+    public static void addItemToTheArray()
     {  
         OrderItem orderItem = new OrderItem();
 
-        for(int i = 0; i < Config.currentSizeOrderItem; i++)
+        for (int i = 0; i < Config.currentSizeOrderItem; i++)
         {
-            for(int j = 0; j < Randomally.Next(); j++)
+            for (int j = 0; j < Randomally.Next(1, 4); j++)
+            {
+                orderItem.ID = Config.getOrderItemId;
+                orderItem.OrderID = orders[i].ID;
+
+                Product product = products[Randomally.Next(0, Config.currentSizeProduct)];
+                orderItem.ProductID = product.ID;
+                orderItem.Price = product.Price;
+                orderItem.Amount = Randomally.Next(1, 10);
+                orderItems[Config.currentSizeOrderItem++] = orderItem;
+            }
         }
     }
-    private static void s_Initialize() { }
+
+    static DataSource()
+    {
+        s_Initialize();
+    }
+
+    private static void s_Initialize() 
+    {
+        addProductsToTheArray();
+        addOrderToTheArray();
+        addItemToTheArray();
+    }
+
     internal static class Config 
     {
         internal static int currentSizeProduct = 0;

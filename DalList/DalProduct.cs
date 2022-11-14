@@ -6,7 +6,7 @@ internal class DalProduct
 {
     public void add(Product newProduct)
     {
-        DataSource.addProductsToTheArray(newProduct);
+        DataSource.addProductsToTheArray();
     }
     public void delete(Product delProduct)
       {
