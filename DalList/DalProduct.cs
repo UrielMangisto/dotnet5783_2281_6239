@@ -61,7 +61,7 @@ public class DalProduct
         throw new Exception("Product Not Found");
     }
 
-    public Product[] getAll()
+    public Product[] getAllProducts()
     {
         Product[] products = new Product[DataSource.Config.currentSizeProduct];
         for(int i=0;i<DataSource.Config.currentSizeProduct;i++)

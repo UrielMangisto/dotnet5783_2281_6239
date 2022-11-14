@@ -1,27 +1,13 @@
 ﻿using DO;
-
 namespace Dal;
 
 public class DalOrder
 {
-    public void addNewOrder(Order newOrder)
+    public int addNewOrder(Order newOrder)
     {
-        int id = 0;
-        bool exict = true;
-        while (exict)
-        {
-            id = DataSource.Randomally.Next(100000, 999999);
-            try
-            {
-                getOrder(id);
-            }
-            catch (Exception exception)
-            {
-                exict = false;
-            }
-        }
-        newOrder.ID = id;
+        newOrder.ID = DataSource.Config.getOrderId;
         DataSource.orders[DataSource.Config.currentSizeOrder++] = newOrder;
+        return newOrder.ID;
     }
     public void deleteOrder(int id)
     {
@@ -35,7 +21,7 @@ public class DalOrder
         }
         throw new Exception("Order Not Found");
     }
-    public void update(Order updatedOrder)
+    public void updateOrder(Order updatedOrder)
     {
         for (int i = 0; i < DataSource.Config.currentSizeOrder; i++)
         {
@@ -57,7 +43,7 @@ public class DalOrder
 
         throw new Exception("order Not Found");
     }
-    public Order[] getAll()
+    public Order[] getAllOrders()
     {
         Order[] orders = new Order[DataSource.Config.currentSizeOrder];
         for (int i = 0; i < DataSource.Config.currentSizeOrder; i++)
