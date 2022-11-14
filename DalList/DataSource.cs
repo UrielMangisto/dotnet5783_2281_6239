@@ -8,7 +8,7 @@ namespace Dal;
 /// </summary>
 internal static class DataSource
 {
-    static readonly Random Randomally = new Random();
+    public static readonly Random Randomally = new Random();
 
     static internal Product[] products = new Product[50];
     static internal Order[] orders = new Order[100];

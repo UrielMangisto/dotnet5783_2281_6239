@@ -2,32 +2,73 @@
 
 namespace Dal;
 
-internal class DalProduct
+public class DalProduct
 {
-    public void add(Product newProduct)
+    public void addNewProduct(Product newProduct)
     {
-        DataSource.addProductsToTheArray();
-    }
-    public void delete(Product delProduct)
-      {
-        bool isdelate = false;
-        for(int i=0;i < DataSource.products.Length&&!isdelate;i++)
+        int id = 0;
+        bool exict = true;
+        while (exict)
         {
-            if(delProduct.ID==DataSource.products[i].ID)
+            id = DataSource.Randomally.Next(100000, 999999);
+            try
             {
-                isdelate = true;
-                DataSource.products[i].ID = 0;//if id=0 its deleated
+                getProduct(id);
+            }
+            catch(Exception exception)
+            {
+                exict = false;
             }
         }
+        newProduct.ID = id;
+        DataSource.products[DataSource.Config.currentSizeProduct++] = newProduct;
     }
-    public void update()
+
+    public void deleteProduct(int id)
     {
-
+        for(int i=0;i < DataSource.Config.currentSizeProduct; i++)
+        {
+            if (DataSource.products[i].ID == id)
+            {
+                DataSource.products[i].ID = 0; //in order to delete it
+                return;
+            }
+        }
+        throw new Exception("Product Not Found");
     }
-    public void get()
+
+    public void update(Product updatedProduct)
     {
-
+        for(int i=0;i<DataSource.Config.currentSizeProduct;i++)
+        {
+            if(DataSource.products[i].ID== updatedProduct.ID)
+            {
+                DataSource.products[i] = updatedProduct;
+                return;
+            }
+        }
+        throw new Exception("Product Not Found");
     }
 
+    public Product getProduct(int id)
+    {
+        for(int i=0;i<DataSource.Config.currentSizeProduct ;i++)
+        {
+           if (DataSource.products[i].ID == id)
+                return DataSource.products[i];
+        }
+
+        throw new Exception("Product Not Found");
+    }
+
+    public Product[] getAll()
+    {
+        Product[] products = new Product[DataSource.Config.currentSizeProduct];
+        for(int i=0;i<DataSource.Config.currentSizeProduct;i++)
+        {
+            products[i] = DataSource.products[i];
+        }
+        return products;
+    }
 }
 
