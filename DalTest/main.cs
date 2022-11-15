@@ -38,7 +38,7 @@ internal class program
 
                             break;
                         case (int)Enums.OrderChoice.deleteOrder:
-
+                            
                             break;
                         case (int)Enums.OrderChoice.updateOrder:
 
@@ -49,6 +49,9 @@ internal class program
                         case (int)Enums.OrderChoice.getAllOrder:
 
                             break;
+                            default:    
+
+                            break;
                     }
                     break;
                 case (int)Enums.mainChoise.orderItem:
@@ -57,11 +60,73 @@ internal class program
                                        2 to delete orderItem
                                        3 to update orderItem
                                        4 to get orderItem
-                                       5 to get all orderItem
+                                       5 to get Specific Item
+                                       6 to get Items By Order
+                                       7 to get all items
                                             ");
                     choice = int.Parse(Console.ReadLine());
+                    switch (choice)
+                    {
+                        case (int)Enums.orderItemChoise.addOrderItem:
 
+                            break;
+                        case (int)Enums.orderItemChoise.deleteOrderItem:
 
+                            break;
+                        case (int)Enums.orderItemChoise.updateOrderItem:
+
+                            break;
+                        case (int)Enums.orderItemChoise.getOrderItem:
+
+                            break;
+                        case (int)Enums.orderItemChoise.getSpecificItem:
+
+                            break;
+                        case (int)Enums.orderItemChoise.getItemsByOrder:
+
+                            break;
+                        case (int)Enums.orderItemChoise.getAllItems:
+
+                            break;
+                        default:
+
+                            break;
+                    }
+                    break;
+                case (int)Enums.mainChoise.product:
+                    Console.WriteLine(@$"press 
+                                       1 to add product
+                                       2 to delete product
+                                       3 to update product
+                                       4 to get product
+                                       5 to get all product
+                                            ");
+                    choice = int.Parse(Console.ReadLine());
+                    switch (choice)
+                    {
+                        case (int)Enums.ProductChoice.addProduct:
+
+                            break;
+                        case (int)Enums.ProductChoice.deleteProduct:
+
+                            break;
+                        case (int)Enums.ProductChoice.updateProduct:
+
+                            break;
+                        case (int)Enums.ProductChoice.getProduct:
+
+                            break;
+                        case (int)Enums.ProductChoice.getAllProduct:
+
+                            break;
+                        default:
+
+                            break;
+                    }
+                    break;
+                default:
+
+                    break;
 
             }
         }
