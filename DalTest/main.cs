@@ -25,11 +25,11 @@ internal class program
             {
                 case (int)Enums.mainChoise.order:
                     Console.WriteLine(@$"press 
-                                       1 to addOrder
-                                       2 to deleteOrder
-                                       3 to updateOrder
-                                       4 to getOrder
-                                       5 to getAllOrder
+                                       1 to add order
+                                       2 to delete order
+                                       3 to update order
+                                       4 to get order
+                                       5 to get all order
                                             ");
                     choice = int.Parse(Console.ReadLine());
                     switch(choice)
@@ -40,17 +40,26 @@ internal class program
                         case (int)Enums.OrderChoice.deleteOrder:
 
                             break;
-                        case (int)Enums.OrderChoice.getOrder:
+                        case (int)Enums.OrderChoice.updateOrder:
 
                             break;
-                        case (int)Enums.OrderChoice.updateOrder:
+                        case (int)Enums.OrderChoice.getOrder:
 
                             break;
                         case (int)Enums.OrderChoice.getAllOrder:
 
                             break;
                     }
-             break;
+                    break;
+                case (int)Enums.mainChoise.orderItem:
+                    Console.WriteLine(@$"press 
+                                       1 to add orderItem
+                                       2 to delete orderItem
+                                       3 to update orderItem
+                                       4 to get orderItem
+                                       5 to get all orderItem
+                                            ");
+                    choice = int.Parse(Console.ReadLine());
 
 
 
