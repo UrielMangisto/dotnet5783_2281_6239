@@ -23,7 +23,7 @@ internal class program
 
             switch(choice)
             {
-                case (int)Enums.mainChoise.order:
+                case (int)Enums.MainChoise.order:
                     Console.WriteLine(@$"press 
                                        1 to add order
                                        2 to delete order
@@ -54,7 +54,7 @@ internal class program
                             break;
                     }
                     break;
-                case (int)Enums.mainChoise.orderItem:
+                case (int)Enums.MainChoise.orderItem:
                     Console.WriteLine(@$"press 
                                        1 to add orderItem
                                        2 to delete orderItem
@@ -93,7 +93,7 @@ internal class program
                             break;
                     }
                     break;
-                case (int)Enums.mainChoise.product:
+                case (int)Enums.MainChoise.product:
                     Console.WriteLine(@$"press 
                                        1 to add product
                                        2 to delete product
