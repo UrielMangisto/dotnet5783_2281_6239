@@ -23,7 +23,7 @@ internal class DalOrderitem
 
         throw new Exception("Order Item Not Found");
     }
-
+    //get order item by the id of the product and the order
     public OrderItem specificItemGet(int idOfProduct, int idOfOrder)
     {
         for(int i = 0; i < DataSource.Config.currentSizeOrderItem; i++)
@@ -35,7 +35,7 @@ internal class DalOrderitem
         }
         throw new Exception("Order Item Not Found");
     }
-
+    //get order items by the id of the order
     public OrderItem[] getItemsByOrder(Order order)
     {
         int sizeOfNew = 0;
@@ -62,6 +62,7 @@ internal class DalOrderitem
         }
         return specificItems;
     }
+    //returns an array of all products
     public OrderItem[] getAllItems()
     {
         OrderItem[] allItems = new OrderItem[DataSource.Config.currentSizeOrderItem];
