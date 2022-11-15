@@ -34,10 +34,23 @@ internal class program
                     choice = int.Parse(Console.ReadLine());
                     switch(choice)
                     {
-                        case Enums.OrderChoice.addOrder:
+                        case (int)Enums.OrderChoice.addOrder:
 
+                            break;
+                        case (int)Enums.OrderChoice.deleteOrder:
 
+                            break;
+                        case (int)Enums.OrderChoice.getOrder:
+
+                            break;
+                        case (int)Enums.OrderChoice.updateOrder:
+
+                            break;
+                        case (int)Enums.OrderChoice.getAllOrder:
+
+                            break;
                     }
+             break;
 
 
 
