@@ -15,21 +15,34 @@ internal class program
         do
         {
             Console.WriteLine(@$"press 0 to exit
-                                       1 to
-                                       2 to
-                                       3 to
-                                       4 to
-                                       5 to
-                                       6 to
-
+                                       1 to order
+                                       2 to order item
+                                       3 to product
                                             ");
             choice = int.Parse(Console.ReadLine());
 
             switch(choice)
             {
-                
+                case (int)Enums.mainChoise.order:
+                    Console.WriteLine(@$"press 
+                                       1 to addOrder
+                                       2 to deleteOrder
+                                       3 to updateOrder
+                                       4 to getOrder
+                                       5 to getAllOrder
+                                            ");
+                    choice = int.Parse(Console.ReadLine());
+                    switch(choice)
+                    {
+                        case Enums.OrderChoice.addOrder:
+
+
+                    }
+
+
+
             }
         }
-        while (choice == 0);
+        while (choice != 0);
     }
 }
