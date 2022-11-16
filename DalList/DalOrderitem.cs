@@ -2,7 +2,7 @@
 
 namespace Dal;
 
-internal class DalOrderitem
+public class DalOrderitem
 {
     public int addItem(OrderItem item)
     {

@@ -8,7 +8,7 @@ using Dal;
 
 public class program
 {
-    public static void main(String[] args)
+    public static void Main(String[] args)
     {
         int choice;
         int temp;
@@ -22,10 +22,12 @@ public class program
         DalProduct dalProduct = new DalProduct();
         do
         {
-            Console.WriteLine(@$"press 0 to exit
-                                       1 to order
-                                       2 to order item
-                                       3 to product
+            Console.WriteLine(
+                @$"
+press 0 to exit
+1 to order
+2 to order it
+3 to product
                                             ");
             choice = int.Parse(Console.ReadLine());
 
