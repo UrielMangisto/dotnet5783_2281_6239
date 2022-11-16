@@ -11,6 +11,7 @@ public class program
     public static void Main(String[] args)
     {
         int choice;
+        int id;
         int temp;
         Order order = new Order();
         DalOrder dalOrder = new DalOrder();
@@ -34,12 +35,13 @@ press 0 to exit
             switch(choice)
             {
                 case (int)Enums.MainChoise.order:
-                    Console.WriteLine(@$"press 
-                                       1 to add order
-                                       2 to delete order
-                                       3 to update order
-                                       4 to get order
-                                       5 to get all order
+                    Console.WriteLine(
+                        @$"
+press 1 to add order
+2 to delete order
+3 to update order
+4 to get order
+5 to get all order
                                             ");
                     choice = int.Parse(Console.ReadLine());
                     switch(choice)
@@ -70,14 +72,16 @@ press 0 to exit
                     }
                     break;
                 case (int)Enums.MainChoise.orderItem:
-                    Console.WriteLine(@$"press 
-                                       1 to add orderItem
-                                       2 to delete orderItem
-                                       3 to update orderItem
-                                       4 to get orderItem
-                                       5 to get Specific Item
-                                       6 to get Items By Order
-                                       7 to get all items
+                    Console.WriteLine(
+                        @$"
+press 
+1 to add orderItem
+2 to delete orderItem
+3 to update orderItem
+4 to get orderItem
+5 to get Specific Item
+6 to get Items By Order
+7 to get all items
                                             ");
                     choice = int.Parse(Console.ReadLine());
                     switch (choice)
@@ -118,29 +122,45 @@ press 0 to exit
                     }
                     break;
                 case (int)Enums.MainChoise.product:
-                    Console.WriteLine(@$"press 
-                                       1 to add product
-                                       2 to delete product
-                                       3 to update product
-                                       4 to get product
-                                       5 to get all product
+                    Console.WriteLine(
+                        @$"
+press 
+1 to add product
+2 to delete product
+3 to update product
+4 to get product
+5 to get all product
                                             ");
                     choice = int.Parse(Console.ReadLine());
                     switch (choice)
                     {
                         case (int)Enums.ProductChoice.addProduct:
+                            product = productInput(product);
+                            dalProduct.addNewProduct(product);
 
                             break;
                         case (int)Enums.ProductChoice.deleteProduct:
-
+                            Console.WriteLine("enter product id:");
+                            id = int.Parse(Console.ReadLine());
+                            dalProduct.deleteProduct(id);
+                            
                             break;
                         case (int)Enums.ProductChoice.updateProduct:
+                            product= productInput(product);
+                            dalProduct.update(product);
 
                             break;
                         case (int)Enums.ProductChoice.getProduct:
-
+                            Console.WriteLine("enter product id:");
+                            id = int.Parse(Console.ReadLine());
+                            dalProduct.getProduct(id);
                             break;
                         case (int)Enums.ProductChoice.getAllProduct:
+                            Product[] products = dalProduct.getAllProducts();
+                            foreach(Product p in products)
+                            {
+                                Console.WriteLine(p);
+                            }
 
                             break;
                         default:
@@ -179,5 +199,18 @@ press 0 to exit
         Console.WriteLine("enter your email");
         order.CostumerEmail = Console.ReadLine();
         return order;
+    }
+
+    private static Product productInput(Product product)
+    {
+        Console.WriteLine("enter product name");
+        product.Name = (Console.ReadLine());
+        Console.WriteLine("enter category");
+        product.Category = Category.parse(Console.ReadLine());
+        Console.WriteLine("enter product price");
+        product.Price = int.Parse(Console.ReadLine());
+        Console.WriteLine("how many products are in stock?");
+        product.InStock = int.Parse(Console.ReadLine());
+        return product;
     }
 }
