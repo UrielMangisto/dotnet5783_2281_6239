@@ -26,7 +26,7 @@ public class program
                 @$"
 press 0 to exit
 1 to order
-2 to order it
+2 to order item
 3 to product
                                             ");
             choice = int.Parse(Console.ReadLine());

@@ -16,16 +16,16 @@ internal static class DataSource
 
     public static void addProductsToTheArray()
     {
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 769988, InStock = 7, Name = "Harry Poter 1", Price = 130.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 784848, InStock = 3, Name = "Harry Poter 2", Price = 120.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 939345, InStock = 5, Name = "Harry Poter 3", Price = 110.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 923844, InStock = 2, Name = "Harry Poter 4", Price = 110.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 493934, InStock = 0, Name = "Harry Poter 5", Price = 100.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 847922, InStock = 4, Name = "Harry Poter 6", Price = 100.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 759329, InStock = 12, Name = "Harry Poter 7", Price = 90.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Kids, ID = 843902, InStock = 0, Name = "Harry Poter 8", Price = 160.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Comics, ID = 123455, InStock = 25, Name = "Spiderman", Price = 60.0 };
-        products[Config.currentSizeProduct++] = new Product { Category = Enums.Category.Comics, ID = 541235, InStock = 18, Name = "Superman", Price = 70.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Kids, ID = 769988, InStock = 7, Name = "Harry Poter 1", Price = 130.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Kids, ID = 784848, InStock = 3, Name = "Harry Poter 2", Price = 120.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Kids, ID = 939345, InStock = 5, Name = "Harry Poter 3", Price = 110.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Kids, ID = 923844, InStock = 2, Name = "Harry Poter 4", Price = 110.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Kids, ID = 493934, InStock = 0, Name = "Harry Poter 5", Price = 100.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Kids, ID = 847922, InStock = 4, Name = "Harry Poter 6", Price = 100.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Kids, ID = 759329, InStock = 12, Name = "Harry Poter 7", Price = 90.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Kids, ID = 843902, InStock = 0, Name = "Harry Poter 8", Price = 160.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Comics, ID = 123455, InStock = 25, Name = "Spiderman", Price = 60.0 };
+        products[Config.currentSizeProduct++] = new Product { Category = Category.Comics, ID = 541235, InStock = 18, Name = "Superman", Price = 70.0 };
     }
     public static void addOrderToTheArray()
     {
@@ -34,9 +34,9 @@ internal static class DataSource
         {
             Order order = new Order();
             order.ID = Config.getOrderId;
-            order.CostumerName = ((Enums.ClientName)(i % 10)).ToString();
-            order.CostumerAddress = ((Enums.ClientAddress)(i % 10)).ToString();
-            order.CostumerEmail = ((Enums.ClientName)(i % 10)).ToString() + "@gmail.com";
+            order.CostumerName = ((ClientName)(i % 10)).ToString();
+            order.CostumerAddress = ((ClientAddress)(i % 10)).ToString();
+            order.CostumerEmail = ((ClientName)(i % 10)).ToString() + "@gmail.com";
 
             order.OrderDate = dateOfStart + new TimeSpan(Randomally.Next(180), 0, 0, 0);
             if (i<= 16)
