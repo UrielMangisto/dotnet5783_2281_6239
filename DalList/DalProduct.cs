@@ -27,7 +27,7 @@ public class DalProduct
     {
         foreach (var p in DataSource.products)
         {
-            if (p.ID == id)
+            if (p?.ID == id)
             {
                 DataSource.products.Remove(p);
                 return;
@@ -40,7 +40,7 @@ public class DalProduct
     {
         foreach(var p in DataSource.products)
         {
-            if(p.ID == updatedProduct.ID)
+            if(p?.ID == updatedProduct.ID)
             {
                 p = updatedProduct;
 
@@ -50,23 +50,23 @@ public class DalProduct
         throw new Exception("Product Not Found");
     }
 
-    public Product getProduct(int id)
+    public Product? getProduct(int id)
     {
-        for(int i=0;i<DataSource.Config.currentSizeProduct ;i++)
+        foreach (var p in DataSource.products)
         {
-           if (DataSource.products[i].ID == id)
-                return DataSource.products[i];
+           if (p?.ID == id)
+                return p;
         }
 
         throw new Exception("Product Not Found");
     }
 
-    public List<Product> getAllProducts()
+    public List<Product?> getAllProducts()
     {
-        List<Product> products = new List<Product>;
-        for(var p in )
+        List<Product?> products = new List<Product?>();
+        foreach (var p in DataSource.products)
         {
-            products[i] = DataSource.products[i];
+            products.Add (p);
         }
         return products;
     }

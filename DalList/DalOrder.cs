@@ -6,52 +6,53 @@ public class DalOrder
     public int addNewOrder(Order newOrder)
     {
         newOrder.ID = DataSource.Config.getOrderId;
-        DataSource.orders[DataSource.Config.currentSizeOrder++] = newOrder;
+        DataSource.orders.Add(newOrder);
         return newOrder.ID;
     }
     public void deleteOrder(int id)
     {
-        for (int i = 0; i < DataSource.Config.currentSizeOrder; i++)
+        foreach (var p in DataSource.orders)
         {
-            if (DataSource.orders[i].ID == id)
+            if (p?.ID == id)
             {
-                DataSource.orders[i].ID = 0; //in order to delete it
+                DataSource.orders.Remove(p); //in order to delete it
                 return;
             }
         }
         throw new Exception("Order Not Found");
     }
-    public void updateOrder(Order updatedOrder)
+    public void updateOrder(Order? updatedOrder)
     {
-        for (int i = 0; i < DataSource.Config.currentSizeOrder; i++)
+        foreach (var p in DataSource.orders)
         {
-            if (DataSource.orders[i].ID == updatedOrder.ID)
+            if (p?.ID == updatedOrder?.ID)
             {
-                DataSource.orders[i] = updatedOrder;
+                p = updatedOrder;
                 return;
             }
         }
         throw new Exception("Order Not Found");
     }
-    public Order getOrder(int id)
+    public Order? getOrder(int id)
     {
-        for (int i = 0; i < DataSource.Config.currentSizeOrder; i++)
+        
+        foreach (var p in DataSource.orders)
         {
-            if (DataSource.orders[i].ID == id)
-                return DataSource.orders[i];
+            if (p?.ID == id)
+                return p;
         }
 
         throw new Exception("order Not Found");
     }
-    public Order[] getAllOrders()
+    public List<Order?> getAllOrders()
     {
-        Order[] orders = new Order[DataSource.Config.currentSizeOrder];
-        for (int i = 0; i < DataSource.Config.currentSizeOrder; i++)
+        List <Order?> orders = new List <Order?> ();
+        foreach (var p in DataSource.orders)
         {
-            orders[i] = DataSource.orders[i];
+            orders.Add(p);
         }
         return orders;
     }
-
+        
 
 }
