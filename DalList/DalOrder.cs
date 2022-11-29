@@ -13,7 +13,7 @@ public class DalOrder
     {
         foreach (var p in DataSource.orders)
         {
-            if (p?.ID == id)
+            if (p.ID == id)
             {
                 DataSource.orders.Remove(p); //in order to delete it
                 return;
@@ -25,7 +25,7 @@ public class DalOrder
     {
         foreach (var p in DataSource.orders)
         {
-            if (p?.ID == updatedOrder?.ID)
+            if (p.ID == updatedOrder?.ID)
             {
                 p = updatedOrder;
                 return;
@@ -33,20 +33,20 @@ public class DalOrder
         }
         throw new Exception("Order Not Found");
     }
-    public Order? getOrder(int id)
+    public Order getOrder(int id)
     {
         
         foreach (var p in DataSource.orders)
         {
-            if (p?.ID == id)
+            if (p.ID == id)
                 return p;
         }
 
         throw new Exception("order Not Found");
     }
-    public List<Order?> getAllOrders()
+    public List<Order> getAllOrders()
     {
-        List <Order?> orders = new List <Order?> ();
+        List <Order> orders = new List <Order> ();
         foreach (var p in DataSource.orders)
         {
             orders.Add(p);

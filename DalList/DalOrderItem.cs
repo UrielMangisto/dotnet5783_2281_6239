@@ -7,52 +7,51 @@ public class DalOrderitem
     public int addItem(OrderItem item)
     {
         item.ID = DataSource.Config.orderItemId;
-        DataSource.orderItems[DataSource.Config.currentSizeOrderItem++] = item;
+        DataSource.orderItems.Add(item);
         return item.ID;
     }
 
-    public OrderItem getOrderItem(int id)
+    public OrderItem? getOrderItem(int id)
     {
-        for (int i = 0; i < DataSource.Config.currentSizeOrderItem; i++)
+        foreach (var p in DataSource.orderItems)
         {
-            if (id == DataSource.orderItems[i].ID)
+            if (id == p.ID)
             {
-                return DataSource.orderItems[i];
+                return p;
             }
         }
 
         throw new Exception("Order Item Not Found");
     }
     //get order item by the id of the product and the order
-    public OrderItem specificItemGet(int idOfProduct, int idOfOrder)
+    public OrderItem? specificItemGet(int idOfProduct, int idOfOrder)
     {
-        for(int i = 0; i < DataSource.Config.currentSizeOrderItem; i++)
+        foreach (var p in DataSource.orderItems)
         {
-            if(idOfProduct == DataSource.orderItems[i].ID && idOfOrder == DataSource.orderItems[i].OrderID)
+            if (idOfProduct == p.ID && idOfOrder == p.OrderID)
             {
-                return DataSource.orderItems[i];
+                return p;
             }
         }
         throw new Exception("Order Item Not Found");
     }
     //get order items by the id of the order
-    public OrderItem[] getItemsByOrder(Order order)
+    public List<OrderItem> getItemsByOrder(Order order)
     {
         int sizeOfNew = 0;
-        for (int i = 0; i<DataSource.Config.currentSizeOrderItem; i++)
+        foreach (var p in DataSource.orderItems)
         {
-            if(DataSource.orderItems[i].ID == order.ID)
+            if(p.ID == order.ID)
             {
                 sizeOfNew++;
             }
         }
-        OrderItem[] specificItems = new OrderItem[sizeOfNew];
-        int counter = 0;
-        for (int i = 0; i < DataSource.Config.currentSizeOrderItem; i++)
+        List<OrderItem> specificItems = new List<OrderItem>() { };
+        foreach (var p in DataSource.orderItems)
         {
-            if (DataSource.orderItems[i].ID == order.ID)
+            if (p.ID == order.ID)
             {
-                specificItems[counter++] = DataSource.orderItems[i];
+                specificItems.Add(p);
             }
         }
 
@@ -63,23 +62,23 @@ public class DalOrderitem
         return specificItems;
     }
     //returns an array of all products
-    public OrderItem[] getAllItems()
+    public List<OrderItem?> getAllItems()
     {
-        OrderItem[] allItems = new OrderItem[DataSource.Config.currentSizeOrderItem];
-        for(int i = 0; i < DataSource.Config.currentSizeOrderItem; i++)
+        List<OrderItem?> allItems = new List<OrderItem?>() { };
+        foreach (var p in DataSource.orderItems)
         {
-            allItems[i] = DataSource.orderItems[i];
+            allItems.Add(p);
         }
         return allItems;
     }
 
     public void deleteItem(int id)
     {
-        for(int i = 0; i < DataSource.Config.currentSizeOrderItem; i++)
+        foreach (var p in DataSource.orderItems)
         {
-            if(id == DataSource.orderItems[i].ID)
+            if(id == p.ID)
             {
-                DataSource.orderItems[i].ID = 0;
+                DataSource.orderItems.Remove(p);
                 return;
             }
         }
@@ -88,16 +87,17 @@ public class DalOrderitem
 
     public void updateItem (OrderItem updatedItem)
     {
-        for(int j = 0; j < DataSource.Config.currentSizeOrderItem; j++)
+        foreach (var p in DataSource.orderItems)
         {
-            if(updatedItem.ID == DataSource.orderItems[j].ID)
+            if(updatedItem.ID == p.ID)
             {
-                DataSource.orderItems[j] = updatedItem;
+                p = updatedItem;
                 return;
             }
         }
+        
         throw new Exception("Order Item Not Found");
-    }
 
+    }
 
 }

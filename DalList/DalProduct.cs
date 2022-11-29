@@ -27,7 +27,7 @@ public class DalProduct
     {
         foreach (var p in DataSource.products)
         {
-            if (p?.ID == id)
+            if (p.ID == id)
             {
                 DataSource.products.Remove(p);
                 return;
@@ -40,7 +40,7 @@ public class DalProduct
     {
         foreach(var p in DataSource.products)
         {
-            if(p?.ID == updatedProduct.ID)
+            if(p.ID == updatedProduct.ID)
             {
                 p = updatedProduct;
 
@@ -54,7 +54,7 @@ public class DalProduct
     {
         foreach (var p in DataSource.products)
         {
-           if (p?.ID == id)
+           if (p.ID == id)
                 return p;
         }
 
