@@ -1,5 +1,4 @@
 ﻿using DO;
-
 namespace Dal;
 
 public class DalProduct
@@ -21,16 +20,16 @@ public class DalProduct
             }
         }
         newProduct.ID = id;
-        DataSource.products[DataSource.Config.currentSizeProduct++] = newProduct;
+        DataSource.products.Add(newProduct);
     }
 
     public void deleteProduct(int id)
     {
-        for(int i=0;i < DataSource.Config.currentSizeProduct; i++)
+        foreach (var p in DataSource.products)
         {
-            if (DataSource.products[i].ID == id)
+            if (p.ID == id)
             {
-                DataSource.products[i].ID = 0; //in order to delete it
+                DataSource.products.Remove(p);
                 return;
             }
         }
@@ -39,11 +38,12 @@ public class DalProduct
 
     public void update(Product updatedProduct)
     {
-        for(int i=0;i<DataSource.Config.currentSizeProduct;i++)
+        foreach(var p in DataSource.products)
         {
-            if(DataSource.products[i].ID== updatedProduct.ID)
+            if(p.ID == updatedProduct.ID)
             {
-                DataSource.products[i] = updatedProduct;
+                p = updatedProduct;
+
                 return;
             }
         }
@@ -61,10 +61,10 @@ public class DalProduct
         throw new Exception("Product Not Found");
     }
 
-    public Product[] getAllProducts()
+    public List<Product> getAllProducts()
     {
-        Product[] products = new Product[DataSource.Config.currentSizeProduct];
-        for(int i=0;i<DataSource.Config.currentSizeProduct;i++)
+        List<Product> products = new List<Product>;
+        for(var p in )
         {
             products[i] = DataSource.products[i];
         }

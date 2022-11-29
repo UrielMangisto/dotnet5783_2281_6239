@@ -11,5 +11,5 @@ public interface IDal
 {
     IOrder Order { get; }
     IProduct Product { get; }
-    IOrder Price { get; }
+    IOrderItem OrderItem { get; }
 }
