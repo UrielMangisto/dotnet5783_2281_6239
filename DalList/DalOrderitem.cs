@@ -15,7 +15,7 @@ public class DalOrderitem
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (id == p?.ID)
+            if (id == p.ID)
             {
                 return p;
             }
@@ -28,7 +28,7 @@ public class DalOrderitem
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (idOfProduct == p?.ID && idOfOrder == p?.OrderID)
+            if (idOfProduct == p.ID && idOfOrder == p.OrderID)
             {
                 return p;
             }
@@ -36,20 +36,20 @@ public class DalOrderitem
         throw new Exception("Order Item Not Found");
     }
     //get order items by the id of the order
-    public List<OrderItem?> getItemsByOrder(Order? order)
+    public List<OrderItem> getItemsByOrder(Order order)
     {
         int sizeOfNew = 0;
         foreach (var p in DataSource.orderItems)
         {
-            if(p?.ID == order?.ID)
+            if(p.ID == order.ID)
             {
                 sizeOfNew++;
             }
         }
-        List<OrderItem?> specificItems = new List<OrderItem?>() { };
+        List<OrderItem> specificItems = new List<OrderItem>() { };
         foreach (var p in DataSource.orderItems)
         {
-            if (p?.ID == order?.ID)
+            if (p.ID == order.ID)
             {
                 specificItems.Add(p);
             }
@@ -76,7 +76,7 @@ public class DalOrderitem
     {
         foreach (var p in DataSource.orderItems)
         {
-            if(id == p?.ID)
+            if(id == p.ID)
             {
                 DataSource.orderItems.Remove(p);
                 return;
@@ -89,14 +89,15 @@ public class DalOrderitem
     {
         foreach (var p in DataSource.orderItems)
         {
-            if(updatedItem.ID == p?.ID)
+            if(updatedItem.ID == p.ID)
             {
                 p = updatedItem;
                 return;
             }
         }
+        
         throw new Exception("Order Item Not Found");
-    }
 
+    }
 
 }
