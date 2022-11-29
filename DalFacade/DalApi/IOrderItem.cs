@@ -8,4 +8,6 @@ namespace DalApi;
 
 public interface IOrderItem:ICrud<OrderItem>
 {
+    IEnumerable<OrderItem> GetItemsByOrderId(int orderId);
+
 }

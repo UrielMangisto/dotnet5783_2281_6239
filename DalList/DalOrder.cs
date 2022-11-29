@@ -5,7 +5,7 @@ public class DalOrder
 {
     public int addNewOrder(Order newOrder)
     {
-        newOrder.ID = DataSource.Config.getOrderId;
+        newOrder.ID = DataSource.Config.NextOrderId;
         DataSource.orders.Add(newOrder);
         return newOrder.ID;
     }
@@ -21,11 +21,11 @@ public class DalOrder
         }
         throw new Exception("Order Not Found");
     }
-    public void updateOrder(Order? updatedOrder)
+    public void updateOrder(Order updatedOrder)
     {
         foreach (var p in DataSource.orders)
         {
-            if (p.ID == updatedOrder?.ID)
+            if (p.ID == updatedOrder.ID)
             {
                 p = updatedOrder;
                 return;

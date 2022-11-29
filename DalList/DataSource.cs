@@ -34,7 +34,7 @@ internal static class DataSource
         for (int i = 0; i < 20; i++)
         {
             Order order = new Order();
-            order.ID = Config.getOrderId;
+            order.ID = Config.NextOrderId;
             order.CostumerName = ((ClientName)(i % 10)).ToString();
             order.CostumerAddress = ((ClientAddress)(i % 10)).ToString();
             order.CostumerEmail = ((ClientName)(i % 10)).ToString() + "@gmail.com";
@@ -68,7 +68,7 @@ internal static class DataSource
         {
             for (int j = 0; j < Randomally.Next(1, 4); j++)
             {
-                orderItem.ID = Config.getOrderItemId;
+                orderItem.ID = Config.NextOrderItemId;
                 orderItem.OrderID = orders[i].ID;
 
                 Product product = products[Randomally.Next(0, products.Count)];
@@ -91,12 +91,30 @@ internal static class DataSource
         s_Initialize();
     }
 
-    internal static class Config 
+/*    internal static class Config 
     {
         internal static int orderItemId = 1;
         internal static int orderId = 1;
 
         internal static int getOrderItemId => orderItemId++;
         internal static int getOrderId => orderItemId++;
+    }*/
+    internal static class Config
+    {
+        //order
+        internal const int s_startOrderId = 100000;
+        private static int s_nextOrderId = s_startOrderId;
+        internal static int NextOrderId { get => s_nextOrderId++; }
+
+        //order item
+        internal const int s_startOrderItemId = 100000;
+        private static int s_nextOrderItemId = s_startOrderItemId;
+        internal static int NextOrderItemId { get => s_nextOrderItemId++; }
+
+        //product
+        internal const int s_startProductId = 0;
+        private static int s_nextProductId = s_startProductId;
+        internal static int NextOrderProductId { get => Random.Next(100000, 1000000); }
+
     }
 }

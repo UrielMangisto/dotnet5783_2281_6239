@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
-    internal interface ICrud<T>
+    public interface ICrud<T>
     {
         T Add (T entity);
         T Delete (T entity);
