@@ -2,50 +2,52 @@
 using DalApi;
 namespace Dal;
 
-public class DalOrder
+public class DalOrder : IProduct
 {
-    public int addNewOrder(Order newOrder)
+    Order Add(Order entity)
     {
-        newOrder.ID = DataSource.Config.NextOrderId;
-        DataSource.orders.Add(newOrder);
-        return newOrder.ID;
+        entity.ID = DataSource.Config.NextOrderId;
+        DataSource.orders.Add(entity);
+        return entity;
     }
-    public void deleteOrder(int id)
+    Order Delete(Order entity)
     {
         foreach (var p in DataSource.orders)
         {
-            if (p.ID == id)
+            if (p.ID == entity.ID)
             {
                 DataSource.orders.Remove(p); //in order to delete it
-                return;
+                return entity;
             }
         }
         throw new Exception("Order Not Found");
     }
-    public void updateOrder(Order updatedOrder)
+    Order Update(Order entity)
     {
+        int count = 0;
         foreach (var p in DataSource.orders)
         {
-            if (p.ID == updatedOrder.ID)
+            count++;    
+            if (p.ID == entity.ID)
             {
-                p = updatedOrder;
-                return;
+                DataSource.orders.Insert(count, entity);
+                return entity;
             }
         }
         throw new Exception("Order Not Found");
     }
-    public Order getOrder(int id)
+    Order Get(int entity)
     {
         
         foreach (var p in DataSource.orders)
         {
-            if (p.ID == id)
+            if (p.ID == entity)
                 return p;
         }
 
         throw new Exception("order Not Found");
     }
-    public List<Order> getAllOrders()
+    IEnumerable<Order> GetAll()
     {
         List <Order> orders = new List <Order> ();
         foreach (var p in DataSource.orders)
