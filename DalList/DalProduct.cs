@@ -1,9 +1,10 @@
 ﻿using DO;
 namespace Dal;
+using DalApi;
 
-public class DalProduct
+internal class DalProduct:IProduct
 {
-    public void addNewProduct(Product newProduct)
+    public void Add(Product newProduct)
     {
         int id = 0;
         bool exict = true;

@@ -1,12 +1,12 @@
 ﻿using DO;
-
+using DalApi;
 namespace Dal;
 
 public class DalOrderitem
 {
     public int addItem(OrderItem item)
     {
-        item.ID = DataSource.Config.orderItemId;
+        item.ID = DataSource.Config.NextOrderItemId;
         DataSource.orderItems.Add(item);
         return item.ID;
     }
@@ -23,8 +23,14 @@ public class DalOrderitem
 
         throw new Exception("Order Item Not Found");
     }
-    //get order item by the id of the product and the order
-    public OrderItem? specificItemGet(int idOfProduct, int idOfOrder)
+    /// <summary>
+    /// get order item by the id of the product and the order
+    /// <param name="idOfProduct"></param>
+    /// <param name="idOfOrder"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    /// </summary>
+    public OrderItem specificItemGet(int idOfProduct, int idOfOrder)
     {
         foreach (var p in DataSource.orderItems)
         {
@@ -36,12 +42,12 @@ public class DalOrderitem
         throw new Exception("Order Item Not Found");
     }
     //get order items by the id of the order
-    public List<OrderItem> getItemsByOrder(Order order)
+    public IEnumerable<OrderItem> getItemsByOrder(int orderID)
     {
         int sizeOfNew = 0;
         foreach (var p in DataSource.orderItems)
         {
-            if(p.ID == order.ID)
+            if(p.ID == orderID)
             {
                 sizeOfNew++;
             }
@@ -49,7 +55,7 @@ public class DalOrderitem
         List<OrderItem> specificItems = new List<OrderItem>() { };
         foreach (var p in DataSource.orderItems)
         {
-            if (p.ID == order.ID)
+            if (p.ID == orderID)
             {
                 specificItems.Add(p);
             }
@@ -62,9 +68,9 @@ public class DalOrderitem
         return specificItems;
     }
     //returns an array of all products
-    public List<OrderItem?> getAllItems()
+    public List<OrderItem> getAllItems()
     {
-        List<OrderItem?> allItems = new List<OrderItem?>() { };
+        List<OrderItem> allItems = new List<OrderItem>() { };
         foreach (var p in DataSource.orderItems)
         {
             allItems.Add(p);

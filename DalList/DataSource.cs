@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using DO;
+using DalApi;
 namespace Dal;
 /// <summary>
 /// Those fields and methods are declaring the data
