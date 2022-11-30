@@ -4,13 +4,13 @@ namespace Dal;
 
 public class DalOrder : IProduct
 {
-    Order Add(Order entity)
+    public Order Add(Order entity)
     {
         entity.ID = DataSource.Config.NextOrderId;
         DataSource.orders.Add(entity);
         return entity;
     }
-    Order Delete(Order entity)
+    public Order Delete(Order entity)
     {
         foreach (var p in DataSource.orders)
         {
@@ -22,7 +22,7 @@ public class DalOrder : IProduct
         }
         throw new Exception("Order Not Found");
     }
-    Order Update(Order entity)
+    public Order Update(Order entity)
     {
         int count = 0;
         foreach (var p in DataSource.orders)
@@ -36,7 +36,7 @@ public class DalOrder : IProduct
         }
         throw new Exception("Order Not Found");
     }
-    Order Get(int entity)
+    public Order Get(int entity)
     {
         
         foreach (var p in DataSource.orders)
@@ -47,7 +47,7 @@ public class DalOrder : IProduct
 
         throw new Exception("order Not Found");
     }
-    IEnumerable<Order> GetAll()
+    public IEnumerable<Order> GetAll()
     {
         List <Order> orders = new List <Order> ();
         foreach (var p in DataSource.orders)

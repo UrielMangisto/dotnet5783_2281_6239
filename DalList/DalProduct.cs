@@ -3,9 +3,9 @@ using DalApi;
 namespace Dal;
 
 
-internal class DalProduct: IProduct
+public class DalProduct: IProduct
 {
-    Product Add (Product entity)
+    public Product Add (Product entity)
     {
         int id = 0;
         bool exict = true;
@@ -25,7 +25,7 @@ internal class DalProduct: IProduct
         DataSource.products.Add(entity);
     }
 
-    Product Delete(Product entity)
+    public Product Delete(Product entity)
     {
         foreach (var p in DataSource.products)
         {
@@ -38,7 +38,7 @@ internal class DalProduct: IProduct
         throw new Exception("Product Not Found");
     }
 
-    Product Update(Product entity)
+    public Product Update(Product entity)
     {
         int count = 0;
         foreach(var p in DataSource.products)
@@ -53,7 +53,7 @@ internal class DalProduct: IProduct
         throw new Exception("Product Not Found");
     }
 
-    Product Get(int id)
+    public Product Get(int id)
     {
         foreach (var p in DataSource.products)
         {
@@ -64,7 +64,7 @@ internal class DalProduct: IProduct
         throw new Exception("Product Not Found");
     }
 
-    IEnumerable<Product> GetAll()
+    public IEnumerable<Product> GetAll()
     {
         List<Product> products = new List<Product>();
         foreach (var p in DataSource.products)

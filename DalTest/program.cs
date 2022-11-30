@@ -48,22 +48,23 @@ press 1 to add order
                         case (int)OrderChoice.addOrder:
                             order = orderInput(order);
 
-                            dalOrder.addNewOrder(order);
+                            dalOrder.Add(order);
                             break;
                         case (int)OrderChoice.deleteOrder:
                             Console.WriteLine("enter id order");
-                            dalOrder.deleteOrder(int.Parse(Console.ReadLine()));
+                            order = orderInput(order);
+                            dalOrder.Delete(order);
                             break;
                         case (int)OrderChoice.updateOrder:
                             order = orderInput(order);
-                            dalOrder.updateOrder(order);
+                            dalOrder.Update(order);
                             break;
                         case (int)OrderChoice.getOrder:
                             Console.WriteLine("enter id order");
-                            dalOrder.getOrder(int.Parse(Console.ReadLine()));
+                            dalOrder.Get(int.Parse(Console.ReadLine()));
                             break;
                         case (int)OrderChoice.getAllOrder:
-                            dalOrder.getAllOrders();
+                            dalOrder.GetAll();
                             break;
                             default:
                             Console.WriteLine("ERROR");
@@ -87,19 +88,20 @@ press
                     {
                         case (int)orderItemChoise.addOrderItem:
                             item = orderItempInput(item);
-                            dalItem.addItem(item);
+                            dalItem.Add(item);
                             break;
                         case (int)orderItemChoise.deleteOrderItem:
                             Console.WriteLine("enter order item id");
-                            dalItem.deleteItem(int.Parse(Console.ReadLine()));
+                            item = orderItempInput(item);
+                            dalItem.Delete(item);
                             break;
                         case (int)orderItemChoise.updateOrderItem:
                             item=orderItempInput(item);
-                            dalItem.updateItem(item);
+                            dalItem.Update(item);
                             break;
                         case (int)orderItemChoise.getOrderItem:
                             Console.WriteLine("enter order item id");
-                            dalItem.getOrderItem(int.Parse(Console.ReadLine()));
+                            dalItem.getItemsByOrder(int.Parse(Console.ReadLine()));
                             break;
                         case (int)orderItemChoise.getSpecificItem:
                             Console.WriteLine("enter product id");
@@ -109,10 +111,10 @@ press
                             break;
                         case (int)orderItemChoise.getItemsByOrder:
                             order= orderInput(order);
-                            dalItem.getItemsByOrder(order);
+                            dalItem.getItemsByOrder(int.Parse(Console.ReadLine()));
                             break;
                         case (int)orderItemChoise.getAllItems:
-                            dalItem.getAllItems(); 
+                            dalItem.GetAll(); 
 
                             break;
                         default:
@@ -135,27 +137,27 @@ press
                     {
                         case (int)ProductChoice.addProduct:
                             product = productInput(product);
-                            dalProduct.addNewProduct(product);
+                            dalProduct.Add(product);
 
                             break;
                         case (int)ProductChoice.deleteProduct:
                             Console.WriteLine("enter product id:");
-                            id = int.Parse(Console.ReadLine());
-                            dalProduct.deleteProduct(id);
+                            product = productInput(product);
+                            dalProduct.Delete(product);
                             
                             break;
                         case (int)ProductChoice.updateProduct:
                             product= productInput(product);
-                            dalProduct.update(product);
+                            dalProduct.Update(product);
 
                             break;
                         case (int)ProductChoice.getProduct:
                             Console.WriteLine("enter product id:");
                             id = int.Parse(Console.ReadLine());
-                            dalProduct.getProduct(id);
+                            dalProduct.Get(id);
                             break;
                         case (int)ProductChoice.getAllProduct:
-                            Product[] products = dalProduct.getAllProducts();
+                            Product[] products = (Product[])dalProduct.GetAll();
                             foreach(Product p in products)
                             {
                                 Console.WriteLine(p);
