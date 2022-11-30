@@ -2,7 +2,7 @@
 using DalApi;
 namespace Dal;
 
-public class DalOrderitem :  IProduct
+public class DalOrderitem :  IOrderItem
 {
     OrderItem Add(OrderItem entity)
     {

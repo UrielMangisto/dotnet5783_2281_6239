@@ -92,14 +92,6 @@ internal static class DataSource
         s_Initialize();
     }
 
-/*    internal static class Config 
-    {
-        internal static int orderItemId = 1;
-        internal static int orderId = 1;
-
-        internal static int getOrderItemId => orderItemId++;
-        internal static int getOrderId => orderItemId++;
-    }*/
     internal static class Config
     {
         //order
@@ -115,7 +107,7 @@ internal static class DataSource
         //product
         internal const int s_startProductId = 0;
         private static int s_nextProductId = s_startProductId;
-        internal static int NextOrderProductId { get => Random.Next(100000, 1000000); }
+        internal static int NextOrderProductId => Randomally.Next(100000, 1000000);
 
     }
 }
