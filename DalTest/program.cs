@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DalApi;
 using DO;
 namespace Dal;
 public class program
 {
+    public static IDal dal = new DalList1();
     public static void Main(String[] args)
     {
+        
         int choice;
         int id;
         int temp;
