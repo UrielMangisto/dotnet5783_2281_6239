@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using DO;
 
 namespace DalApi;
-
+/// <summary>
+/// abstract of product
+/// </summary>
 public interface IProduct:ICrud<Product>
 {
 

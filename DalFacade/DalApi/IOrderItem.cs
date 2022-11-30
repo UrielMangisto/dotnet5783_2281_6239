@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 namespace DalApi;
-
+/// <summary>
+/// abstract of orderItemm
+/// </summary>
 public interface IOrderItem:ICrud<OrderItem>
 {
     IEnumerable<OrderItem> GetItemsByOrderId(int orderId);

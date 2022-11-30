@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
  namespace DalApi;
 
+/// <summary>
+/// abstract of iorder,iorderItemm and iprodoct
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public interface ICrud<T>
 {
 T Add(T entity);
