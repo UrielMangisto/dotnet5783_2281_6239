@@ -8,5 +8,6 @@ using System.Threading.Tasks;
 namespace BlImplementation;
 
 internal class BL
-{ //public xrfd=1;
+{
+
 }

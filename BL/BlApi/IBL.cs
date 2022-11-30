@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace BlApi;
 
-internal class IBL
+public interface IBl
 {
+    public IOrder Order{ get; }
+    public IProduct Product{ get; }
+    public IOrderItem OrderItem { get; }
 }
+
+

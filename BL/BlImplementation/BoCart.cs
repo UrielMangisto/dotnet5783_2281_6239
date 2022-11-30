@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace BlImplementation
+
+internal class BoCart : BlApi.ICart
 {
-    internal class BoCart
+    public BO.Cart Add(BO.Cart C, int id) 
     {
+
+    }
+
+
+    public BO.Cart Update(BO.Cart C, int ID, int amount)
+    {
+
+    }
+ 
+    public void Confirmation(BO.Cart C)
+    {
+
     }
 }
