@@ -2,20 +2,20 @@
 using DalApi;
 namespace Dal;
 
-public class DalOrderitem
+public class DalOrderitem :  IProduct
 {
-    public int addItem(OrderItem item)
+    OrderItem Add(OrderItem entity)
     {
-        item.ID = DataSource.Config.NextOrderItemId;
-        DataSource.orderItems.Add(item);
-        return item.ID;
+        entity.ID = DataSource.Config.NextOrderItemId;
+        DataSource.orderItems.Add(entity);
+        return entity;
     }
 
-    public OrderItem? getOrderItem(int id)
+    OrderItem Get(OrderItem entity)
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (id == p.ID)
+            if (entity.ID == p.ID)
             {
                 return p;
             }
@@ -68,7 +68,7 @@ public class DalOrderitem
         return specificItems;
     }
     //returns an array of all products
-    public List<OrderItem> getAllItems()
+    IEnumerable<OrderItem> GetAll()
     {
         List<OrderItem> allItems = new List<OrderItem>() { };
         foreach (var p in DataSource.orderItems)
@@ -78,27 +78,29 @@ public class DalOrderitem
         return allItems;
     }
 
-    public void deleteItem(int id)
+    OrderItem Delete(OrderItem entity)
     {
         foreach (var p in DataSource.orderItems)
         {
-            if(id == p.ID)
+            if(entity.ID == p.ID)
             {
                 DataSource.orderItems.Remove(p);
-                return;
+                return entity;
             }
         }
         throw new Exception("Order Item Not Found");
     }
 
-    public void updateItem (OrderItem updatedItem)
+    OrderItem Update(OrderItem entity)
     {
+        int count = 0;
         foreach (var p in DataSource.orderItems)
         {
-            if(updatedItem.ID == p.ID)
+            count++;
+            if(entity.ID == p.ID)
             {
-                p = updatedItem;
-                return;
+                DataSource.orderItems.Insert(count, entity);
+                return entity;
             }
         }
         
