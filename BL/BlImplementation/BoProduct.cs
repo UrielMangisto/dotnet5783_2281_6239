@@ -14,10 +14,10 @@ internal class BoProduct:BlApi.IProduct
         foreach(var product in products)
         {
             BO.ProductForList productList = new BO.ProductForList();
-            productList.Id = product.Id;
+            productList.Id = product.ID;
             productList.Name = product.Name;    
-            productList.Price = product.Price;  
-            productList.Category = product.Category;
+            productList.Price = product.Price;
+            productList.Category = (BO.Category)product.Category;
             productsList.Add(product);
         }
         return productsList;

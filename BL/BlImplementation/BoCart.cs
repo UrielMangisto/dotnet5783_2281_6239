@@ -1,7 +1,7 @@
 ﻿
 
 
-internal class BoCart : BlApi.ICart
+public class BoCart : BlApi.ICart
 {
     public BO.Cart Add(BO.Cart C, int id) 
     {

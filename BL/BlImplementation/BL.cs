@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlImplementation;
 
-internal class BL
+public class BL
 {
 
 }
