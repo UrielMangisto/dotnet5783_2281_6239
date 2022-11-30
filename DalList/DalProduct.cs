@@ -1,10 +1,11 @@
 ﻿using DO;
-namespace Dal;
 using DalApi;
+namespace Dal;
 
-internal class DalProduct:IProduct
+
+internal class DalProduct: IProduct
 {
-    public void Add(Product newProduct)
+    Product Add (Product entity)
     {
         int id = 0;
         bool exict = true;
@@ -20,38 +21,39 @@ internal class DalProduct:IProduct
                 exict = false;
             }
         }
-        newProduct.ID = id;
-        DataSource.products.Add(newProduct);
+        entity.ID = id;
+        DataSource.products.Add(entity);
     }
 
-    public void deleteProduct(int id)
+    Product Delete(Product entity)
     {
         foreach (var p in DataSource.products)
         {
-            if (p.ID == id)
+            if (p.ID == entity.ID)
             {
                 DataSource.products.Remove(p);
-                return;
+                return entity;
             }
         }
         throw new Exception("Product Not Found");
     }
 
-    public void update(Product updatedProduct)
+    Product Update(Product entity)
     {
+        int count = 0;
         foreach(var p in DataSource.products)
         {
-            if(p.ID == updatedProduct.ID)
+            count++;
+            if(p.ID == entity.ID)
             {
-                p = updatedProduct;
-
-                return;
+                DataSource.products.Insert(count, entity);
+                return entity;
             }
         }
         throw new Exception("Product Not Found");
     }
 
-    public Product? getProduct(int id)
+    Product Get(int id)
     {
         foreach (var p in DataSource.products)
         {
@@ -62,9 +64,9 @@ internal class DalProduct:IProduct
         throw new Exception("Product Not Found");
     }
 
-    public List<Product?> getAllProducts()
+    IEnumerable<Product> GetAll()
     {
-        List<Product?> products = new List<Product?>();
+        List<Product> products = new List<Product>();
         foreach (var p in DataSource.products)
         {
             products.Add (p);
