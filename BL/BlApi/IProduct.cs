@@ -23,14 +23,14 @@ public interface IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Product ProductDetailsM(int id);
+    public Product ProductDetailsForManager(int id);
     /// <summary>
     /// 
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cart"></param>
     /// <returns></returns>
-    public ProductItem ProductDetailsC(int id, Cart cart);
+    public ProductItem ProductDetailsForCostumer(int id, Cart cart);
     /// <summary>
     /// 
     /// </summary>

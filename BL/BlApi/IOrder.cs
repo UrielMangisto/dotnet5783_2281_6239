@@ -21,7 +21,7 @@ public interface IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Order OrderDetails(int id);
+    public Order DetailsOfOrder(int id);
     /// <summary>
     /// 
     /// </summary>

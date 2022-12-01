@@ -102,17 +102,17 @@ internal static class DataSource
     }*/
     internal static class Config
     {
-        //order
+        //Order
         internal const int s_startOrderId = 100000;
         private static int s_nextOrderId = s_startOrderId;
         internal static int NextOrderId { get => s_nextOrderId++; }
 
-        //order item
+        //Order item
         internal const int s_startOrderItemId = 100000;
         private static int s_nextOrderItemId = s_startOrderItemId;
         internal static int NextOrderItemId { get => s_nextOrderItemId++; }
 
-        //product
+        //Product
         internal const int s_startProductId = 0;
         private static int s_nextProductId = s_startProductId;
         internal static int NextOrderProductId { get => Randomally.Next(100000, 1000000); }

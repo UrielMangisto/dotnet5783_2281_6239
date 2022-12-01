@@ -1,6 +1,8 @@
 ﻿
 
-
+/// <summary>
+/// the implementation of the cart
+/// </summary>
 public class BoCart : BlApi.ICart
 {
     public BO.Cart Add(BO.Cart C, int id) 

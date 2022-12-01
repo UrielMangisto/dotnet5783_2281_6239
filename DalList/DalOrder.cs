@@ -2,9 +2,9 @@
 using DalApi;
 namespace Dal;
 /// <summary>
-/// Implementation of the CRUB functions on order
+/// Implementation of the CRUB functions on Order
 /// </summary>
-public class DalOrder : IOrder
+internal class DalOrder : IOrder
 {
     public int Add(Order entity)
     {
@@ -18,7 +18,7 @@ public class DalOrder : IOrder
         {
             if (p.ID == entity.ID)
             {
-                DataSource.orders.Remove(p); //in order to delete it
+                DataSource.orders.Remove(p); //in Order to delete it
                 return;
             }
         }
@@ -47,7 +47,7 @@ public class DalOrder : IOrder
                 return p;
         }
 
-        throw new Exception("order Not Found");
+        throw new Exception("Order Not Found");
     }
     public IEnumerable<Order> GetAll()
     {

@@ -10,7 +10,7 @@ public class OrderForList
 {
     public int Id { get; set; }
     public string CostomerName { get; set; }
-    public OrderStatus Status { get; set; }
+    public Enums.OrderStatus Status { get; set; }
     public int AmountOfItems { get; set; }
     public double TotalPrice { get; set; }
 

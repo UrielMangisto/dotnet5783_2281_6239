@@ -3,9 +3,9 @@ using DalApi;
 namespace Dal;
 
 /// <summary>
-/// Implementation of the CRUB functions on product
+/// Implementation of the CRUB functions on Product
 /// </summary>
-public class DalProduct: IProduct
+internal class DalProduct: IProduct
 {
     public int Add(Product entity)
     {

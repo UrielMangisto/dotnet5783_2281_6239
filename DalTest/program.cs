@@ -25,9 +25,9 @@ public class program
             Console.WriteLine(
                 @$"
 press 0 to exit
-1 to order
-2 to order item
-3 to product
+1 to Order
+2 to Order item
+3 to Product
                                             ");
             choice = int.Parse(Console.ReadLine());
 
@@ -36,11 +36,11 @@ press 0 to exit
                 case (int)MainChoise.order:
                     Console.WriteLine(
                         @$"
-press 1 to add order
-2 to delete order
-3 to update order
-4 to get order
-5 to get all order
+press 1 to add Order
+2 to delete Order
+3 to update Order
+4 to get Order
+5 to get all Order
                                             ");
                     choice = int.Parse(Console.ReadLine());
                     switch(choice)
@@ -51,7 +51,7 @@ press 1 to add order
                             dalOrder.Add(order);
                             break;
                         case (int)OrderChoice.deleteOrder:
-                            Console.WriteLine("enter id order");
+                            Console.WriteLine("enter id Order");
                             order = orderInput(order);
                             dalOrder.Delete(order);
                             break;
@@ -60,7 +60,7 @@ press 1 to add order
                             dalOrder.Update(order);
                             break;
                         case (int)OrderChoice.getOrder:
-                            Console.WriteLine("enter id order");
+                            Console.WriteLine("enter id Order");
                             dalOrder.Get(int.Parse(Console.ReadLine()));
                             break;
                         case (int)OrderChoice.getAllOrder:
@@ -75,10 +75,10 @@ press 1 to add order
                     Console.WriteLine(
                         @$"
 press 
-1 to add orderItem
-2 to delete orderItem
-3 to update orderItem
-4 to get orderItem
+1 to add OrderItem
+2 to delete OrderItem
+3 to update OrderItem
+4 to get OrderItem
 5 to get Specific Item
 6 to get Items By Order
 7 to get all items
@@ -91,7 +91,7 @@ press
                             dalItem.Add(item);
                             break;
                         case (int)orderItemChoise.deleteOrderItem:
-                            Console.WriteLine("enter order item id");
+                            Console.WriteLine("enter Order item id");
                             item = orderItempInput(item);
                             dalItem.Delete(item);
                             break;
@@ -100,13 +100,13 @@ press
                             dalItem.Update(item);
                             break;
                         case (int)orderItemChoise.getOrderItem:
-                            Console.WriteLine("enter order item id");
+                            Console.WriteLine("enter Order item id");
                             dalItem.getItemsByOrder(int.Parse(Console.ReadLine()));
                             break;
                         case (int)orderItemChoise.getSpecificItem:
-                            Console.WriteLine("enter product id");
+                            Console.WriteLine("enter Product id");
                             temp=int.Parse(Console.ReadLine());
-                            Console.WriteLine("enter order id");
+                            Console.WriteLine("enter Order id");
                             dalItem.specificItemGet(temp,int.Parse(Console.ReadLine()));
                             break;
                         case (int)orderItemChoise.getItemsByOrder:
@@ -126,11 +126,11 @@ press
                     Console.WriteLine(
                         @$"
 press 
-1 to add product
-2 to delete product
-3 to update product
-4 to get product
-5 to get all product
+1 to add Product
+2 to delete Product
+3 to update Product
+4 to get Product
+5 to get all Product
                                             ");
                     choice = int.Parse(Console.ReadLine());
                     switch (choice)
@@ -141,7 +141,7 @@ press
 
                             break;
                         case (int)ProductChoice.deleteProduct:
-                            Console.WriteLine("enter product id:");
+                            Console.WriteLine("enter Product id:");
                             product = productInput(product);
                             dalProduct.Delete(product);
                             
@@ -152,7 +152,7 @@ press
 
                             break;
                         case (int)ProductChoice.getProduct:
-                            Console.WriteLine("enter product id:");
+                            Console.WriteLine("enter Product id:");
                             id = int.Parse(Console.ReadLine());
                             dalProduct.Get(id);
                             break;
@@ -178,16 +178,16 @@ press
 
     private static OrderItem orderItempInput(OrderItem item)
     {
-        Console.WriteLine("enter product id");
+        Console.WriteLine("enter Product id");
         item.ProductID = int.Parse(Console.ReadLine());
 
-        Console.WriteLine("enter order id");
+        Console.WriteLine("enter Order id");
         item.OrderID = int.Parse(Console.ReadLine());
 
-        Console.WriteLine("enter order item price");
+        Console.WriteLine("enter Order item price");
         item.Price = int.Parse(Console.ReadLine());
 
-        Console.WriteLine("enter order item amount");
+        Console.WriteLine("enter Order item amount");
         item.Amount = int.Parse(Console.ReadLine());
 
         return item;
@@ -211,14 +211,14 @@ press
     {
         int cat;
 
-        Console.WriteLine("enter product name");
+        Console.WriteLine("enter Product name");
         product.Name = (Console.ReadLine());
 
         Console.WriteLine("enter category");
         int.TryParse(Console.ReadLine(), out cat);
         product.Category = (Category)cat;
 
-        Console.WriteLine("enter product price");
+        Console.WriteLine("enter Product price");
         product.Price = int.Parse(Console.ReadLine());
 
         Console.WriteLine("how many products are in stock?");

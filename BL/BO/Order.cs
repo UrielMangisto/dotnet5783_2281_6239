@@ -12,7 +12,7 @@ public class Order
     public string CostomerName { get; set; }
     public string CostomerEmail { get; set; }
     public string CostomerAdress { get; set; }
-    public OrderStatus Status { get; set; }
+    public Enums.OrderStatus Status { get; set; }
     public DateTime? PaymentDate { get; set; }
     public DateTime? OrderDate { get; set; }
     public DateTime? ShipDate { get; set; }

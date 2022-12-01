@@ -9,7 +9,7 @@ namespace BO;
 public class OrderTracking
 {
     public int Id { get; set; }
-    public OrderStatus Status { get; set; }
+    public Enums.OrderStatus Status { get; set; }
     public List<(DateTime?, string)> TrackList { get; set; }
 
     //to print the object
