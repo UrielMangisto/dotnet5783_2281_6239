@@ -2,9 +2,9 @@
 using DalApi;
 namespace Dal;
 /// <summary>
-/// Implementation of the CRUB functions on order item
+/// Implementation of the CRUB functions on Order item
 /// </summary>
-public class DalOrderitem :  IOrderItem
+internal class DalOrderitem :  IOrderItem
 {
     public int Add(OrderItem entity)
     {
@@ -25,7 +25,7 @@ public class DalOrderitem :  IOrderItem
         throw new Exception("Order Item Not Found");
     }
     /// <summary>
-    /// get order item by the id of the product and the order
+    /// get Order item by the id of the Product and the Order
     /// <param name="idOfProduct"></param>
     /// <param name="idOfOrder"></param>
     /// <returns></returns>
@@ -43,7 +43,7 @@ public class DalOrderitem :  IOrderItem
         throw new Exception("Order Item Not Found");
     }
     /// <summary>
-    /// get order items by the id of the order
+    /// get Order items by the id of the Order
     /// </summary>
     /// <param name="orderID"></param>
     /// <returns></returns>
