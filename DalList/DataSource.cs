@@ -115,7 +115,7 @@ internal static class DataSource
         //product
         internal const int s_startProductId = 0;
         private static int s_nextProductId = s_startProductId;
-        internal static int NextOrderProductId { get => Random.Next(100000, 1000000); }
+        internal static int NextOrderProductId { get => Randomally.Next(100000, 1000000); }
 
     }
 }

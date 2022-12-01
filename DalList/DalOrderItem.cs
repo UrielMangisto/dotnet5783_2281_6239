@@ -1,26 +1,27 @@
 ﻿using DO;
 using DalApi;
 namespace Dal;
-
-public class DalOrderitem :  IProduct
+/// <summary>
+/// Implementation of the CRUB functions on order item
+/// </summary>
+public class DalOrderitem :  IOrderItem
 {
-    public OrderItem Add(OrderItem entity)
+    public int Add(OrderItem entity)
     {
         entity.ID = DataSource.Config.NextOrderItemId;
         DataSource.orderItems.Add(entity);
-        return entity;
+        return entity.ID;
     }
 
-    public OrderItem Get(OrderItem entity)
+    public OrderItem Get(int id)
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (entity.ID == p.ID)
+            if (p.ID==id)
             {
                 return p;
             }
         }
-
         throw new Exception("Order Item Not Found");
     }
     /// <summary>
@@ -41,7 +42,12 @@ public class DalOrderitem :  IProduct
         }
         throw new Exception("Order Item Not Found");
     }
-    //get order items by the id of the order
+    /// <summary>
+    /// get order items by the id of the order
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public IEnumerable<OrderItem> getItemsByOrder(int orderID)
     {
         int sizeOfNew = 0;
@@ -78,20 +84,20 @@ public class DalOrderitem :  IProduct
         return allItems;
     }
 
-    public OrderItem Delete(OrderItem entity)
+    public void Delete(OrderItem entity)
     {
         foreach (var p in DataSource.orderItems)
         {
             if(entity.ID == p.ID)
             {
                 DataSource.orderItems.Remove(p);
-                return entity;
+                return;
             }
         }
         throw new Exception("Order Item Not Found");
     }
 
-    public OrderItem Update(OrderItem entity)
+    public void Update(OrderItem entity)
     {
         int count = 0;
         foreach (var p in DataSource.orderItems)
@@ -100,7 +106,7 @@ public class DalOrderitem :  IProduct
             if(entity.ID == p.ID)
             {
                 DataSource.orderItems.Insert(count, entity);
-                return entity;
+                return;
             }
         }
         

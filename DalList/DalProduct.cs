@@ -2,10 +2,12 @@
 using DalApi;
 namespace Dal;
 
-
+/// <summary>
+/// Implementation of the CRUB functions on product
+/// </summary>
 public class DalProduct: IProduct
 {
-    public Product Add (Product entity)
+    public int Add(Product entity)
     {
         int id = 0;
         bool exict = true;
@@ -14,7 +16,7 @@ public class DalProduct: IProduct
             id = DataSource.Randomally.Next(100000, 999999);
             try
             {
-                getProduct(id);
+                Get(id);
             }
             catch(Exception exception)
             {
@@ -23,22 +25,23 @@ public class DalProduct: IProduct
         }
         entity.ID = id;
         DataSource.products.Add(entity);
+        return id;
     }
 
-    public Product Delete(Product entity)
+    public void Delete(Product entity)
     {
         foreach (var p in DataSource.products)
         {
             if (p.ID == entity.ID)
             {
                 DataSource.products.Remove(p);
-                return entity;
+                return;
             }
         }
         throw new Exception("Product Not Found");
     }
 
-    public Product Update(Product entity)
+    public void Update(Product entity)
     {
         int count = 0;
         foreach(var p in DataSource.products)
@@ -47,7 +50,7 @@ public class DalProduct: IProduct
             if(p.ID == entity.ID)
             {
                 DataSource.products.Insert(count, entity);
-                return entity;
+                return;
             }
         }
         throw new Exception("Product Not Found");
@@ -60,7 +63,6 @@ public class DalProduct: IProduct
            if (p.ID == id)
                 return p;
         }
-
         throw new Exception("Product Not Found");
     }
 

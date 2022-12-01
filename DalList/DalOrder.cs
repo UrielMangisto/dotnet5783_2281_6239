@@ -1,28 +1,30 @@
 ﻿using DO;
 using DalApi;
 namespace Dal;
-
-public class DalOrder : IProduct
+/// <summary>
+/// Implementation of the CRUB functions on order
+/// </summary>
+public class DalOrder : IOrder
 {
-    public Order Add(Order entity)
+    public int Add(Order entity)
     {
         entity.ID = DataSource.Config.NextOrderId;
         DataSource.orders.Add(entity);
-        return entity;
+        return entity.ID;
     }
-    public Order Delete(Order entity)
+    public void Delete(Order entity)
     {
         foreach (var p in DataSource.orders)
         {
             if (p.ID == entity.ID)
             {
                 DataSource.orders.Remove(p); //in order to delete it
-                return entity;
+                return;
             }
         }
         throw new Exception("Order Not Found");
     }
-    public Order Update(Order entity)
+    public void Update(Order entity)
     {
         int count = 0;
         foreach (var p in DataSource.orders)
@@ -31,7 +33,7 @@ public class DalOrder : IProduct
             if (p.ID == entity.ID)
             {
                 DataSource.orders.Insert(count, entity);
-                return entity;
+                return;
             }
         }
         throw new Exception("Order Not Found");
