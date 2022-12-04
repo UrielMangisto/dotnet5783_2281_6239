@@ -59,11 +59,14 @@ internal class BoProduct : BlApi.IProduct
                 BProduct.InStock = DProduct.InStock;
                 return BProduct;
             }
-            throw new Exception();
+            else
+            {
+                throw new Exception();
+            }
         }
         catch(Exception)
         {
-            Console.WriteLine("not found");
+            throw new Exception();
         }
     }
 
@@ -193,4 +196,32 @@ internal class BoProduct : BlApi.IProduct
         }
 
     }
+    public IEnumerable<BO.ProductItem> KatalogRequest()
+    {
+        List<DO.Product> products = new List<DO.Product>();
+        products = (List<DO.Product>)dal.Product.GetAll();
+
+        List<BO.ProductItem> productItems = new List<BO.ProductItem>();
+
+        foreach(var dProduct in products)
+        {
+            try
+            {
+                BO.ProductItem productItem = new BO.ProductItem();
+                productItem.Id = dProduct.ID;
+                productItem.Name = dProduct.Name;
+                productItem.Price = dProduct.Price;
+                productItem.Category = (BO.Enums.Category)dProduct.Category;
+                productItem.InStock = dProduct.InStock > 0;
+                productItems.Add(productItem);
+            }
+            catch
+            {
+                throw new Exception();
+            }
+        }
+        return productItems;
+    }
+
+
 }

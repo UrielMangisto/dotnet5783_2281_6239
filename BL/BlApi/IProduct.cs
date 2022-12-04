@@ -47,4 +47,9 @@ public interface IProduct
     /// <param name="product"></param>
     public void Update(Product product);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public IEnumerable<ProductItem> KatalogRequest();
+
 }
