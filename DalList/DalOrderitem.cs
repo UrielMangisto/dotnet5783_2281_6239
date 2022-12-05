@@ -4,7 +4,7 @@ namespace Dal;
 /// <summary>
 /// Implementation of the CRUB functions on Order item
 /// </summary>
-internal class DalOrderitem :  IOrderItem
+public class DalOrderitem :  IOrderItem
 {
     public int Add(OrderItem entity)
     {
@@ -48,7 +48,7 @@ internal class DalOrderitem :  IOrderItem
     /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem> getItemsByOrder(int orderID)
+    public IEnumerable<OrderItem> GetItemsByOrder(int orderID)
     {
         int sizeOfNew = 0;
         foreach (var p in DataSource.orderItems)

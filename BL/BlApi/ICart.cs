@@ -8,7 +8,7 @@ using BO;
 
 namespace BlApi;
 /// <summary>
-/// 
+/// The implementation of the logic cart entity
 /// </summary>
 public interface ICart
 {

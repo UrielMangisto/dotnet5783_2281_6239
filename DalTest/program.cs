@@ -61,10 +61,13 @@ press 1 to add Order
                             break;
                         case (int)OrderChoice.getOrder:
                             Console.WriteLine("enter id Order");
-                            dalOrder.Get(int.Parse(Console.ReadLine()));
+                            Console.WriteLine(dalOrder.Get(int.Parse(Console.ReadLine())));
                             break;
                         case (int)OrderChoice.getAllOrder:
-                            dalOrder.GetAll();
+                            foreach(var ordr in dalOrder.GetAll())
+                            {
+                                Console.WriteLine(ordr);
+                            }
                             break;
                             default:
                             Console.WriteLine("ERROR");
@@ -101,20 +104,23 @@ press
                             break;
                         case (int)orderItemChoise.getOrderItem:
                             Console.WriteLine("enter Order item id");
-                            dalItem.getItemsByOrder(int.Parse(Console.ReadLine()));
+                            Console.WriteLine(dalItem.getItemsByOrder(int.Parse(Console.ReadLine())));
                             break;
                         case (int)orderItemChoise.getSpecificItem:
                             Console.WriteLine("enter Product id");
                             temp=int.Parse(Console.ReadLine());
                             Console.WriteLine("enter Order id");
-                            dalItem.specificItemGet(temp,int.Parse(Console.ReadLine()));
+                            Console.WriteLine(dalItem.specificItemGet(temp,int.Parse(Console.ReadLine())));
                             break;
                         case (int)orderItemChoise.getItemsByOrder:
                             order= orderInput(order);
-                            dalItem.getItemsByOrder(int.Parse(Console.ReadLine()));
+                            Console.WriteLine(dalItem.getItemsByOrder(int.Parse(Console.ReadLine())));
                             break;
                         case (int)orderItemChoise.getAllItems:
-                            dalItem.GetAll(); 
+                            foreach( var itm in dalItem.GetAll())
+                            {
+                                Console.WriteLine(itm);
+                            }
 
                             break;
                         default:
@@ -154,11 +160,10 @@ press
                         case (int)ProductChoice.getProduct:
                             Console.WriteLine("enter Product id:");
                             id = int.Parse(Console.ReadLine());
-                            dalProduct.Get(id);
+                            Console.WriteLine(dalProduct.Get(id));
                             break;
-                        case (int)ProductChoice.getAllProduct:
-                            Product[] products = (Product[])dalProduct.GetAll();
-                            foreach(Product p in products)
+                        case (int)ProductChoice.getAllProduct:                          
+                            foreach(Product p in dalProduct.GetAll())
                             {
                                 Console.WriteLine(p);
                             }

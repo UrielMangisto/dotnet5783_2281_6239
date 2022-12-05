@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using Dal;
+using DalApi;
 using BO;
 namespace BlImplementation;
 /// <summary>
@@ -7,36 +8,36 @@ namespace BlImplementation;
 /// </summary>
 internal class BoProduct : BlApi.IProduct
 {
-    private DalApi.IDal dal = new Dal.DalList();
+    private IDal dal = new Dal.DalList();
     /// <summary>
     /// returns list of the dProducts
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<BO.ProductForList> GetProducts()
+    public IEnumerable<BO.ProductForList> GetProductList()
     {
-        List<DO.Product> products = new List<DO.Product>();
-        products = (List<DO.Product>)dal.Product.GetAll();
+        List<DO.Product> dalProducts = new List<DO.Product>();
+        dalProducts = (List<DO.Product>)dal.Product.GetAll();
 
-        List<BO.ProductForList> productsList = new List<BO.ProductForList>();
+        List<BO.ProductForList> blProducts = new List<BO.ProductForList>();
 
-        foreach(var product in products)
+        foreach(var dalProduct in dalProducts)
         {
             try
             {
-                BO.ProductForList productList = new BO.ProductForList();
-                productList.Id = product.ID;
-                productList.Name = product.Name;
-                productList.Price = product.Price;
-                productList.Category = (BO.Enums.Category)product.Category;
-                productsList.Add(productList);
+                BO.ProductForList blProduct = new BO.ProductForList();
+                blProduct.Id = dalProduct.ID;
+                blProduct.Name = dalProduct.Name;
+                blProduct.Price = dalProduct.Price;
+                blProduct.Category = (BO.Enums.Category)dalProduct.Category;
+                blProducts.Add(blProduct);
             }
             catch
             {
                 throw new Exception("already exist");
             }
         }
-        return productsList;
+        return blProducts;
     }
     /// <summary>
     /// returns dProduct for manager
@@ -51,7 +52,9 @@ internal class BoProduct : BlApi.IProduct
             {
                 DO.Product DProduct = new DO.Product();
                 BO.Product? BProduct = new BO.Product();
+
                 DProduct = dal.Product.Get(id);
+
                 BProduct.ID = DProduct.ID;
                 BProduct.Name = DProduct.Name;
                 BProduct.Price = DProduct.Price;
@@ -196,7 +199,13 @@ internal class BoProduct : BlApi.IProduct
         }
 
     }
-    public IEnumerable<BO.ProductItem> KatalogRequest()
+
+    /// <summary>
+    /// Catalog Request From Costumer
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public IEnumerable<BO.ProductItem> CatalogRequest()
     {
         List<DO.Product> products = new List<DO.Product>();
         products = (List<DO.Product>)dal.Product.GetAll();
@@ -223,5 +232,39 @@ internal class BoProduct : BlApi.IProduct
         return productItems;
     }
 
+    /// <summary>
+    /// Requests Details Of Products From The Costumer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public ProductItem RequestDetailsFromCostumer(int id)
+    {
+        List<DO.Product> Dproducts = new List<DO.Product>();
+        Dproducts = (List<DO.Product>)dal.Product.GetAll();
+
+        BO.ProductItem BproductItem = new BO.ProductItem();
+
+        try
+        {
+            foreach (var dProduct in Dproducts)
+            {
+                if (dProduct.ID == id)
+                {
+                    BproductItem.Name = dProduct.Name;
+                    BproductItem.Price = dProduct.Price;
+                    BproductItem.Category = (BO.Enums.Category)dProduct.Category;
+                    BproductItem.Amount = dProduct.InStock;
+                    return BproductItem;
+                }
+            }
+            throw new Exception();
+        }
+        catch
+        {
+            throw new Exception();
+        }
+
+    }
 
 }

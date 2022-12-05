@@ -7,21 +7,21 @@ using BO;
 
 namespace BlApi;
 /// <summary>
-/// 
+/// The implementation of the logic order entity
 /// </summary>
 public interface IOrder
 {
     /// <summary>
-    /// 
+    /// Returns Order List
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderForList> GetOrders();
+    public IEnumerable<OrderForList> GetOrderList();
     /// <summary>
     /// 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Order DetailsOfOrder(int id);
+    public Order DetailsOfOrderForManager(int id);
     /// <summary>
     /// 
     /// </summary>

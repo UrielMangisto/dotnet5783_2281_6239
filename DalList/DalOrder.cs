@@ -4,9 +4,8 @@ namespace Dal;
 /// <summary>
 /// Implementation of the CRUB functions on Order
 /// </summary>
-internal class DalOrder : IOrder
+public class DalOrder : IOrder
 {
-
     public int Add(Order entity)
     {
         entity.ID = DataSource.Config.NextOrderId;
@@ -20,7 +19,7 @@ internal class DalOrder : IOrder
         {
             if (p.ID == entity.ID)
             {
-                DataSource.orders.Remove(p); //in Order to delete it
+                DataSource.orders.Remove(p); //in order to delete it
                 return;
             }
         }

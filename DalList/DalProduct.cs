@@ -5,7 +5,7 @@ namespace Dal;
 /// <summary>
 /// Implementation of the CRUB functions on Product
 /// </summary>
-internal class DalProduct: IProduct
+public class DalProduct: IProduct
 {
     public int Add(Product entity)
     {
