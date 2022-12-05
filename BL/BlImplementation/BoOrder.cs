@@ -29,7 +29,7 @@ internal class BoOrder : BlApi.IOrder
                 int TotalAmount = 0;
                 double TotalPrice = 0;
                 BO.OrderForList b = new BO.OrderForList();
-                foreach (var it in dal.OrderItem.GetItemsByOrder(d.ID))
+                foreach (var it in dal.OrderItem.GetItemByOrder(d.ID))
                 {
                     TotalAmount += it.Amount;
                     TotalPrice += it.Price * it.Amount;
@@ -62,7 +62,16 @@ internal class BoOrder : BlApi.IOrder
 
     public Order DetailsOfOrderForManager(int id)
     {
-        
+        try
+        {
+            if(id >= 0)
+            {
+                DO.Order Dorder = new DO.Order();
+                BO.Order? Border = new BO.Order();
+
+                Dorder = dal.Order.GetType()
+            }
+        }
     }
 
     public Order ShippingUpdate(int id)

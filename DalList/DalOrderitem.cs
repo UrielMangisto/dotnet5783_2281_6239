@@ -48,7 +48,7 @@ public class DalOrderitem :  IOrderItem
     /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem> GetItemsByOrder(int orderID)
+    public IEnumerable<OrderItem> GetItemByOrder(int orderID)
     {
         int sizeOfNew = 0;
         foreach (var p in DataSource.orderItems)

@@ -12,7 +12,6 @@ public class OrderTracking
     public Enums.OrderStatus Status { get; set; }
     public List<(DateTime?, string)> TrackList { get; set; }
 
-    //to print the object
     public override string ToString()
     {
         string str = "Id: " + Id + "\nStatus: " + Status + "\nTracking:\n ";
