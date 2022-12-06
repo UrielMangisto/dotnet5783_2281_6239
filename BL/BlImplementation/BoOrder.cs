@@ -29,7 +29,7 @@ internal class BoOrder : BlApi.IOrder
                 int TotalAmount = 0;
                 double TotalPrice = 0;
                 BO.OrderForList b = new BO.OrderForList();
-                foreach (var it in dal.OrderItem.GetItemByOrder(d.ID))
+                foreach (var it in dal.OrderItem.GetItemsByOrder(d.ID))
                 {
                     TotalAmount += it.Amount;
                     TotalPrice += it.Price * it.Amount;
@@ -69,8 +69,40 @@ internal class BoOrder : BlApi.IOrder
                 DO.Order Dorder = new DO.Order();
                 BO.Order? Border = new BO.Order();
 
-                Dorder = dal.Order.GetType()
+                Dorder = dal.Order.Get(id);
+
+                Border.Id = id;
+                Border.CostomerName = Dorder.CostumerName;
+                Border.CostomerEmail = Dorder.CostumerEmail;
+                Border.CostomerAdress = Dorder.CostumerAddress;
+                Border.DeliveryDate = Dorder.DeliveryDate;
+                Border.ShipDate = Dorder.ShipDate;
+                Border.OrderDate = Dorder.OrderDate;
+                Border.PaymentDate = Dorder.OrderDate;//???
+                if (Dorder.DeliveryDate != null)
+                    Border.Status = Enums.OrderStatus.Delivered;
+                else if (Dorder.ShipDate != null)
+                    Border.Status = Enums.OrderStatus.Sent;
+                else if (Dorder.OrderDate != null)
+                    Border.Status = Enums.OrderStatus.Confirmed;
+                else
+                    Border.Status = Enums.OrderStatus.NullStatus;
+
+                List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
+                DorderItems = (List<DO.OrderItem>)dal.OrderItem.GetAll();
+                foreach (DO.OrderItem item in DorderItems)
+                {
+                    if(item.OrderID == id)
+                    {
+                        BO.OrderItem item2 = new BO.OrderItem();
+                        //לאתחל את האורדר אייטם2 הזה לפי אייטם 
+                    }
+                }
             }
+        }
+        catch
+        {
+            throw new Exception();
         }
     }
 

@@ -8,7 +8,4 @@ namespace DalApi;
 /// <summary>
 /// abstract of order
 /// </summary>
-public interface IOrder : ICrud <Order>
-{
-
-}
+public interface IOrder : ICrud <Order> { }

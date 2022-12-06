@@ -19,7 +19,6 @@ public class Order
     public DateTime? DeliveryDate { get; set; }
     public List<OrderItem> OrderItems { get; set; }
     public double TotalPrice { get; set; }
-    //to print the object
     public override string ToString()
     {
         string str = $@"

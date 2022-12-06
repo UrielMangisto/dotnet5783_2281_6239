@@ -15,7 +15,6 @@ public class OrderItem
     public int Amount { get; set; }
     public double TotalPrice { get; set; }
 
-    //to print the object
     public override string ToString() => $@"
     Id: {Id} 
     Costomer Name: {ItemName}
