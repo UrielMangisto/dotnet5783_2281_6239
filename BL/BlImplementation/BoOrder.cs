@@ -96,6 +96,8 @@ internal class BoOrder : BlApi.IOrder
                     {
                         BO.OrderItem item2 = new BO.OrderItem();
                         //לאתחל את האורדר אייטם2 הזה לפי אייטם 
+
+                        //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
                     }
                 }
             }
