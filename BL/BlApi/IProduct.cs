@@ -58,5 +58,10 @@ public interface IProduct
     /// <returns></returns>
     public IEnumerable<ProductItem> CatalogRequest();
 
+    /// <summary>
+    /// Request Details From Costumer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public ProductItem RequestDetailsFromCostumer(int id);
 }

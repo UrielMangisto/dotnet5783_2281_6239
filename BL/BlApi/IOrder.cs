@@ -40,4 +40,11 @@ public interface IOrder
     /// <param name="id"></param>
     /// <returns></returns>
     public OrderTracking Track(int id);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Order DetailsOfOrderForCustomer(int id);
 }

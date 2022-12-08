@@ -32,5 +32,4 @@ public interface ICart
     /// </summary>
     /// <param name="C"></param>
     public void Confirmation(Cart C);
-
 }
