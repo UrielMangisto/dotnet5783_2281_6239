@@ -8,31 +8,33 @@ namespace BlTest
     {
         static void Main(string[] args)
         {
-            int choice;
-            int id;
-            Cart cart = new Cart();
-            Cart mycart = new Cart();
-            Product product = new Product();
-            
-            BoCart boCart = new BoCart();
-            BoOrder boOrder = new BoOrder();
-            BoProduct boProduct = new BoProduct();
-            do
+            try
             {
-                Console.WriteLine(
-           @$"
+                int choice;
+                int id;
+                Cart cart = new Cart();
+                Cart mycart = new Cart();
+                Product product = new Product();
+
+                BoCart boCart = new BoCart();
+                BoOrder boOrder = new BoOrder();
+                BoProduct boProduct = new BoProduct();
+                do
+                {
+                    Console.WriteLine(
+               @$"
 press 0 to exit
 1 to Order 
 2 to  Cart
 3 to Product
                                             ");
-                choice = int.Parse(Console.ReadLine());
+                    choice = int.Parse(Console.ReadLine());
 
-                switch (choice)
-                {
-                    case (int)BO.Enums.MainChoise.Order:
-                        Console.WriteLine(
-                        @$"
+                    switch (choice)
+                    {
+                        case (int)BO.Enums.MainChoise.Order:
+                            Console.WriteLine(
+                            @$"
 press 1 to get order list
 2 to Details of order for manager
 3 to Details of Order for customer
@@ -41,84 +43,84 @@ press 1 to get order list
 6 to Track
 
                                       ");
-                    choice = int.Parse(Console.ReadLine());
-                        switch(choice)
-                        {
-                            case (int)BO.Enums.OrderChoice.GetOrderList:
-                             
-                                foreach (var order in boOrder.GetOrderList())
-                                {
-                                    Console.WriteLine(order);
-                                }
-                                break;
-                            case (int)BO.Enums.OrderChoice.DetailsOfOrderForManager:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                boOrder.DetailsOfOrderForManager(int.Parse(Console.ReadLine()));
-                                break;
-                            case (int)BO.Enums.OrderChoice.DetailsOfOrderForCustomer:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                boOrder.DetailsOfOrderForCustomer(int.Parse(Console.ReadLine()));
-                                break;
-                            case (int)BO.Enums.OrderChoice.ShippingUpdate:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                boOrder.ShippingUpdate(int.Parse(Console.ReadLine()));
-                                break;
-                            case (int)BO.Enums.OrderChoice.UpdateDelivery:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                boOrder.UpdateDelivery(int.Parse(Console.ReadLine()));
-                                break;
-                            case (int)BO.Enums.OrderChoice.Track:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                boOrder.Track(int.Parse(Console.ReadLine()));
-                                break;
-                            default:
-                                throw new NotvalidException();  
-                                 break;
-                        }
-                        break;
-                    case (int)BO.Enums.MainChoise.Cart:
-                        Console.WriteLine(
-                        @$"
+                            choice = int.Parse(Console.ReadLine());
+                            switch (choice)
+                            {
+                                case (int)BO.Enums.OrderChoice.GetOrderList:
+
+                                    foreach (var order in boOrder.GetOrderList())
+                                    {
+                                        Console.WriteLine(order);
+                                    }
+                                    break;
+                                case (int)BO.Enums.OrderChoice.DetailsOfOrderForManager:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    boOrder.DetailsOfOrderForManager(int.Parse(Console.ReadLine()));
+                                    break;
+                                case (int)BO.Enums.OrderChoice.DetailsOfOrderForCustomer:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    boOrder.DetailsOfOrderForCustomer(int.Parse(Console.ReadLine()));
+                                    break;
+                                case (int)BO.Enums.OrderChoice.ShippingUpdate:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    boOrder.ShippingUpdate(int.Parse(Console.ReadLine()));
+                                    break;
+                                case (int)BO.Enums.OrderChoice.UpdateDelivery:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    boOrder.UpdateDelivery(int.Parse(Console.ReadLine()));
+                                    break;
+                                case (int)BO.Enums.OrderChoice.Track:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    boOrder.Track(int.Parse(Console.ReadLine()));
+                                    break;
+                                default:
+                                    throw new NotvalidException();
+                                    break;
+                            }
+                            break;
+                        case (int)BO.Enums.MainChoise.Cart:
+                            Console.WriteLine(
+                            @$"
 press 1 to add Cart
 2 to update Cart
 3 to ConfirmationCart
                                       ");
-                        choice = int.Parse(Console.ReadLine());
-                        switch(choice)
-                        {
-                            case (int)BO.Enums.CartChoise.addCart:
-                               cart = cartInput(cart);
-                                Console.WriteLine(
-@$" enter the id of the product ");
-                               mycart = boCart.Add(cart, int.Parse(Console.ReadLine()));
-                                Console.WriteLine(mycart);
-                                break;
-                            case (int)BO.Enums.CartChoise.updateCart:
-                                cart = cartInput(cart);
-                                Console.WriteLine(
-@$" enter the id of the product ");
-                                id = int.Parse(Console.ReadLine());
-                                Console.WriteLine(
-@$" enter the new amount");
+                            choice = int.Parse(Console.ReadLine());
+                            switch (choice)
+                            {
+                                case (int)BO.Enums.CartChoise.addCart:
+                                    cart = cartInput(cart);
+                                    Console.WriteLine(
+    @$" enter the id of the product ");
+                                    mycart = boCart.Add(cart, int.Parse(Console.ReadLine()));
+                                    Console.WriteLine(mycart);
+                                    break;
+                                case (int)BO.Enums.CartChoise.updateCart:
+                                    cart = cartInput(cart);
+                                    Console.WriteLine(
+    @$" enter the id of the product ");
+                                    id = int.Parse(Console.ReadLine());
+                                    Console.WriteLine(
+    @$" enter the new amount");
 
-                                boCart.Update(cart, id, int.Parse(Console.ReadLine()));
-                                break;
-                            case (int)BO.Enums.CartChoise.ConfirmationCart:
-                                cart = cartInput(cart);
-                                boCart.Confirmation(cart);
-                                break;
-                            default :
-                                throw new NotvalidException();
-                        }
-                        break;
+                                    boCart.Update(cart, id, int.Parse(Console.ReadLine()));
+                                    break;
+                                case (int)BO.Enums.CartChoise.ConfirmationCart:
+                                    cart = cartInput(cart);
+                                    boCart.Confirmation(cart);
+                                    break;
+                                default:
+                                    throw new NotvalidException();
+                            }
+                            break;
                         case (int)BO.Enums.MainChoise.Product:
-                        Console.WriteLine(
-                     @$"
+                            Console.WriteLine(
+                         @$"
 press 1 to Get product list
 2 to product details for manager
 3 to product details for costumer
@@ -128,57 +130,88 @@ press 1 to Get product list
 7 to CatalogRequest
 8 to RequestDetailsFromCostumer
                                       ");
-                        choice = int.Parse(Console.ReadLine());
-                        switch(choice)
-                        {
-                            case(int)BO.Enums.ProductChoice.GetProductList:
-                                boProduct.GetProductList();
-                                foreach(var produc in boProduct.GetProductList())
-                                {
-                                    Console.WriteLine(produc);
-                                }
-                                break;
-                            case (int)BO.Enums.ProductChoice.ProductDetailsForManager:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                boProduct.ProductDetailsForManager(int.Parse(Console.ReadLine()));
-                                break;
-                            case (int)BO.Enums.ProductChoice.ProductDetailsForCostumer:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                id = int.Parse(Console.ReadLine());
-                                cart = cartInput(cart);
-                                boProduct.ProductDetailsForCostumer(id, cart);
-                                break;
-                            case (int)BO.Enums.ProductChoice.Add:
-                                product = ProductInput(product);
-                                boProduct.Add(product);
-                                break;
-                            case (int)BO.Enums.ProductChoice.Delete:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                boProduct.Delete(int.Parse(Console.ReadLine()));
-                                break;
-                            case (int)BO.Enums.ProductChoice.Update:
-                                product = ProductInput(product);
-                                boProduct.Update(product);
-                                break;
-                            case (int)BO.Enums.ProductChoice.CatalogRequest:
-                                boProduct.CatalogRequest();
-                                break;
-                            case (int)BO.Enums.ProductChoice.RequestDetailsFromCostumer:
-                                Console.WriteLine(
-@$" enter the id of the order ");
-                                boProduct.RequestDetailsFromCostumer(int.Parse(Console.ReadLine()));
-                                break;
+                            choice = int.Parse(Console.ReadLine());
+                            switch (choice)
+                            {
+                                case (int)BO.Enums.ProductChoice.GetProductList:
+                                    boProduct.GetProductList();
+                                    foreach (var produc in boProduct.GetProductList())
+                                    {
+                                        Console.WriteLine(produc);
+                                    }
+                                    break;
+                                case (int)BO.Enums.ProductChoice.ProductDetailsForManager:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    boProduct.ProductDetailsForManager(int.Parse(Console.ReadLine()));
+                                    break;
+                                case (int)BO.Enums.ProductChoice.ProductDetailsForCostumer:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    id = int.Parse(Console.ReadLine());
+                                    cart = cartInput(cart);
+                                    boProduct.ProductDetailsForCostumer(id, cart);
+                                    break;
+                                case (int)BO.Enums.ProductChoice.Add:
+                                    product = ProductInput(product);
+                                    boProduct.Add(product);
+                                    break;
+                                case (int)BO.Enums.ProductChoice.Delete:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    boProduct.Delete(int.Parse(Console.ReadLine()));
+                                    break;
+                                case (int)BO.Enums.ProductChoice.Update:
+                                    product = ProductInput(product);
+                                    boProduct.Update(product);
+                                    break;
+                                case (int)BO.Enums.ProductChoice.CatalogRequest:
+                                    boProduct.CatalogRequest();
+                                    break;
+                                case (int)BO.Enums.ProductChoice.RequestDetailsFromCostumer:
+                                    Console.WriteLine(
+    @$" enter the id of the order ");
+                                    boProduct.RequestDetailsFromCostumer(int.Parse(Console.ReadLine()));
+                                    break;
                                 default:
-                                throw new NotvalidException();
-                        }
-                        break;
-                        
+                                    throw new NotvalidException();
+                            }
+                            break;
+
+                    }
                 }
+                while (choice != 0);
+
             }
-            while (choice!=0);
+            catch(NotFoundException)
+            {
+
+            }
+            catch(AlreadyExistException)
+            {
+
+            }
+            catch (NotvalidException)
+            {
+
+            }
+            catch(RequestProductFaildException)
+            {
+
+            }
+            catch(InCorrectDataException)
+            {
+
+            }
+            catch (ProductExistInOrderException)
+            {
+
+            }
+            catch(NotInExistinStockException)
+            {
+
+            }
+            
 
         }
         //פה תוסיף פונקציות עזר
@@ -216,6 +249,11 @@ press 1 to Get product list
             return product;
 
         }
+
+
+
     }
+        
 
 }
+    

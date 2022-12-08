@@ -17,12 +17,12 @@ public class BoOrder : BlApi.IOrder
     private IDal dal = new Dal.DalList();
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
-        List<DO.Order> dOrders  = new List<DO.Order>();
+        List<DO.Order> dOrders = new List<DO.Order>();
         dOrders = (List<DO.Order>)dal.Order.GetAll();
 
         List<BO.OrderForList> bOrdersForList = new List<BO.OrderForList>();
 
-        foreach(var d in dOrders)
+        foreach (var d in dOrders)
         {
             try
             {
@@ -64,7 +64,7 @@ public class BoOrder : BlApi.IOrder
     {
         try
         {
-            if(id >= 0)
+            if (id >= 0)
             {
                 DO.Order Dorder = new DO.Order();
                 BO.Order? Border = new BO.Order();
@@ -105,18 +105,18 @@ public class BoOrder : BlApi.IOrder
                 Border.TotalPrice = 0;
                 foreach (var item in Border.OrderItems)
                 {
-                    Border.TotalPrice+= item.TotalPrice;
+                    Border.TotalPrice += item.TotalPrice;
                 }
                 return Border;
             }
             else
             {
-                throw new NotFoundException();
+                throw new InCorrectDataException();
             }
         }
         catch
         {
-            throw new NotvalidException();
+            throw new InCorrectDataException();
         }
     }
 
@@ -127,139 +127,121 @@ public class BoOrder : BlApi.IOrder
 
     public Order ShippingUpdate(int id)
     {
-        try
+        DO.Order Dorder = new DO.Order();
+        Dorder = dal.Order.Get(id);
+        if (Dorder.ShipDate != null || Dorder.OrderDate == null)
         {
-            DO.Order Dorder = new DO.Order();
-            Dorder = dal.Order.Get(id);
-            if(Dorder.ShipDate != null || Dorder.OrderDate == null)
-            {
-                throw new NotFoundException();
-            }
-            Dorder.ShipDate = DateTime.Now;
-            dal.Order.Update(Dorder);
-            BO.Order Border = new BO.Order();
-            Border.Id = id;
-            Border.CostomerName = Dorder.CostumerName;
-            Border.CostomerEmail = Dorder.CostumerEmail;
-            Border.CostomerAdress = Dorder.CostumerAddress;
-            Border.DeliveryDate = Dorder.DeliveryDate;
-            Border.ShipDate = Dorder.ShipDate;
-            Border.OrderDate = Dorder.OrderDate;
-            Border.Status = Enums.OrderStatus.Sent;
+            throw new NotFoundException();
+        }
+        Dorder.ShipDate = DateTime.Now;
+        dal.Order.Update(Dorder);
+        BO.Order Border = new BO.Order();
+        Border.Id = id;
+        Border.CostomerName = Dorder.CostumerName;
+        Border.CostomerEmail = Dorder.CostumerEmail;
+        Border.CostomerAdress = Dorder.CostumerAddress;
+        Border.DeliveryDate = Dorder.DeliveryDate;
+        Border.ShipDate = Dorder.ShipDate;
+        Border.OrderDate = Dorder.OrderDate;
+        Border.Status = Enums.OrderStatus.Sent;
 
-            List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
-            DorderItems = (List<DO.OrderItem>)dal.OrderItem.GetItemsByOrder(id);
-            foreach (DO.OrderItem item in DorderItems)
-            {
-                BO.OrderItem item2 = new BO.OrderItem();
-                //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-                item2.Id = item.ID;
-                item2.ProductId = item.ProductID;
-                item2.ItemName = dal.Product.Get(item2.ProductId).Name;
-                item2.Price = item.Price;
-                item2.Amount = item.Amount;
-                item2.TotalPrice = item.Price * item.Amount;
-                //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
-                Border.OrderItems.Add(item2);
-            }
-            Border.TotalPrice = 0;
-            foreach (var item in Border.OrderItems)
-            {
-                Border.TotalPrice += item.TotalPrice;
-            }
-            return Border;
-        }
-        catch 
+        List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
+        DorderItems = (List<DO.OrderItem>)dal.OrderItem.GetItemsByOrder(id);
+        foreach (DO.OrderItem item in DorderItems)
         {
-            throw new NotvalidException();
+            BO.OrderItem item2 = new BO.OrderItem();
+            //לאתחל את האורדר אייטם2 הזה לפי אייטם 
+            item2.Id = item.ID;
+            item2.ProductId = item.ProductID;
+            item2.ItemName = dal.Product.Get(item2.ProductId).Name;
+            item2.Price = item.Price;
+            item2.Amount = item.Amount;
+            item2.TotalPrice = item.Price * item.Amount;
+            //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
+            Border.OrderItems.Add(item2);
         }
+        Border.TotalPrice = 0;
+        foreach (var item in Border.OrderItems)
+        {
+            Border.TotalPrice += item.TotalPrice;
+        }
+        return Border;
+
     }
 
     public Order UpdateDelivery(int id)
     {
-        try
+        DO.Order Dorder = new DO.Order();
+        Dorder = dal.Order.Get(id);
+        if (Dorder.DeliveryDate != null || Dorder.ShipDate == null || Dorder.OrderDate == null)
         {
-            DO.Order Dorder = new DO.Order();
-            Dorder = dal.Order.Get(id);
-            if (Dorder.DeliveryDate != null||Dorder.ShipDate == null || Dorder.OrderDate == null)
-            {
-                throw new NotFoundException();
-            }
-            Dorder.DeliveryDate = DateTime.Now;
-            dal.Order.Update(Dorder);
-            BO.Order Border = new BO.Order();
-            Border.Id = id;
-            Border.CostomerName = Dorder.CostumerName;
-            Border.CostomerEmail = Dorder.CostumerEmail;
-            Border.CostomerAdress = Dorder.CostumerAddress;
-            Border.DeliveryDate = Dorder.DeliveryDate;
-            Border.ShipDate = Dorder.ShipDate;
-            Border.OrderDate = Dorder.OrderDate;
-            Border.Status = Enums.OrderStatus.Delivered;
+            throw new Exception();//NEED TO CHACK   
+        }
+        Dorder.DeliveryDate = DateTime.Now;
+        dal.Order.Update(Dorder);
+        BO.Order Border = new BO.Order();
+        Border.Id = id;
+        Border.CostomerName = Dorder.CostumerName;
+        Border.CostomerEmail = Dorder.CostumerEmail;
+        Border.CostomerAdress = Dorder.CostumerAddress;
+        Border.DeliveryDate = Dorder.DeliveryDate;
+        Border.ShipDate = Dorder.ShipDate;
+        Border.OrderDate = Dorder.OrderDate;
+        Border.Status = Enums.OrderStatus.Delivered;
 
-            List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
-            DorderItems = (List<DO.OrderItem>)dal.OrderItem.GetItemsByOrder(id);
-            foreach (DO.OrderItem item in DorderItems)
-            {
-                BO.OrderItem item2 = new BO.OrderItem();
-                //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-                item2.Id = item.ID;
-                item2.ProductId = item.ProductID;
-                item2.ItemName = dal.Product.Get(item2.ProductId).Name;
-                item2.Price = item.Price;
-                item2.Amount = item.Amount;
-                item2.TotalPrice = item.Price * item.Amount;
-                //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
-                Border.OrderItems.Add(item2);
-            }
-            Border.TotalPrice = 0;
-            foreach (var item in Border.OrderItems)
-            {
-                Border.TotalPrice += item.TotalPrice;
-            }
-            return Border;
-        }
-        catch
+        List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
+        DorderItems = (List<DO.OrderItem>)dal.OrderItem.GetItemsByOrder(id);
+        foreach (DO.OrderItem item in DorderItems)
         {
-            throw new NotvalidException();
+            BO.OrderItem item2 = new BO.OrderItem();
+            //לאתחל את האורדר אייטם2 הזה לפי אייטם 
+            item2.Id = item.ID;
+            item2.ProductId = item.ProductID;
+            item2.ItemName = dal.Product.Get(item2.ProductId).Name;
+            item2.Price = item.Price;
+            item2.Amount = item.Amount;
+            item2.TotalPrice = item.Price * item.Amount;
+            //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
+            Border.OrderItems.Add(item2);
         }
+        Border.TotalPrice = 0;
+        foreach (var item in Border.OrderItems)
+        {
+            Border.TotalPrice += item.TotalPrice;
+        }
+        return Border;
+
     }
 
     public OrderTracking Track(int id)
     {
-        try
+        DO.Order Dorder = new DO.Order();
+        Dorder = dal.Order.Get(id);
+        BO.OrderTracking orderTracking = new BO.OrderTracking();
+        orderTracking.Id = id;
+        if (Dorder.DeliveryDate != null)
+            orderTracking.Status = Enums.OrderStatus.Delivered;
+        else if (Dorder.ShipDate != null)
+            orderTracking.Status = Enums.OrderStatus.Sent;
+        else if (Dorder.OrderDate != null)
+            orderTracking.Status = Enums.OrderStatus.Confirmed;
+        else
+            orderTracking.Status = Enums.OrderStatus.NullStatus;
+        if (Dorder.OrderDate != null)
         {
-            DO.Order Dorder = new DO.Order();
-            Dorder = dal.Order.Get(id);
-            BO.OrderTracking orderTracking = new BO.OrderTracking();
-            orderTracking.Id = id;
-            if (Dorder.DeliveryDate != null)
-                orderTracking.Status = Enums.OrderStatus.Delivered;
-            else if (Dorder.ShipDate != null)
-                orderTracking.Status = Enums.OrderStatus.Sent;
-            else if (Dorder.OrderDate != null)
-                orderTracking.Status = Enums.OrderStatus.Confirmed;
-            else
-                orderTracking.Status = Enums.OrderStatus.NullStatus;
-            if (Dorder.OrderDate != null)
+            orderTracking.TrackList.Add((Dorder.OrderDate, " the order was created"));
+            if (Dorder.ShipDate != null)
             {
-                orderTracking.TrackList.Add((Dorder.OrderDate, " the order was created"));
-                if (Dorder.ShipDate != null)
-                {
-                    orderTracking.TrackList.Add((Dorder.ShipDate, " the order was shipped"));
+                orderTracking.TrackList.Add((Dorder.ShipDate, " the order was shipped"));
 
-                    if (Dorder.DeliveryDate != null)
-                    {
-                        orderTracking.TrackList.Add((Dorder.DeliveryDate, " the order was deliveried"));
-                    }
+                if (Dorder.DeliveryDate != null)
+                {
+                    orderTracking.TrackList.Add((Dorder.DeliveryDate, " the order was deliveried"));
                 }
             }
-            return orderTracking; 
+        }
+        return orderTracking;
 
-        }
-        catch
-        {
-            throw new NotvalidException();
-        }
     }
 }
+

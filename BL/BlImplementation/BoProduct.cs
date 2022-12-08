@@ -34,7 +34,7 @@ public class BoProduct : BlApi.IProduct
             }
             catch
             {
-                throw new BO.alreadyexist();
+                throw new BO.AlreadyExistException();
             }
         }
         return blProducts;
@@ -64,12 +64,12 @@ public class BoProduct : BlApi.IProduct
             }
             else
             {
-                throw new BO.NotvalidException();
+                throw new RequestProductFaildException();
             }
         }
         catch(Exception)
         {
-            throw new BO.NotvalidException();
+            throw new RequestProductFaildException();
         }
     }
 
@@ -110,7 +110,7 @@ public class BoProduct : BlApi.IProduct
             }
             return pItem;
         }
-        throw new NotFoundException();
+        throw new RequestProductFaildException();
     }
 
     /// <summary>
@@ -121,13 +121,13 @@ public class BoProduct : BlApi.IProduct
     public void Add(BO.Product bProduct)
     {
         if (bProduct.ID < 0)
-            throw new Exception();
+            throw new InCorrectDataException();
         if (bProduct.Name == null) 
-            throw new Exception();
+            throw new InCorrectDataException();
         if (bProduct.Price <= 0) 
-            throw new Exception();
+            throw new InCorrectDataException();
         if (bProduct.InStock < 0)
-            throw new Exception();
+            throw new InCorrectDataException();
 
         DO.Product dProduct = new DO.Product();
         dProduct.ID = (int)bProduct.ID;
@@ -158,6 +158,13 @@ public class BoProduct : BlApi.IProduct
             }
             i++;
         }
+        List <DO.OrderItem> DoOrderitems = new List<DO.OrderItem>();
+        DoOrderitems = (List<DO.OrderItem>)dal.OrderItem.GetAll();
+        foreach(var dor in DoOrderitems)
+        {
+           if(id == dor.ProductID)
+                throw new ProductExistInOrderException();    
+        }
         if (i == dProducts.Count)
         {
             throw new NotFoundException();
@@ -174,29 +181,24 @@ public class BoProduct : BlApi.IProduct
     public void Update(BO.Product bProduct)
     {
         if (bProduct.ID < 0)
-            throw new Exception();
+            throw new InCorrectDataException();
         if (bProduct.Name == null)
-            throw new Exception();
+            throw new InCorrectDataException();
         if (bProduct.Price <= 0)
-            throw new Exception();
+            throw new InCorrectDataException();
         if (bProduct.InStock < 0)
-            throw new Exception();
+            throw new InCorrectDataException();
 
         DO.Product dProduct = new DO.Product();
         //exceptions
-        try
-        {
-            dProduct.ID = (int)bProduct.ID;
-            dProduct.Name = bProduct.Name;
-            dProduct.Price = bProduct.Price;
-            dProduct.Category = (DO.Category)bProduct.Category;
-            dProduct.InStock = bProduct.InStock;
-            dal.Product.Update(dProduct);
-        }
-        catch (Exception)
-        {
-            throw new NotFoundException();
-        }
+        
+         dProduct.ID = (int)bProduct.ID;
+         dProduct.Name = bProduct.Name;
+         dProduct.Price = bProduct.Price;
+         dProduct.Category = (DO.Category)bProduct.Category;
+         dProduct.InStock = bProduct.InStock;
+         dal.Product.Update(dProduct);
+       
 
     }
 
@@ -245,8 +247,7 @@ public class BoProduct : BlApi.IProduct
 
         BO.ProductItem BproductItem = new BO.ProductItem();
 
-        try
-        {
+        
             foreach (var dProduct in Dproducts)
             {
                 if (dProduct.ID == id)
@@ -260,11 +261,6 @@ public class BoProduct : BlApi.IProduct
             }
             throw new NotFoundException();
         }
-        catch
-        {
-            throw new NotFoundException();
-        }
-
-    }
+        
 
 }

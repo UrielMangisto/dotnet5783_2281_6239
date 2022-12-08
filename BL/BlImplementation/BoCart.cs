@@ -12,12 +12,10 @@ public class BoCart : BlApi.ICart
 
     public BO.Cart Add(BO.Cart C, int id) 
     {
-        try
-        {
             DO.Product Dproduct = new DO.Product();
             Dproduct = dal.Product.Get(id);
             if (Dproduct.InStock <= 0)
-                throw new NotvalidException();
+                throw new NotInExistinStockException();
             if(C.OrderItems == null)
             {
                 
@@ -57,11 +55,6 @@ public class BoCart : BlApi.ICart
             C.OrderItems.Add(BorderItem);
             C.TotalPrice += Dproduct.Price;
             return C;
-        }
-        catch
-        {
-            throw new NotvalidException();
-        }
     }
 
     public BO.Cart Update(BO.Cart C, int ID, int amount)
@@ -81,7 +74,7 @@ public class BoCart : BlApi.ICart
                     if(diff > 0)
                     {
                         if(Dproduct.InStock < diff)
-                            throw new NotFoundException();//the are no products in the stock
+                            throw new NotInExistinStockException();//the are no products in the stock
                         pro.Amount = amount;
                         C.TotalPrice += pro.Price * diff;
                         return C;
@@ -102,11 +95,11 @@ public class BoCart : BlApi.ICart
     public void Confirmation(BO.Cart C)
     {
             if (C.CostumerName == null)
-                throw new NotFoundException();
+                throw new InCorrectDataException();
             if (C.CostumerEmail == null || !C.CostumerEmail.Contains('@'))
-                throw new InvalidCastException("invalid or not exist");
+                throw new InCorrectDataException();
             if (C.CostumerAddress == null)
-                throw new NotFoundException();
+                throw new InCorrectDataException();
            
             DO.Order Dorder = new DO.Order();
             //Dorder.ID = dal.Order.GetAll().Last().ID + 1;

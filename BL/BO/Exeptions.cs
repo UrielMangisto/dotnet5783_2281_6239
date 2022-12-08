@@ -15,9 +15,9 @@ public class NotFoundException : Exception
         Console.WriteLine("NOT FOUND");
     }
 }
-public class alreadyexist : Exception
+public class AlreadyExistException : Exception
 {
-    public alreadyexist()
+    public AlreadyExistException()
     {
         Console.WriteLine("ALREADY EXIST");
     }
@@ -32,5 +32,33 @@ public class NotvalidException : Exception
     public NotvalidException()
     {
         Console.WriteLine("Not valid");
+    }
+}
+public class RequestProductFaildException : Exception
+{
+    public RequestProductFaildException()
+    {
+        Console.WriteLine("request product faild");
+    }
+}
+public class InCorrectDataException : Exception
+{
+    public InCorrectDataException()
+    {
+        Console.WriteLine("Incorrect Data");
+    }
+}
+public class ProductExistInOrderException : Exception
+{
+    public ProductExistInOrderException()
+    {
+        Console.WriteLine("Product Exist In Order");
+    }
+}
+public class NotInExistinStockException : Exception
+{
+    public NotInExistinStockException()
+    {
+        Console.WriteLine("Not In Exist in Stock Exception");
     }
 }
