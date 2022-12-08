@@ -23,7 +23,7 @@ public class DalOrder : IOrder
                 return;
             }
         }
-        throw new Exception("Order Not Found");
+        throw new NotFoundException();
     }
     public void Update(Order entity)
     {
@@ -37,7 +37,7 @@ public class DalOrder : IOrder
                 return;
             }
         }
-        throw new Exception("Order Not Found");
+        throw new NotFoundException();
     }
     public Order Get(int entity)
     {
@@ -48,7 +48,7 @@ public class DalOrder : IOrder
                 return p;
         }
 
-        throw new Exception("Order Not Found");
+        throw new NotFoundException();
     }
     public IEnumerable<Order> GetAll()
     {

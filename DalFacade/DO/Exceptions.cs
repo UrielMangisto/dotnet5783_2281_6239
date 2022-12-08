@@ -7,15 +7,27 @@ using System.Threading.Tasks;
 namespace DO;
 public class NotFoundException : Exception
 {
-    public NotFoundException(string myException)
+    public NotFoundException()
     {
-        Console.WriteLine(myException);
+        Console.WriteLine("NOT FOUND");
     }
 }
 public class alreadyexist : Exception
 {
-    public alreadyexist(string myException)
+    public alreadyexist()
+    {
+        Console.WriteLine("ALREADY EXIST");
+    }
+}
+
+public class NotvalidException : Exception
+{
+    public NotvalidException(string myException)
     {
         Console.WriteLine(myException);
+    }
+    public NotvalidException()
+    {
+        Console.WriteLine("Not valid");
     }
 }

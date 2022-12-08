@@ -6,7 +6,7 @@ namespace BlImplementation;
 /// <summary>
 /// the implementation of the dProduct
 /// </summary>
-internal class BoProduct : BlApi.IProduct
+public class BoProduct : BlApi.IProduct
 {
     private IDal dal = new Dal.DalList();
     /// <summary>
@@ -34,7 +34,7 @@ internal class BoProduct : BlApi.IProduct
             }
             catch
             {
-                throw new Exception("already exist");
+                throw new BO.alreadyexist();
             }
         }
         return blProducts;
@@ -64,12 +64,12 @@ internal class BoProduct : BlApi.IProduct
             }
             else
             {
-                throw new Exception();
+                throw new BO.NotvalidException();
             }
         }
         catch(Exception)
         {
-            throw new Exception();
+            throw new BO.NotvalidException();
         }
     }
 
@@ -83,7 +83,7 @@ internal class BoProduct : BlApi.IProduct
     {
         if (cart.OrderItems == null)
         {
-            throw new Exception();
+            throw new BO.NotvalidException();
         }
         if (id >= 0)
         {
@@ -110,7 +110,7 @@ internal class BoProduct : BlApi.IProduct
             }
             return pItem;
         }
-        throw new Exception();
+        throw new NotFoundException();
     }
 
     /// <summary>
@@ -160,7 +160,7 @@ internal class BoProduct : BlApi.IProduct
         }
         if (i == dProducts.Count)
         {
-            throw new Exception();
+            throw new NotFoundException();
         }
         dal.Product.Delete(dal.Product.Get(id));
     }
@@ -195,7 +195,7 @@ internal class BoProduct : BlApi.IProduct
         }
         catch (Exception)
         {
-            Console.WriteLine("Not Found");
+            throw new NotFoundException();
         }
 
     }
@@ -258,11 +258,11 @@ internal class BoProduct : BlApi.IProduct
                     return BproductItem;
                 }
             }
-            throw new Exception();
+            throw new NotFoundException();
         }
         catch
         {
-            throw new Exception();
+            throw new NotFoundException();
         }
 
     }

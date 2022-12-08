@@ -17,7 +17,24 @@ public class BoCart : BlApi.ICart
             DO.Product Dproduct = new DO.Product();
             Dproduct = dal.Product.Get(id);
             if (Dproduct.InStock <= 0)
-                throw new Exception();
+                throw new NotvalidException();
+            if(C.OrderItems == null)
+            {
+                
+                BO.OrderItem BorderItem1 = new BO.OrderItem();
+                Random randNum1 = new Random();
+                int nId1 = randNum1.Next(10000);
+                BorderItem1.Id = nId1;
+                BorderItem1.ProductId = id;
+                BorderItem1.ItemName = Dproduct.Name;
+                BorderItem1.Price = Dproduct.Price;
+                BorderItem1.Amount = 1;
+                BorderItem1.TotalPrice = BorderItem1.Price;
+                C.OrderItems = new List<OrderItem>();
+                C.OrderItems.Add(BorderItem1);
+                C.TotalPrice += Dproduct.Price;
+                return C;
+            }
             foreach (var pro in C.OrderItems)
             {
                 if (pro.Id == id)
@@ -43,14 +60,12 @@ public class BoCart : BlApi.ICart
         }
         catch
         {
-            throw new Exception();
+            throw new NotvalidException();
         }
     }
 
     public BO.Cart Update(BO.Cart C, int ID, int amount)
-    {
-        try
-        {
+    {      
             DO.Product Dproduct = new DO.Product();
             foreach(var pro in C.OrderItems)
             {
@@ -66,7 +81,7 @@ public class BoCart : BlApi.ICart
                     if(diff > 0)
                     {
                         if(Dproduct.InStock < diff)
-                            throw new Exception();//the are no products in the stock
+                            throw new NotFoundException();//the are no products in the stock
                         pro.Amount = amount;
                         C.TotalPrice += pro.Price * diff;
                         return C;
@@ -80,23 +95,18 @@ public class BoCart : BlApi.ICart
                 }
             }
             return C;
-        }
-        catch
-        {
-            throw new Exception();
-        }
+        
+       
     }
  
     public void Confirmation(BO.Cart C)
     {
-        try
-        {
-            if(C.CostumerName == null)
-                throw new Exception();
-            if(C.CostumerEmail == null || !C.CostumerEmail.Contains('@'))
-                throw new Exception();
-            if(C.CostumerAddress == null)
-                throw new Exception();
+            if (C.CostumerName == null)
+                throw new NotFoundException();
+            if (C.CostumerEmail == null || !C.CostumerEmail.Contains('@'))
+                throw new InvalidCastException("invalid or not exist");
+            if (C.CostumerAddress == null)
+                throw new NotFoundException();
            
             DO.Order Dorder = new DO.Order();
             //Dorder.ID = dal.Order.GetAll().Last().ID + 1;
@@ -113,9 +123,9 @@ public class BoCart : BlApi.ICart
                 DO.Product Dproduct = new DO.Product();
                 Dproduct = dal.Product.Get(item.Id);
                 if (Dproduct.InStock <= 0)
-                    throw new Exception();
+                    throw new NotvalidException();
                 if (item.Amount <= 0)
-                    throw new Exception();
+                    throw new NotvalidException();
                 BorderItems.Add(item);
             }
             foreach (BO.OrderItem item in BorderItems)
@@ -127,10 +137,6 @@ public class BoCart : BlApi.ICart
                 dal.OrderItem.Add(tempItem);
                 product.InStock -= item.Amount;
             }
-        }
-        catch
-        {
-            throw new Exception();
-        }
+        
     }
 }

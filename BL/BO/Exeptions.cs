@@ -10,27 +10,27 @@ namespace BO;
 /// </summary>
 public class NotFoundException : Exception
 {
-    public NotFoundException(string myException)
+    public NotFoundException()
     {
-        Console.WriteLine(myException);
+        Console.WriteLine("NOT FOUND");
     }
 }
 public class alreadyexist : Exception
 {
-    public alreadyexist(string myException)
+    public alreadyexist()
     {
-        Console.WriteLine(myException);
+        Console.WriteLine("ALREADY EXIST");
     }
 }
 
-public class NotImplementedException : Exception
+public class NotvalidException : Exception
 {
-    public NotImplementedException(string myException)
+    public NotvalidException(string myException)
     {
         Console.WriteLine(myException);
     }
-    public NotImplementedException()
+    public NotvalidException()
     {
-        Console.WriteLine("Not Implemented");
+        Console.WriteLine("Not valid");
     }
 }

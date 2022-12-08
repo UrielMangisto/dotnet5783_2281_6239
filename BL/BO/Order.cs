@@ -26,7 +26,6 @@ public class Order
     Costomer Email: {CostomerEmail}
     CostomerAdress: {CostomerAdress}
     Status: {Status}
-    Payment Date: {PaymentDate}
     Order Date: {OrderDate}   
     Ship Date: {ShipDate}
     Delivery Date: {DeliveryDate}

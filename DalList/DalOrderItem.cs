@@ -22,7 +22,7 @@ public class DalOrderitem :  IOrderItem
                 return p;
             }
         }
-        throw new Exception("Order Item Not Found");
+        throw new NotFoundException();
     }
     /// <summary>
     /// get Order item by the id of the Product and the Order
@@ -40,7 +40,7 @@ public class DalOrderitem :  IOrderItem
                 return p;
             }
         }
-        throw new Exception("Order Item Not Found");
+        throw new NotFoundException();
     }
     /// <summary>
     /// get Order items by the id of the Order
@@ -69,7 +69,7 @@ public class DalOrderitem :  IOrderItem
 
         if (sizeOfNew == 0)
         {
-            throw new Exception("Order Not Found");
+            throw new NotFoundException();
         }
         return specificItems;
     }
@@ -94,7 +94,7 @@ public class DalOrderitem :  IOrderItem
                 return;
             }
         }
-        throw new Exception("Order Item Not Found");
+        throw new NotFoundException();
     }
 
     public void Update(OrderItem entity)
@@ -110,7 +110,7 @@ public class DalOrderitem :  IOrderItem
             }
         }
         
-        throw new Exception("Order Item Not Found");
+        throw new NotFoundException();
 
     }
 

@@ -12,7 +12,7 @@ using DalApi;
 /// </summary>
 namespace BlImplementation;
 
-internal class BoOrder : BlApi.IOrder
+public class BoOrder : BlApi.IOrder
 {
     private IDal dal = new Dal.DalList();
     public IEnumerable<BO.OrderForList> GetOrderList()
@@ -54,7 +54,7 @@ internal class BoOrder : BlApi.IOrder
             }
             catch
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
         }
         return bOrdersForList;
@@ -111,12 +111,12 @@ internal class BoOrder : BlApi.IOrder
             }
             else
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
         }
         catch
         {
-            throw new Exception();
+            throw new NotvalidException();
         }
     }
 
@@ -133,7 +133,7 @@ internal class BoOrder : BlApi.IOrder
             Dorder = dal.Order.Get(id);
             if(Dorder.ShipDate != null || Dorder.OrderDate == null)
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
             Dorder.ShipDate = DateTime.Now;
             dal.Order.Update(Dorder);
@@ -171,7 +171,7 @@ internal class BoOrder : BlApi.IOrder
         }
         catch 
         {
-            throw new Exception();
+            throw new NotvalidException();
         }
     }
 
@@ -183,7 +183,7 @@ internal class BoOrder : BlApi.IOrder
             Dorder = dal.Order.Get(id);
             if (Dorder.DeliveryDate != null||Dorder.ShipDate == null || Dorder.OrderDate == null)
             {
-                throw new Exception();
+                throw new NotFoundException();
             }
             Dorder.DeliveryDate = DateTime.Now;
             dal.Order.Update(Dorder);
@@ -221,7 +221,7 @@ internal class BoOrder : BlApi.IOrder
         }
         catch
         {
-            throw new Exception();
+            throw new NotvalidException();
         }
     }
 
@@ -259,7 +259,7 @@ internal class BoOrder : BlApi.IOrder
         }
         catch
         {
-            throw new Exception();
+            throw new NotvalidException();
         }
     }
 }

@@ -21,6 +21,7 @@ public class DalProduct: IProduct
             catch(Exception exception)
             {
                 exict = false;
+
             }
         }
         entity.ID = id;
