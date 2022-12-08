@@ -6,5 +6,6 @@
         {
             Console.WriteLine("Hello, World!");
         }
+        //פה תוסיף פונקציות עזר
     }
 }

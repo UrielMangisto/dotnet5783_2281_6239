@@ -78,7 +78,6 @@ internal class BoOrder : BlApi.IOrder
                 Border.DeliveryDate = Dorder.DeliveryDate;
                 Border.ShipDate = Dorder.ShipDate;
                 Border.OrderDate = Dorder.OrderDate;
-                Border.PaymentDate = Dorder.OrderDate;//???
                 if (Dorder.DeliveryDate != null)
                     Border.Status = Enums.OrderStatus.Delivered;
                 else if (Dorder.ShipDate != null)
@@ -146,7 +145,6 @@ internal class BoOrder : BlApi.IOrder
             Border.DeliveryDate = Dorder.DeliveryDate;
             Border.ShipDate = Dorder.ShipDate;
             Border.OrderDate = Dorder.OrderDate;
-            Border.PaymentDate = Dorder.OrderDate;//???
             Border.Status = Enums.OrderStatus.Sent;
 
             List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
@@ -197,7 +195,6 @@ internal class BoOrder : BlApi.IOrder
             Border.DeliveryDate = Dorder.DeliveryDate;
             Border.ShipDate = Dorder.ShipDate;
             Border.OrderDate = Dorder.OrderDate;
-            Border.PaymentDate = Dorder.OrderDate;//???
             Border.Status = Enums.OrderStatus.Delivered;
 
             List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
