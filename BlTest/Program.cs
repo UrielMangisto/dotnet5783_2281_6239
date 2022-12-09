@@ -30,7 +30,7 @@ press 0 to exit
 2 to  Cart
 3 to Product
                                             ");
-                    tryparse = int.TryParse(Console.ReadLine(), out choice);                 
+                    tryparse = int.TryParse(Console.ReadLine(), out choice);
 
                     switch (choice)
                     {
@@ -46,7 +46,7 @@ press 1 to get order list
 
                                       ");
                             tryparse = int.TryParse(Console.ReadLine(), out choice);
-                            
+
                             switch (choice)
                             {
                                 case (int)BO.Enums.OrderChoice.GetOrderList:
@@ -88,7 +88,7 @@ press 1 to get order list
                                     break;
                                 default:
                                     throw new NotvalidException();
-                                    
+
                             }
                             break;
                         case (int)BO.Enums.MainChoise.Cart:
@@ -99,7 +99,7 @@ press 1 to add Cart
 3 to ConfirmationCart
                                       ");
                             tryparse = int.TryParse(Console.ReadLine(), out choice);
-                            
+
                             switch (choice)
                             {
                                 case (int)BO.Enums.CartChoise.addCart:
@@ -115,7 +115,7 @@ press 1 to add Cart
                                     Console.WriteLine(
     @$" enter the id of the product ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
-                                  
+
                                     Console.WriteLine(
     @$" enter the new amount");
                                     tryparse = int.TryParse(Console.ReadLine(), out input);
@@ -143,7 +143,7 @@ press 1 to Get product list
 8 to RequestDetailsFromCostumer
                                       ");
                             tryparse = int.TryParse(Console.ReadLine(), out choice);
-                            
+
                             switch (choice)
                             {
                                 case (int)BO.Enums.ProductChoice.GetProductList:
@@ -199,11 +199,11 @@ press 1 to Get product list
                 while (choice != 0);
 
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
 
             }
-            catch(AlreadyExistException)
+            catch (AlreadyExistException)
             {
 
             }
@@ -211,11 +211,11 @@ press 1 to Get product list
             {
 
             }
-            catch(RequestProductFaildException)
+            catch (RequestProductFaildException)
             {
 
             }
-            catch(InCorrectDataException)
+            catch (InCorrectDataException)
             {
 
             }
@@ -223,11 +223,14 @@ press 1 to Get product list
             {
 
             }
-            catch(NotInExistinStockException)
+            catch (NotInExistinStockException)
             {
 
             }
-            
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
         }
         //פה תוסיף פונקציות עזר

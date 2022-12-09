@@ -12,9 +12,9 @@ internal static class DataSource
 {
     internal static readonly Random Randomally = new Random();
 
-    static internal List<Order> orders { get; } = new List<Order>() { };
-    static internal List<Product> products { get; } = new List<Product>() { };
-    static internal List<OrderItem> orderItems { get; } = new List<OrderItem>() { };
+    static internal List<Order?> orders { get; } = new List<Order?>() { };
+    static internal List<Product?> products { get; } = new List<Product?>() { };
+    static internal List<OrderItem?> orderItems { get; } = new List<OrderItem?>() { };
 
     public static void addProductsToTheArray()
     {
