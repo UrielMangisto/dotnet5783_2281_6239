@@ -9,9 +9,10 @@ public class program
 {
     public static void Main(String[] args)
     {
+        bool tryparse;
         int choice;
         int id;
-        int temp;
+        int input;
         Order order = new Order();
         DalOrder dalOrder = new DalOrder();
 
@@ -29,8 +30,7 @@ press 0 to exit
 2 to Order item
 3 to Product
                                             ");
-            choice = int.Parse(Console.ReadLine());
-
+            tryparse = int.TryParse(Console.ReadLine(), out choice);
             switch(choice)
             {
                 case (int)MainChoise.order:
@@ -42,8 +42,8 @@ press 1 to add Order
 4 to get Order
 5 to get all Order
                                             ");
-                    choice = int.Parse(Console.ReadLine());
-                    switch(choice)
+                    tryparse = int.TryParse(Console.ReadLine(), out choice);
+                    switch (choice)
                     {
                         case (int)OrderChoice.addOrder:
                             order = orderInput(order);
@@ -61,7 +61,8 @@ press 1 to add Order
                             break;
                         case (int)OrderChoice.getOrder:
                             Console.WriteLine("enter id Order");
-                            Console.WriteLine(dalOrder.Get(int.Parse(Console.ReadLine())));
+                            tryparse = int.TryParse(Console.ReadLine(), out id);
+                            Console.WriteLine(dalOrder.Get(id));
                             break;
                         case (int)OrderChoice.getAllOrder:
                             foreach(var ordr in dalOrder.GetAll())
@@ -86,7 +87,7 @@ press
 6 to get Items By Order
 7 to get all items
                                             ");
-                    choice = int.Parse(Console.ReadLine());
+                    tryparse = int.TryParse(Console.ReadLine(), out choice);                    
                     switch (choice)
                     {
                         case (int)orderItemChoise.addOrderItem:
@@ -104,17 +105,20 @@ press
                             break;
                         case (int)orderItemChoise.getOrderItem:
                             Console.WriteLine("enter Order item id");
-                            Console.WriteLine(dalItem.GetItemsByOrder(int.Parse(Console.ReadLine())));
+                            tryparse = int.TryParse(Console.ReadLine(), out id);
+                            Console.WriteLine(dalItem.GetItemsByOrder(id));
                             break;
                         case (int)orderItemChoise.getSpecificItem:
                             Console.WriteLine("enter Product id");
-                            temp=int.Parse(Console.ReadLine());
+                            tryparse = int.TryParse(Console.ReadLine(), out id);                            
                             Console.WriteLine("enter Order id");
-                            Console.WriteLine(dalItem.specificItemGet(temp,int.Parse(Console.ReadLine())));
+                            tryparse = int.TryParse(Console.ReadLine(), out input);
+                            Console.WriteLine(dalItem.specificItemGet(id,input));
                             break;
                         case (int)orderItemChoise.getItemsByOrder:
-                            order= orderInput(order);
-                            Console.WriteLine(dalItem.GetItemsByOrder(int.Parse(Console.ReadLine())));
+                            Console.WriteLine("enter Order id");
+                            tryparse = int.TryParse(Console.ReadLine(), out id);
+                            Console.WriteLine(dalItem.GetItemsByOrder(id));
                             break;
                         case (int)orderItemChoise.getAllItems:
                             foreach(var itm in dalItem.GetAll())
@@ -138,7 +142,7 @@ press
 4 to get Product
 5 to get all Product
                                             ");
-                    choice = int.Parse(Console.ReadLine());
+                    tryparse = int.TryParse(Console.ReadLine(), out choice);
                     switch (choice)
                     {
                         case (int)ProductChoice.addProduct:
@@ -159,7 +163,7 @@ press
                             break;
                         case (int)ProductChoice.getProduct:
                             Console.WriteLine("enter Product id:");
-                            id = int.Parse(Console.ReadLine());
+                            tryparse = int.TryParse(Console.ReadLine(), out id);
                             Console.WriteLine(dalProduct.Get(id));
                             break;
                         case (int)ProductChoice.getAllProduct:                          
@@ -183,17 +187,24 @@ press
 
     private static OrderItem orderItempInput(OrderItem item)
     {
+        bool tryparse;
+        int input;
+
         Console.WriteLine("enter Product id");
-        item.ProductID = int.Parse(Console.ReadLine());
+        tryparse = int.TryParse(Console.ReadLine(), out input);
+        item.ProductID = input;
 
         Console.WriteLine("enter Order id");
-        item.OrderID = int.Parse(Console.ReadLine());
+        tryparse = int.TryParse(Console.ReadLine(), out input);
+        item.OrderID = input;
 
         Console.WriteLine("enter Order item price");
-        item.Price = int.Parse(Console.ReadLine());
+        tryparse = int.TryParse(Console.ReadLine(), out input);
+        item.Price = input;
 
         Console.WriteLine("enter Order item amount");
-        item.Amount = int.Parse(Console.ReadLine());
+        tryparse = int.TryParse(Console.ReadLine(), out input);
+        item.Amount = input;
 
         return item;
     }
