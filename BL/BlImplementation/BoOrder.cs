@@ -243,5 +243,21 @@ public class BoOrder : BlApi.IOrder
         return orderTracking;
 
     }
+    public void changeamountformnanager(int newAmount,OrderItem orderItem,Order order)
+    {
+        if (order.Status != Enums.OrderStatus.Sent)
+        {
+            foreach (var p in order.OrderItems)
+            {
+                if (p.Id <= orderItem.Id)
+                    p.Amount = newAmount;
+            }
+        }
+        else
+        {
+            throw new NotvalidException("order alredy sent");
+        }
+    }
+        
 }
 
