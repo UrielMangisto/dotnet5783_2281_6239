@@ -14,7 +14,7 @@ public class Product
     public Category? Category { get; set; }
     public double Price { get; set; }
     public int InStock { get; set; }
-    public override string? ToString() => $@"
+    public override string ToString() => $@"
     Product ID={ID}: {Name}, 
     Category - {Category}
    	Price: {Price}

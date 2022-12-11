@@ -14,7 +14,7 @@ public struct Order
     public DateTime? OrderDate { get; set; } 
     public DateTime? ShipDate { get; set; }  
     public DateTime? DeliveryDate { get; set; }
-    public override string? ToString() => $@"
+    public override string ToString() => $@"
     Order ID={ID}: {CostumerName}, 
     CostumerEmail - {CostumerEmail}
    	CostumerAdress {CostumerAddress}

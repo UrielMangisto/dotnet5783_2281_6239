@@ -18,7 +18,7 @@ public class Order
     public DateTime? DeliveryDate { get; set; }
     public List<OrderItem?>? OrderItems { get; set; }
     public double TotalPrice { get; set; }
-    public override string? ToString()
+    public override string ToString()
     {
         string str = $@"
     Id: {Id} 

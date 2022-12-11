@@ -16,7 +16,7 @@ public interface IProduct
     /// Returns Product List
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductForList> GetProductList();
+    public IEnumerable<ProductForList?> GetProductList();
 
     /// <summary>
     /// Product Details For Manager
@@ -56,7 +56,7 @@ public interface IProduct
     /// Catalog Request From Costumer
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<ProductItem> CatalogRequest();
+    public IEnumerable<ProductItem?> CatalogRequest();
 
     /// <summary>
     /// Request Details From Costumer

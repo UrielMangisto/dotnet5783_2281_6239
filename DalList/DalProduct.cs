@@ -33,7 +33,7 @@ public class DalProduct: IProduct
     {
         foreach (var p in DataSource.products)
         {
-            if (p.ID == entity.ID)
+            if (p?.ID == entity.ID)
             {
                 DataSource.products.Remove(p);
                 return;
@@ -48,7 +48,7 @@ public class DalProduct: IProduct
         foreach(var p in DataSource.products)
         {
             count++;
-            if(p.ID == entity.ID)
+            if(p?.ID == entity.ID)
             {
                 DataSource.products.Insert(count, entity);
                 return;
@@ -57,22 +57,22 @@ public class DalProduct: IProduct
         throw new Exception("Product Not Found");
     }
 
-    public Product Get(int id)
+    public Product? Get(int id)
     {
         foreach (var p in DataSource.products)
         {
-           if (p.ID == id)
+           if (p?.ID == id)
                 return p;
         }
         throw new Exception("Product Not Found");
     }
 
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product?> GetAll()
     {
-        List<Product> products = new List<Product>();
+        List<Product?> products = new List<Product?>();
         foreach (var p in DataSource.products)
         {
-            products.Add (p);
+            products.Add(p);
         }
         return products;
     }

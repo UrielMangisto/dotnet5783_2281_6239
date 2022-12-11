@@ -17,7 +17,7 @@ public class DalOrder : IOrder
     {
         foreach (var p in DataSource.orders)
         {
-            if (p.ID == entity.ID)
+            if (p?.ID == entity.ID)
             {
                 DataSource.orders.Remove(p); //in order to delete it
                 return;
@@ -31,7 +31,7 @@ public class DalOrder : IOrder
         foreach (var p in DataSource.orders)
         {
             count++;    
-            if (p.ID == entity.ID)
+            if (p?.ID == entity.ID)
             {
                 DataSource.orders.Insert(count, entity);
                 return;
@@ -39,26 +39,23 @@ public class DalOrder : IOrder
         }
         throw new NotFoundException();
     }
-    public Order Get(int entity)
+    public Order? Get(int entity)
     {
         
         foreach (var p in DataSource.orders)
         {
-            if (p.ID == entity)
+            if (p?.ID == entity)
                 return p;
         }
-
         throw new NotFoundException();
     }
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetAll()
     {
-        List <Order> orders = new List <Order> ();
+        List <Order?> orders = new List <Order?> ();
         foreach (var p in DataSource.orders)
         {
             orders.Add(p);
         }
         return orders;
     }
-        
-
 }

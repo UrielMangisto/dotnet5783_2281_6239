@@ -13,11 +13,11 @@ public class DalOrderitem :  IOrderItem
         return entity.ID;
     }
 
-    public OrderItem Get(int id)
+    public OrderItem? Get(int id)
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (p.ID==id)
+            if (p?.ID==id)
             {
                 return p;
             }
@@ -31,11 +31,11 @@ public class DalOrderitem :  IOrderItem
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     /// </summary>
-    public OrderItem specificItemGet(int idOfProduct, int idOfOrder)
+    public OrderItem? specificItemGet(int idOfProduct, int idOfOrder)
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (idOfProduct == p.ID && idOfOrder == p.OrderID)
+            if (idOfProduct == p?.ID && idOfOrder == p?.OrderID)
             {
                 return p;
             }
@@ -48,20 +48,20 @@ public class DalOrderitem :  IOrderItem
     /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem> GetItemsByOrder(int orderID)
+    public IEnumerable<OrderItem?> GetItemsByOrder(int orderID)
     {
         int sizeOfNew = 0;
         foreach (var p in DataSource.orderItems)
         {
-            if(p.ID == orderID)
+            if(p?.ID == orderID)
             {
                 sizeOfNew++;
             }
         }
-        List<OrderItem> specificItems = new List<OrderItem>() { };
+        List<OrderItem?> specificItems = new List<OrderItem?>() { };
         foreach (var p in DataSource.orderItems)
         {
-            if (p.ID == orderID)
+            if (p?.ID == orderID)
             {
                 specificItems.Add(p);
             }
@@ -74,9 +74,9 @@ public class DalOrderitem :  IOrderItem
         return specificItems;
     }
     //returns an array of all products
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem?> GetAll()
     {
-        List<OrderItem> allItems = new List<OrderItem>() { };
+        List<OrderItem?> allItems = new List<OrderItem?>() { };
         foreach (var p in DataSource.orderItems)
         {
             allItems.Add(p);
@@ -88,7 +88,7 @@ public class DalOrderitem :  IOrderItem
     {
         foreach (var p in DataSource.orderItems)
         {
-            if(entity.ID == p.ID)
+            if(entity.ID == p?.ID)
             {
                 DataSource.orderItems.Remove(p);
                 return;
@@ -103,7 +103,7 @@ public class DalOrderitem :  IOrderItem
         foreach (var p in DataSource.orderItems)
         {
             count++;
-            if(entity.ID == p.ID)
+            if(entity.ID == p?.ID)
             {
                 DataSource.orderItems.Insert(count, entity);
                 return;

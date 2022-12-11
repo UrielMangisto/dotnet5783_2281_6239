@@ -15,10 +15,10 @@ namespace BlImplementation;
 public class BoOrder : BlApi.IOrder
 {
     private IDal dal = new Dal.DalList();
-    public IEnumerable<BO.OrderForList> GetOrderList()
+    public IEnumerable<BO.OrderForList?> GetOrderList()
     {
-        List<DO.Order> dOrders = new List<DO.Order>();
-        dOrders = (List<DO.Order>)dal.Order.GetAll();
+        List<DO.Order?> dOrders = new List<DO.Order?>();
+        dOrders = dal.Order.GetAll().ToList();
 
         List<BO.OrderForList> bOrdersForList = new List<BO.OrderForList>();
 
@@ -29,24 +29,24 @@ public class BoOrder : BlApi.IOrder
                 int TotalAmount = 0;
                 double TotalPrice = 0;
                 BO.OrderForList b = new BO.OrderForList();
-                foreach (var it in dal.OrderItem.GetItemsByOrder(d.ID))
+                foreach (var it in dal.OrderItem.GetItemsByOrder(d?.ID ?? throw new Exception()))
                 {
-                    TotalAmount += it.Amount;
-                    TotalPrice += it.Price * it.Amount;
+                    TotalAmount += it?.Amount ?? throw new Exception();
+                    TotalPrice += (it?.Price ?? throw new Exception()) * (it?.Amount ?? throw new Exception());
                 }
                 b.AmountOfItems = TotalAmount;
 
                 b.TotalPrice = TotalPrice;
 
-                b.Id = d.ID;
+                b.Id = d?.ID ?? throw new Exception();
 
-                b.CostomerName = d.CostumerName;
+                b.CostomerName = d?.CostumerName ?? throw new Exception();
 
-                if (d.DeliveryDate != null)
+                if (d?.DeliveryDate != null)
                     b.Status = Enums.OrderStatus.Delivered;
-                else if (d.ShipDate != null)
+                else if (d?.ShipDate != null)
                     b.Status = Enums.OrderStatus.Sent;
-                else if (d.OrderDate != null)
+                else if (d?.OrderDate != null)
                     b.Status = Enums.OrderStatus.Confirmed;
                 else
                     b.Status = Enums.OrderStatus.NullStatus;
@@ -66,39 +66,40 @@ public class BoOrder : BlApi.IOrder
         {
             if (id >= 0)
             {
-                DO.Order Dorder = new DO.Order();
-                BO.Order? Border = new BO.Order();
+                DO.Order? Dorder = new DO.Order();
+                BO.Order Border = new BO.Order();
 
-                Dorder = dal.Order.Get(id);
+                Dorder = dal.Order.Get(id) ?? throw new Exception();
 
                 Border.Id = id;
-                Border.CostomerName = Dorder.CostumerName;
-                Border.CostomerEmail = Dorder.CostumerEmail;
-                Border.CostomerAdress = Dorder.CostumerAddress;
-                Border.DeliveryDate = Dorder.DeliveryDate;
-                Border.ShipDate = Dorder.ShipDate;
-                Border.OrderDate = Dorder.OrderDate;
-                if (Dorder.DeliveryDate != null)
+                Border.CostomerName = Dorder?.CostumerName;
+                Border.CostomerEmail = Dorder?.CostumerEmail;
+                Border.CostomerAdress = Dorder?.CostumerAddress;
+                Border.DeliveryDate = Dorder?.DeliveryDate;
+                Border.ShipDate = Dorder?.ShipDate;
+                Border.OrderDate = Dorder?.OrderDate;
+                if (Dorder?.DeliveryDate != null)
                     Border.Status = Enums.OrderStatus.Delivered;
-                else if (Dorder.ShipDate != null)
+                else if (Dorder?.ShipDate != null)
                     Border.Status = Enums.OrderStatus.Sent;
-                else if (Dorder.OrderDate != null)
+                else if (Dorder?.OrderDate != null)
                     Border.Status = Enums.OrderStatus.Confirmed;
                 else
                     Border.Status = Enums.OrderStatus.NullStatus;
 
-                List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
-                DorderItems = (List<DO.OrderItem>)dal.OrderItem.GetItemsByOrder(id);
-                foreach (DO.OrderItem item in DorderItems)
+                List<DO.OrderItem?> DorderItems = new List<DO.OrderItem?>();
+                DorderItems = dal.OrderItem.GetItemsByOrder(id).ToList();
+                Border.OrderItems = new List<OrderItem?>();
+                foreach (DO.OrderItem? item in DorderItems)
                 {
                     BO.OrderItem item2 = new BO.OrderItem();
                     //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-                    item2.Id = item.ID;
-                    item2.ProductId = item.ProductID;
-                    item2.ItemName = dal.Product.Get(item2.ProductId).Name;
-                    item2.Price = item.Price;
-                    item2.Amount = item.Amount;
-                    item2.TotalPrice = item.Price * item.Amount;
+                    item2.Id = item?.ID ?? throw new Exception();
+                    item2.ProductId = item?.ProductID ?? throw new Exception();
+                    item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
+                    item2.Price = item?.Price ?? throw new Exception();
+                    item2.Amount = item?.Amount ?? throw new Exception();
+                    item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new Exception();
                     //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
                     Border.OrderItems.Add(item2);
                 }
@@ -127,36 +128,39 @@ public class BoOrder : BlApi.IOrder
 
     public Order ShippingUpdate(int id)
     {
-        DO.Order Dorder = new DO.Order();
+        DO.Order? Dorder = new DO.Order();
         Dorder = dal.Order.Get(id);
-        if (Dorder.ShipDate != null || Dorder.OrderDate == null)
+        if (Dorder?.ShipDate != null || Dorder?.OrderDate == null)
         {
             throw new NotFoundException();
         }
-        Dorder.ShipDate = DateTime.Now;
-        dal.Order.Update(Dorder);
+
+        DO.Order updateOrder = Dorder ?? throw new Exception();
+        updateOrder.ShipDate = DateTime.Now;
+        dal.Order.Update(updateOrder);
         BO.Order Border = new BO.Order();
+        Border.OrderItems = new List<OrderItem?>();
         Border.Id = id;
-        Border.CostomerName = Dorder.CostumerName;
-        Border.CostomerEmail = Dorder.CostumerEmail;
-        Border.CostomerAdress = Dorder.CostumerAddress;
-        Border.DeliveryDate = Dorder.DeliveryDate;
-        Border.ShipDate = Dorder.ShipDate;
-        Border.OrderDate = Dorder.OrderDate;
+        Border.CostomerName = Dorder?.CostumerName;
+        Border.CostomerEmail = Dorder?.CostumerEmail;
+        Border.CostomerAdress = Dorder?.CostumerAddress;
+        Border.DeliveryDate = Dorder?.DeliveryDate;
+        Border.ShipDate = Dorder?.ShipDate;
+        Border.OrderDate = Dorder?.OrderDate;
         Border.Status = Enums.OrderStatus.Sent;
 
-        List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
-        DorderItems = (List<DO.OrderItem>)dal.OrderItem.GetItemsByOrder(id);
-        foreach (DO.OrderItem item in DorderItems)
+        List<DO.OrderItem?> DorderItems = new List<DO.OrderItem?>();
+        DorderItems = dal.OrderItem.GetItemsByOrder(id).ToList();
+        foreach (DO.OrderItem? item in DorderItems)
         {
             BO.OrderItem item2 = new BO.OrderItem();
             //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-            item2.Id = item.ID;
-            item2.ProductId = item.ProductID;
-            item2.ItemName = dal.Product.Get(item2.ProductId).Name;
-            item2.Price = item.Price;
-            item2.Amount = item.Amount;
-            item2.TotalPrice = item.Price * item.Amount;
+            item2.Id = item?.ID ?? throw new Exception();
+            item2.ProductId = item?.ProductID ?? throw new Exception();
+            item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
+            item2.Price = item?.Price ?? throw new Exception();
+            item2.Amount = item?.Amount ?? throw new Exception();
+            item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new Exception();
             //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
             Border.OrderItems.Add(item2);
         }
@@ -171,36 +175,37 @@ public class BoOrder : BlApi.IOrder
 
     public Order UpdateDelivery(int id)
     {
-        DO.Order Dorder = new DO.Order();
+        DO.Order? Dorder = new DO.Order?();
         Dorder = dal.Order.Get(id);
-        if (Dorder.DeliveryDate != null || Dorder.ShipDate == null || Dorder.OrderDate == null)
+        if (Dorder?.DeliveryDate != null || Dorder?.ShipDate == null || Dorder?.OrderDate == null)
         {
             throw new Exception();//NEED TO CHACK   
         }
-        Dorder.DeliveryDate = DateTime.Now;
-        dal.Order.Update(Dorder);
+        DO.Order updateOrder = Dorder ?? throw new Exception();
+        updateOrder.DeliveryDate = DateTime.Now;
+        dal.Order.Update(updateOrder);;
         BO.Order Border = new BO.Order();
         Border.Id = id;
-        Border.CostomerName = Dorder.CostumerName;
-        Border.CostomerEmail = Dorder.CostumerEmail;
-        Border.CostomerAdress = Dorder.CostumerAddress;
-        Border.DeliveryDate = Dorder.DeliveryDate;
-        Border.ShipDate = Dorder.ShipDate;
-        Border.OrderDate = Dorder.OrderDate;
+        Border.CostomerName = Dorder?.CostumerName;
+        Border.CostomerEmail = Dorder?.CostumerEmail;
+        Border.CostomerAdress = Dorder?.CostumerAddress;
+        Border.DeliveryDate = Dorder?.DeliveryDate;
+        Border.ShipDate = Dorder?.ShipDate;
+        Border.OrderDate = Dorder?.OrderDate;
         Border.Status = Enums.OrderStatus.Delivered;
 
-        List<DO.OrderItem> DorderItems = new List<DO.OrderItem>();
-        DorderItems = (List<DO.OrderItem>)dal.OrderItem.GetItemsByOrder(id);
-        foreach (DO.OrderItem item in DorderItems)
+        List<DO.OrderItem?> DorderItems = new List<DO.OrderItem?>();
+        DorderItems = dal.OrderItem.GetItemsByOrder(id).ToList();
+        foreach (DO.OrderItem? item in DorderItems)
         {
             BO.OrderItem item2 = new BO.OrderItem();
             //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-            item2.Id = item.ID;
-            item2.ProductId = item.ProductID;
-            item2.ItemName = dal.Product.Get(item2.ProductId).Name;
-            item2.Price = item.Price;
-            item2.Amount = item.Amount;
-            item2.TotalPrice = item.Price * item.Amount;
+            item2.Id = item?.ID ?? throw new Exception();
+            item2.ProductId = item?.ProductID ?? throw new Exception();
+            item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
+            item2.Price = item?.Price ?? throw new Exception();
+            item2.Amount = item?.Amount ?? throw new Exception();
+            item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new Exception();
             //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
             Border.OrderItems.Add(item2);
         }
@@ -215,35 +220,36 @@ public class BoOrder : BlApi.IOrder
 
     public OrderTracking Track(int id)
     {
-        DO.Order Dorder = new DO.Order();
+        DO.Order? Dorder = new DO.Order();
         Dorder = dal.Order.Get(id);
         BO.OrderTracking orderTracking = new BO.OrderTracking();
+        orderTracking.TrackList = new List<(DateTime?, string?)>();
         orderTracking.Id = id;
-        if (Dorder.DeliveryDate != null)
+        if (Dorder?.DeliveryDate != null)
             orderTracking.Status = Enums.OrderStatus.Delivered;
-        else if (Dorder.ShipDate != null)
+        else if (Dorder?.ShipDate != null)
             orderTracking.Status = Enums.OrderStatus.Sent;
-        else if (Dorder.OrderDate != null)
+        else if (Dorder?.OrderDate != null)
             orderTracking.Status = Enums.OrderStatus.Confirmed;
         else
             orderTracking.Status = Enums.OrderStatus.NullStatus;
-        if (Dorder.OrderDate != null)
+        if (Dorder?.OrderDate != null)
         {
-            orderTracking.TrackList.Add((Dorder.OrderDate, " the order was created"));
-            if (Dorder.ShipDate != null)
+            orderTracking.TrackList.Add((Dorder?.OrderDate, " the order was created"));
+            if (Dorder?.ShipDate != null)
             {
-                orderTracking.TrackList.Add((Dorder.ShipDate, " the order was shipped"));
+                orderTracking.TrackList.Add((Dorder?.ShipDate, " the order was shipped"));
 
-                if (Dorder.DeliveryDate != null)
+                if (Dorder?.DeliveryDate != null)
                 {
-                    orderTracking.TrackList.Add((Dorder.DeliveryDate, " the order was deliveried"));
+                    orderTracking.TrackList.Add((Dorder?.DeliveryDate, " the order was deliveried"));
                 }
             }
         }
         return orderTracking;
 
     }
-    public void changeamountformnanager(int newAmount,OrderItem orderItem,Order order)
+    public void changeamountformnanager(int newAmount, OrderItem orderItem, Order order)
     {
         if (order.Status != Enums.OrderStatus.Sent)
         {
@@ -258,6 +264,6 @@ public class BoOrder : BlApi.IOrder
             throw new NotvalidException("order alredy sent");
         }
     }
-        
+
 }
 

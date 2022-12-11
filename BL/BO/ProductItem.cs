@@ -15,7 +15,7 @@ public class ProductItem
     public int Amount { get; set; }
     public bool InStock { get; set; }
 
-    public override string? ToString() => $@"
+    public override string ToString() => $@"
     Id - {Id} 
     Name: {Name}
     Category: {Category}

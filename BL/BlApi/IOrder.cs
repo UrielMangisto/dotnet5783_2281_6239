@@ -15,7 +15,7 @@ public interface IOrder
     /// Returns Order List
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderForList> GetOrderList();
+    public IEnumerable<OrderForList?> GetOrderList();
     /// <summary>
     /// 
     /// </summary>

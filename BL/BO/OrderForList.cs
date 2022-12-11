@@ -14,7 +14,7 @@ public class OrderForList
     public int AmountOfItems { get; set; }
     public double TotalPrice { get; set; }
 
-    public override string? ToString() => $@"
+    public override string ToString() => $@"
     Id : {Id} 
     Costomer Name : {CostomerName}
     Status: {Status}

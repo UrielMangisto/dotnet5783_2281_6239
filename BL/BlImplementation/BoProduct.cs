@@ -2,6 +2,8 @@
 using Dal;
 using DalApi;
 using BO;
+using DO;
+
 namespace BlImplementation;
 /// <summary>
 /// the implementation of the dProduct
@@ -14,10 +16,10 @@ public class BoProduct : BlApi.IProduct
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<BO.ProductForList> GetProductList()
+    public IEnumerable<BO.ProductForList?> GetProductList()
     {
-        List<DO.Product> dalProducts = new List<DO.Product>();
-        dalProducts = (List<DO.Product>)dal.Product.GetAll();
+        List<DO.Product?> dalProducts = new List<DO.Product?>();
+        dalProducts = dal.Product.GetAll().ToList();
 
         List<BO.ProductForList> blProducts = new List<BO.ProductForList>();
 
@@ -26,10 +28,10 @@ public class BoProduct : BlApi.IProduct
             try
             {
                 BO.ProductForList blProduct = new BO.ProductForList();
-                blProduct.Id = dalProduct.ID;
-                blProduct.Name = dalProduct.Name;
-                blProduct.Price = dalProduct.Price;
-                blProduct.Category = (BO.Enums.Category)dalProduct.Category;
+                blProduct.Id = dalProduct?.ID ?? throw new Exception();
+                blProduct.Name = dalProduct?.Name;
+                blProduct.Price = dalProduct?.Price ?? throw new Exception();
+                blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new Exception());
                 blProducts.Add(blProduct);
             }
             catch
@@ -50,16 +52,16 @@ public class BoProduct : BlApi.IProduct
         {
             if (id >= 0)
             {
-                DO.Product DProduct = new DO.Product();
-                BO.Product? BProduct = new BO.Product();
+                DO.Product? DProduct = new DO.Product?();
+                BO.Product BProduct = new BO.Product();
 
                 DProduct = dal.Product.Get(id);
 
-                BProduct.ID = DProduct.ID;
-                BProduct.Name = DProduct.Name;
-                BProduct.Price = DProduct.Price;
-                BProduct.Category = DProduct.Category;
-                BProduct.InStock = DProduct.InStock;
+                BProduct.ID = DProduct?.ID ?? throw new Exception();
+                BProduct.Name = DProduct?.Name;
+                BProduct.Price = DProduct?.Price ?? throw new Exception();
+                BProduct.Category = DProduct?.Category;
+                BProduct.InStock = DProduct?.InStock ?? throw new Exception();
                 return BProduct;
             }
             else
@@ -87,14 +89,14 @@ public class BoProduct : BlApi.IProduct
         }
         if (id >= 0)
         {
-            DO.Product dProduct = new DO.Product();
+            DO.Product? dProduct = new DO.Product?();
             dProduct = dal.Product.Get(id);
             BO.ProductItem pItem = new BO.ProductItem();
-            pItem.Id = dProduct.ID;
-            pItem.Name = dProduct.Name;
-            pItem.Price = dProduct.Price;
-            pItem.Category = (BO.Enums.Category)dProduct.Category;
-            if (dProduct.InStock > 0)
+            pItem.Id = dProduct?.ID ?? throw new Exception();
+            pItem.Name = dProduct?.Name ?? throw new Exception();
+            pItem.Price = dProduct?.Price ?? throw new Exception();
+            pItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new Exception());
+            if (dProduct?.InStock > 0)
             {
                 pItem.InStock = true;
             }
@@ -148,28 +150,28 @@ public class BoProduct : BlApi.IProduct
     public void Delete(int id)
     {
         int i = 0;
-        List<DO.Product> dProducts = new List<DO.Product>();
-        dProducts = (List<DO.Product>)dal.Product.GetAll();
-        foreach (DO.Product dProduct in dProducts)
+        List<DO.Product?> dProducts = new List<DO.Product?>();
+        dProducts = dal.Product.GetAll().ToList();
+        foreach (DO.Product? dProduct in dProducts)
         {
-            if (id == dProduct.ID)
+            if (id == dProduct?.ID)
             {
                 break;
             }
             i++;
         }
-        List <DO.OrderItem> DoOrderitems = new List<DO.OrderItem>();
-        DoOrderitems = (List<DO.OrderItem>)dal.OrderItem.GetAll();
+        List <DO.OrderItem?> DoOrderitems = new List<DO.OrderItem?>();
+        DoOrderitems = dal.OrderItem.GetAll().ToList();
         foreach(var dor in DoOrderitems)
         {
-           if(id == dor.ProductID)
+           if(id == dor?.ProductID)
                 throw new ProductExistInOrderException();    
         }
         if (i == dProducts.Count)
         {
-            throw new NotFoundException();
+            throw new BO.NotFoundException();
         }
-        dal.Product.Delete(dal.Product.Get(id));
+        dal.Product.Delete(dal.Product.Get(id) ?? throw new Exception());
     }
 
 
@@ -207,10 +209,10 @@ public class BoProduct : BlApi.IProduct
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<BO.ProductItem> CatalogRequest()
+    public IEnumerable<BO.ProductItem?> CatalogRequest()
     {
-        List<DO.Product> products = new List<DO.Product>();
-        products = (List<DO.Product>)dal.Product.GetAll();
+        List<DO.Product?> products = new List<DO.Product?>();
+        products = dal.Product.GetAll().ToList();
 
         List<BO.ProductItem> productItems = new List<BO.ProductItem>();
 
@@ -219,11 +221,11 @@ public class BoProduct : BlApi.IProduct
             try
             {
                 BO.ProductItem productItem = new BO.ProductItem();
-                productItem.Id = dProduct.ID;
-                productItem.Name = dProduct.Name;
-                productItem.Price = dProduct.Price;
-                productItem.Category = (BO.Enums.Category)dProduct.Category;
-                productItem.InStock = dProduct.InStock > 0;
+                productItem.Id = dProduct?.ID ?? throw new Exception();
+                productItem.Name = dProduct?.Name;
+                productItem.Price = dProduct?.Price ?? throw new Exception();
+                productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new Exception());
+                productItem.InStock = dProduct?.InStock > 0;
                 productItems.Add(productItem);
             }
             catch
@@ -242,24 +244,24 @@ public class BoProduct : BlApi.IProduct
     /// <exception cref="Exception"></exception>
     public ProductItem RequestDetailsFromCostumer(int id)
     {
-        List<DO.Product> Dproducts = new List<DO.Product>();
-        Dproducts = (List<DO.Product>)dal.Product.GetAll();
+        List<DO.Product?> Dproducts = new List<DO.Product?>();
+        Dproducts = dal.Product.GetAll().ToList();
 
         BO.ProductItem BproductItem = new BO.ProductItem();
 
         
             foreach (var dProduct in Dproducts)
             {
-                if (dProduct.ID == id)
+                if (dProduct?.ID == id)
                 {
-                    BproductItem.Name = dProduct.Name;
-                    BproductItem.Price = dProduct.Price;
-                    BproductItem.Category = (BO.Enums.Category)dProduct.Category;
-                    BproductItem.Amount = dProduct.InStock;
+                    BproductItem.Name = dProduct?.Name;
+                    BproductItem.Price = dProduct?.Price ?? throw new Exception();
+                    BproductItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new Exception());
+                    BproductItem.Amount = dProduct?.InStock ?? throw new Exception();
                     return BproductItem;
                 }
             }
-            throw new NotFoundException();
+            throw new BO.NotFoundException();
         }
         
 

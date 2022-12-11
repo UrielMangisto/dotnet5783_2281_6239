@@ -15,7 +15,7 @@ public class OrderItem
     public int Amount { get; set; }
     public double TotalPrice { get; set; }
 
-    public override string? ToString() => $@"
+    public override string ToString() => $@"
     Id: {Id} 
     Costomer Name: {ItemName}
     Product Id: {ProductId}

@@ -60,7 +60,6 @@ internal static class DataSource
             orders.Add (order);
         }
     }
-
     public static void addItemToTheArray()
     {  
         OrderItem orderItem = new OrderItem();
@@ -70,11 +69,11 @@ internal static class DataSource
             for (int j = 0; j < Randomally.Next(1, 4); j++)
             {
                 orderItem.ID = Config.NextOrderItemId;
-                orderItem.OrderID = orders[i].ID;
+                orderItem.OrderID = orders[i]?.ID ?? throw new Exception();
 
-                Product product = products[Randomally.Next(0, products.Count)];
-                orderItem.ProductID = product.ID;
-                orderItem.Price = product.Price;
+                Product? product = products[Randomally.Next(0, products.Count)];
+                orderItem.ProductID = product?.ID ?? throw new Exception();
+                orderItem.Price = product?.Price ?? throw new Exception();
                 orderItem.Amount = Randomally.Next(1, 10);
                 orderItems.Add(orderItem);
             }
