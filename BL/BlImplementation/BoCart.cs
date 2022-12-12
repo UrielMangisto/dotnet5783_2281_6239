@@ -74,7 +74,7 @@ public class BoCart : BlApi.ICart
                     if(diff > 0)
                     {
                         if(Dproduct.InStock < diff)
-                            throw new NotInExistinStockException();//the are no products in the stock
+                            throw new NotInExistinStockException();//there are no products in the stock
                         pro.Amount = amount;
                         C.TotalPrice += pro.Price * diff;
                         return C;

@@ -17,4 +17,6 @@ public interface ICrud<T> where T: struct
     void Update(T entity);
     T? Get(int entity);
     IEnumerable<T?> GetAll();
+
+
 }

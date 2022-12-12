@@ -66,12 +66,12 @@ public class BoProduct : BlApi.IProduct
             }
             else
             {
-                throw new RequestProductFaildException();
+                throw new BO.RequestProductFaildException();
             }
         }
         catch(Exception)
         {
-            throw new RequestProductFaildException();
+            throw new BO.RequestProductFaildException();
         }
     }
 
@@ -112,7 +112,7 @@ public class BoProduct : BlApi.IProduct
             }
             return pItem;
         }
-        throw new RequestProductFaildException();
+        throw new BO.RequestProductFaildException();
     }
 
     /// <summary>
@@ -123,13 +123,13 @@ public class BoProduct : BlApi.IProduct
     public void Add(BO.Product bProduct)
     {
         if (bProduct.ID < 0)
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
         if (bProduct.Name == null) 
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
         if (bProduct.Price <= 0) 
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
         if (bProduct.InStock < 0)
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
 
         DO.Product dProduct = new DO.Product();
         dProduct.ID = (int)bProduct.ID;
@@ -165,7 +165,7 @@ public class BoProduct : BlApi.IProduct
         foreach(var dor in DoOrderitems)
         {
            if(id == dor?.ProductID)
-                throw new ProductExistInOrderException();    
+                throw new BO.ProductExistInOrderException();    
         }
         if (i == dProducts.Count)
         {
@@ -183,13 +183,13 @@ public class BoProduct : BlApi.IProduct
     public void Update(BO.Product bProduct)
     {
         if (bProduct.ID < 0)
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
         if (bProduct.Name == null)
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
         if (bProduct.Price <= 0)
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
         if (bProduct.InStock < 0)
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
 
         DO.Product dProduct = new DO.Product();
         //exceptions
