@@ -29,18 +29,18 @@ public class BoOrder : BlApi.IOrder
                 int TotalAmount = 0;
                 double TotalPrice = 0;
                 BO.OrderForList b = new BO.OrderForList();
-                foreach (var it in dal.OrderItem.GetItemsByOrder(d?.ID ?? throw new mayBeNull()))
+                foreach (var it in dal.OrderItem.GetItemsByOrder(d?.ID ?? throw new mayBeNullException()))
                 {
-                    TotalAmount += it?.Amount ?? throw new mayBeNull();
-                    TotalPrice += (it?.Price ?? throw new mayBeNull()) * (it?.Amount ?? throw new mayBeNull());
+                    TotalAmount += it?.Amount ?? throw new mayBeNullException();
+                    TotalPrice += (it?.Price ?? throw new mayBeNullException()) * (it?.Amount ?? throw new mayBeNullException());
                 }
                 b.AmountOfItems = TotalAmount;
 
                 b.TotalPrice = TotalPrice;
 
-                b.Id = d?.ID ?? throw new mayBeNull();
+                b.Id = d?.ID ?? throw new mayBeNullException();
 
-                b.CostomerName = d?.CostumerName ?? throw new mayBeNull();
+                b.CostomerName = d?.CostumerName ?? throw new mayBeNullException();
 
                 if (d?.DeliveryDate != null)
                     b.Status = Enums.OrderStatus.Delivered;
@@ -69,7 +69,7 @@ public class BoOrder : BlApi.IOrder
                 DO.Order? Dorder = new DO.Order();
                 BO.Order Border = new BO.Order();
 
-                Dorder = dal.Order.Get(id) ?? throw new mayBeNull();
+                Dorder = dal.Order.Get(id) ?? throw new mayBeNullException();
 
                 Border.Id = id;
                 Border.CostomerName = Dorder?.CostumerName;
@@ -94,12 +94,12 @@ public class BoOrder : BlApi.IOrder
                 {
                     BO.OrderItem item2 = new BO.OrderItem();
                     //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-                    item2.Id = item?.ID ?? throw new mayBeNull();
-                    item2.ProductId = item?.ProductID ?? throw new mayBeNull();
+                    item2.Id = item?.ID ?? throw new mayBeNullException();
+                    item2.ProductId = item?.ProductID ?? throw new mayBeNullException();
                     item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
-                    item2.Price = item?.Price ?? throw new mayBeNull();
-                    item2.Amount = item?.Amount ?? throw new mayBeNull();
-                    item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNull();
+                    item2.Price = item?.Price ?? throw new mayBeNullException();
+                    item2.Amount = item?.Amount ?? throw new mayBeNullException();
+                    item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNullException();
                     //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
                     Border.OrderItems.Add(item2);
                 }
@@ -135,7 +135,7 @@ public class BoOrder : BlApi.IOrder
             throw new NotFoundException();
         }
 
-        DO.Order updateOrder = Dorder ?? throw new mayBeNull();
+        DO.Order updateOrder = Dorder ?? throw new mayBeNullException();
         updateOrder.ShipDate = DateTime.Now;
         dal.Order.Update(updateOrder);
         BO.Order Border = new BO.Order();
@@ -155,12 +155,12 @@ public class BoOrder : BlApi.IOrder
         {
             BO.OrderItem item2 = new BO.OrderItem();
             //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-            item2.Id = item?.ID ?? throw new mayBeNull();
-            item2.ProductId = item?.ProductID ?? throw new mayBeNull();
+            item2.Id = item?.ID ?? throw new mayBeNullException();
+            item2.ProductId = item?.ProductID ?? throw new mayBeNullException();
             item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
-            item2.Price = item?.Price ?? throw new mayBeNull();
-            item2.Amount = item?.Amount ?? throw new mayBeNull();
-            item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNull();
+            item2.Price = item?.Price ?? throw new mayBeNullException();
+            item2.Amount = item?.Amount ?? throw new mayBeNullException();
+            item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNullException();
             //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
             Border.OrderItems.Add(item2);
         }
@@ -179,9 +179,9 @@ public class BoOrder : BlApi.IOrder
         Dorder = dal.Order.Get(id);
         if (Dorder?.DeliveryDate != null || Dorder?.ShipDate == null || Dorder?.OrderDate == null)
         {
-            throw new mayBeNull();//NEED TO CHACK   
+            throw new mayBeNullException();//NEED TO CHACK   
         }
-        DO.Order updateOrder = Dorder ?? throw new mayBeNull();
+        DO.Order updateOrder = Dorder ?? throw new mayBeNullException();
         updateOrder.DeliveryDate = DateTime.Now;
         dal.Order.Update(updateOrder);;
         BO.Order Border = new BO.Order();
@@ -200,12 +200,12 @@ public class BoOrder : BlApi.IOrder
         {
             BO.OrderItem item2 = new BO.OrderItem();
             //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-            item2.Id = item?.ID ?? throw new mayBeNull();
-            item2.ProductId = item?.ProductID ?? throw new mayBeNull();
+            item2.Id = item?.ID ?? throw new mayBeNullException();
+            item2.ProductId = item?.ProductID ?? throw new mayBeNullException();
             item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
-            item2.Price = item?.Price ?? throw new mayBeNull();
-            item2.Amount = item?.Amount ?? throw new mayBeNull();
-            item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNull();
+            item2.Price = item?.Price ?? throw new mayBeNullException();
+            item2.Amount = item?.Amount ?? throw new mayBeNullException();
+            item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNullException();
             //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
             Border.OrderItems.Add(item2);
         }

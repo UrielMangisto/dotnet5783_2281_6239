@@ -166,21 +166,21 @@ public class NotInExistinStockException : Exception
 }
 
 [Serializable]
-public class mayBeNull : Exception
+public class mayBeNullException : Exception
 {
-    public mayBeNull()
+    public mayBeNullException()
     {
         Console.WriteLine("may Be Null");
     }
-    public mayBeNull(string massge) : base(massge)
+    public mayBeNullException(string massge) : base(massge)
     {
 
     }
-    public mayBeNull(string massge, Exception inner) : base(massge, inner)
+    public mayBeNullException(string massge, Exception inner) : base(massge, inner)
     {
 
     }
-    public mayBeNull(SerializationInfo info, StreamingContext context) : base(info, context)
+    public mayBeNullException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
 
     }

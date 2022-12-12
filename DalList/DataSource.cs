@@ -69,11 +69,11 @@ internal static class DataSource
             for (int j = 0; j < Randomally.Next(1, 4); j++)
             {
                 orderItem.ID = Config.NextOrderItemId;
-                orderItem.OrderID = orders[i]?.ID ?? throw new Exception();
+                orderItem.OrderID = orders[i]?.ID ?? throw new mayBeNullException();
 
                 Product? product = products[Randomally.Next(0, products.Count)];
-                orderItem.ProductID = product?.ID ?? throw new Exception();
-                orderItem.Price = product?.Price ?? throw new Exception();
+                orderItem.ProductID = product?.ID ?? throw new mayBeNullException();
+                orderItem.Price = product?.Price ?? throw new mayBeNullException();
                 orderItem.Amount = Randomally.Next(1, 10);
                 orderItems.Add(orderItem);
             }
