@@ -9,11 +9,17 @@ namespace BO;
 /// <summary>
 /// all of the exceptions of the BL
 /// </summary>
+/// 
+[Serializable]
 public class NotFoundException : Exception
 {
     public NotFoundException()
     {
         Console.WriteLine("NOT FOUND");
+    }
+    public NotFoundException(int id,string massge) : base($"Bo_Exception:  the id {id} not found in the database of {massge}.")
+    {
+
     }
     public NotFoundException(string massge):base (massge)
     {
@@ -28,11 +34,17 @@ public class NotFoundException : Exception
 
     }
 }
+
+[Serializable]
 public class AlreadyExistException : Exception
 {
     public AlreadyExistException()
     {
         Console.WriteLine("ALREADY EXIST");
+    }
+    public AlreadyExistException(int id,string massge) : base($"Bo_Exception:  the id {id} already exists in the database of {massge}.")
+    {
+
     }
     public AlreadyExistException(string massge) : base(massge)
     {
@@ -48,6 +60,7 @@ public class AlreadyExistException : Exception
     }
 }
 
+[Serializable]
 public class NotvalidException : Exception
 {
     public NotvalidException()
@@ -67,6 +80,8 @@ public class NotvalidException : Exception
         
     }
 }
+
+[Serializable]
 public class RequestProductFaildException : Exception
 {
     public RequestProductFaildException()
@@ -86,6 +101,8 @@ public class RequestProductFaildException : Exception
         
     }
 }
+
+[Serializable]
 public class InCorrectDataException : Exception
 {
     public InCorrectDataException()
@@ -105,6 +122,8 @@ public class InCorrectDataException : Exception
         
     }
 }
+
+[Serializable]
 public class ProductExistInOrderException : Exception
 {
     public ProductExistInOrderException()
@@ -124,6 +143,8 @@ public class ProductExistInOrderException : Exception
         
     }
 }
+
+[Serializable]
 public class NotInExistinStockException : Exception
 {
     public NotInExistinStockException()
@@ -142,4 +163,27 @@ public class NotInExistinStockException : Exception
     {
        
     }
+}
+
+[Serializable]
+public class mayBeNull : Exception
+{
+    public mayBeNull()
+    {
+        Console.WriteLine("may Be Null");
+    }
+    public mayBeNull(string massge) : base(massge)
+    {
+
+    }
+    public mayBeNull(string massge, Exception inner) : base(massge, inner)
+    {
+
+    }
+    public mayBeNull(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+
+    }
+
+
 }

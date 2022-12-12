@@ -25,17 +25,17 @@ public class BoCart : BlApi.ICart
                 BorderItem1.Id = nId1;
                 BorderItem1.ProductId = id;
                 BorderItem1.ItemName = Dproduct?.Name;
-                BorderItem1.Price = Dproduct?.Price ?? throw new Exception();
+                BorderItem1.Price = Dproduct?.Price ?? throw new mayBeNull();
                 BorderItem1.Amount = 1;
                 BorderItem1.TotalPrice = BorderItem1.Price;
-                C.OrderItems = new List<OrderItem>();
+                C.OrderItems = new List<OrderItem?>();
                 C.OrderItems.Add(BorderItem1);
-                C.TotalPrice += Dproduct?.Price ?? throw new Exception();
+                C.TotalPrice += Dproduct?.Price ?? throw new mayBeNull();
                 return C;
             }
             foreach (var pro in C.OrderItems)
             {
-                if (pro.Id == id)
+                if (pro?.Id == id)
                 {
                     pro.Amount++;
                     C.TotalPrice+=pro.Price;
@@ -48,12 +48,12 @@ public class BoCart : BlApi.ICart
             int nId = randNum.Next(10000);
             BorderItem.Id = nId;
             BorderItem.ProductId = id;
-            BorderItem.ItemName = Dproduct?.Name ?? throw new Exception();
-            BorderItem.Price = Dproduct?.Price ?? throw new Exception();
+            BorderItem.ItemName = Dproduct?.Name ?? throw new mayBeNull();
+            BorderItem.Price = Dproduct?.Price ?? throw new mayBeNull();
             BorderItem.Amount = 1;
             BorderItem.TotalPrice = BorderItem.Price;
             C.OrderItems.Add(BorderItem);
-            C.TotalPrice += Dproduct?.Price ?? throw new Exception();
+            C.TotalPrice += Dproduct?.Price ?? throw new mayBeNull();
             return C;
     }
 
@@ -62,7 +62,7 @@ public class BoCart : BlApi.ICart
             DO.Product Dproduct = new DO.Product();
             foreach(var pro in C.OrderItems)
             {
-                if(pro.Id == ID)
+                if(pro?.Id == ID)
                 {
                     if(amount == 0)
                     {
@@ -124,7 +124,7 @@ public class BoCart : BlApi.ICart
             foreach (BO.OrderItem item in BorderItems)
             {
                 DO.Product product = new DO.Product();
-                product = dal.Product.Get(item.Id) ?? throw new Exception();
+                product = dal.Product.Get(item.Id) ?? throw new mayBeNull();
                 DO.OrderItem tempItem = new DO.OrderItem();
                 tempItem.OrderID = Dorder.ID;
                 dal.OrderItem.Add(tempItem);

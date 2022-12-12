@@ -28,10 +28,10 @@ public class BoProduct : BlApi.IProduct
             try
             {
                 BO.ProductForList blProduct = new BO.ProductForList();
-                blProduct.Id = dalProduct?.ID ?? throw new Exception();
+                blProduct.Id = dalProduct?.ID ?? throw new mayBeNull();
                 blProduct.Name = dalProduct?.Name;
-                blProduct.Price = dalProduct?.Price ?? throw new Exception();
-                blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new Exception());
+                blProduct.Price = dalProduct?.Price ?? throw new mayBeNull();
+                blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new mayBeNull());
                 blProducts.Add(blProduct);
             }
             catch
@@ -57,11 +57,11 @@ public class BoProduct : BlApi.IProduct
 
                 DProduct = dal.Product.Get(id);
 
-                BProduct.ID = DProduct?.ID ?? throw new Exception();
+                BProduct.ID = DProduct?.ID ?? throw new mayBeNull();
                 BProduct.Name = DProduct?.Name;
-                BProduct.Price = DProduct?.Price ?? throw new Exception();
+                BProduct.Price = DProduct?.Price ?? throw new mayBeNull();
                 BProduct.Category = DProduct?.Category;
-                BProduct.InStock = DProduct?.InStock ?? throw new Exception();
+                BProduct.InStock = DProduct?.InStock ?? throw new mayBeNull();
                 return BProduct;
             }
             else
@@ -92,10 +92,10 @@ public class BoProduct : BlApi.IProduct
             DO.Product? dProduct = new DO.Product?();
             dProduct = dal.Product.Get(id);
             BO.ProductItem pItem = new BO.ProductItem();
-            pItem.Id = dProduct?.ID ?? throw new Exception();
-            pItem.Name = dProduct?.Name ?? throw new Exception();
-            pItem.Price = dProduct?.Price ?? throw new Exception();
-            pItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new Exception());
+            pItem.Id = dProduct?.ID ?? throw new mayBeNull();
+            pItem.Name = dProduct?.Name ?? throw new mayBeNull();
+            pItem.Price = dProduct?.Price ?? throw new mayBeNull();
+            pItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new mayBeNull());
             if (dProduct?.InStock > 0)
             {
                 pItem.InStock = true;
@@ -171,7 +171,7 @@ public class BoProduct : BlApi.IProduct
         {
             throw new BO.NotFoundException();
         }
-        dal.Product.Delete(dal.Product.Get(id) ?? throw new Exception());
+        dal.Product.Delete(dal.Product.Get(id) ?? throw new mayBeNull());
     }
 
 
@@ -218,20 +218,13 @@ public class BoProduct : BlApi.IProduct
 
         foreach(var dProduct in products)
         {
-            try
-            {
-                BO.ProductItem productItem = new BO.ProductItem();
-                productItem.Id = dProduct?.ID ?? throw new Exception();
-                productItem.Name = dProduct?.Name;
-                productItem.Price = dProduct?.Price ?? throw new Exception();
-                productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new Exception());
-                productItem.InStock = dProduct?.InStock > 0;
-                productItems.Add(productItem);
-            }
-            catch
-            {
-                throw new Exception();
-            }
+            BO.ProductItem productItem = new BO.ProductItem();
+            productItem.Id = dProduct?.ID ?? throw new mayBeNull();
+            productItem.Name = dProduct?.Name;
+            productItem.Price = dProduct?.Price ?? throw new mayBeNull();
+            productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new mayBeNull());
+            productItem.InStock = dProduct?.InStock > 0;
+            productItems.Add(productItem);
         }
         return productItems;
     }
@@ -255,9 +248,9 @@ public class BoProduct : BlApi.IProduct
                 if (dProduct?.ID == id)
                 {
                     BproductItem.Name = dProduct?.Name;
-                    BproductItem.Price = dProduct?.Price ?? throw new Exception();
-                    BproductItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new Exception());
-                    BproductItem.Amount = dProduct?.InStock ?? throw new Exception();
+                    BproductItem.Price = dProduct?.Price ?? throw new mayBeNull();
+                    BproductItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new mayBeNull());
+                    BproductItem.Amount = dProduct?.InStock ?? throw new mayBeNull();
                     return BproductItem;
                 }
             }
