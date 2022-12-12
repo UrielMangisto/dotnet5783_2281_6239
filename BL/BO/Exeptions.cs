@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,18 @@ public class NotFoundException : Exception
     {
         Console.WriteLine("NOT FOUND");
     }
+    public NotFoundException(string massge):base (massge)
+    {
+
+    }
+    public NotFoundException(string massge,Exception inner) : base(massge,inner)
+    {
+
+    }
+    public NotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+
+    }
 }
 public class AlreadyExistException : Exception
 {
@@ -21,17 +34,37 @@ public class AlreadyExistException : Exception
     {
         Console.WriteLine("ALREADY EXIST");
     }
+    public AlreadyExistException(string massge) : base(massge)
+    {
+        
+    }
+    public AlreadyExistException(string massge, Exception inner) : base(massge, inner)
+    {
+        
+    }
+    public AlreadyExistException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+        
+    }
 }
 
 public class NotvalidException : Exception
 {
-    public NotvalidException(string myException)
-    {
-        Console.WriteLine(myException);
-    }
     public NotvalidException()
     {
         Console.WriteLine("Not valid");
+    }
+    public NotvalidException(string massge) : base(massge)
+    {
+        
+    }
+    public NotvalidException(string massge, Exception inner) : base(massge, inner)
+    {
+        
+    }
+    public NotvalidException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+        
     }
 }
 public class RequestProductFaildException : Exception
@@ -40,12 +73,36 @@ public class RequestProductFaildException : Exception
     {
         Console.WriteLine("request product faild");
     }
+    public RequestProductFaildException(string massge) : base(massge)
+    {
+        
+    }
+    public RequestProductFaildException(string massge, Exception inner) : base(massge, inner)
+    {
+        
+    }
+    public RequestProductFaildException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+        
+    }
 }
 public class InCorrectDataException : Exception
 {
     public InCorrectDataException()
     {
         Console.WriteLine("Incorrect Data");
+    }
+    public InCorrectDataException(string massge) : base(massge)
+    {
+        
+    }
+    public InCorrectDataException(string massge, Exception inner) : base(massge, inner)
+    {
+        
+    }
+    public InCorrectDataException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+        
     }
 }
 public class ProductExistInOrderException : Exception
@@ -54,11 +111,35 @@ public class ProductExistInOrderException : Exception
     {
         Console.WriteLine("Product Exist In Order");
     }
+    public ProductExistInOrderException(string massge) : base(massge)
+    {
+        
+    }
+    public ProductExistInOrderException(string massge, Exception inner) : base(massge, inner)
+    {
+       
+    }
+    public ProductExistInOrderException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+        
+    }
 }
 public class NotInExistinStockException : Exception
 {
     public NotInExistinStockException()
     {
         Console.WriteLine("Not In Exist in Stock Exception");
+    }
+    public NotInExistinStockException(string massge) : base(massge)
+    {
+        
+    }
+    public NotInExistinStockException(string massge, Exception inner) : base(massge, inner)
+    {
+        
+    }
+    public NotInExistinStockException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+       
     }
 }
