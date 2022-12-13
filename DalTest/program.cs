@@ -41,6 +41,7 @@ press 1 to add Order
 3 to update Order
 4 to get Order
 5 to get all Order
+6 to get Order By some Term
                                             ");
                     tryparse = int.TryParse(Console.ReadLine(), out choice);
                     switch (choice)
@@ -70,6 +71,9 @@ press 1 to add Order
                                 Console.WriteLine(ordr);
                             }
                             break;
+                        case (int)OrderChoice.getOrderBysomeTerm:
+                            לשאול את עמוס
+                            break;
                             default:
                             Console.WriteLine("ERROR");
                             break;
@@ -86,6 +90,7 @@ press
 5 to get Specific Item
 6 to get Items By Order
 7 to get all items
+8 to get order item by some term
                                             ");
                     tryparse = int.TryParse(Console.ReadLine(), out choice);                    
                     switch (choice)
@@ -127,6 +132,9 @@ press
                             }
 
                             break;
+                        case (int)orderItemChoise.getOrderItemBysomeTerm:
+
+                            break;
                         default:
 
                             break;
@@ -141,6 +149,7 @@ press
 3 to update Product
 4 to get Product
 5 to get all Product
+6 to get product item by some term
                                             ");
                     tryparse = int.TryParse(Console.ReadLine(), out choice);
                     switch (choice)
@@ -171,6 +180,9 @@ press
                             {
                                 Console.WriteLine(p);
                             }
+                            break;
+                        case (int)ProductChoice.getProdactBysomeTerm:
+
                             break;
 
                         default:

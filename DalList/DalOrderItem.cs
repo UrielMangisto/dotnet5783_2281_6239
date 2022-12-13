@@ -31,6 +31,18 @@ public class DalOrderitem :  IOrderItem
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     /// </summary>
+    /// 
+    public OrderItem? Get(Func<OrderItem?, bool>? selector)
+    {
+        foreach (var p in DataSource.orderItems)
+        {
+            if (selector(p))
+            {
+                return p;
+            }
+        }
+        throw new NotFoundException();
+    }
     public OrderItem? specificItemGet(int idOfProduct, int idOfOrder)
     {
         foreach (var p in DataSource.orderItems)
@@ -48,40 +60,64 @@ public class DalOrderitem :  IOrderItem
     /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem?> GetItemsByOrder(int orderID)
+    public IEnumerable<OrderItem?> GetItemsByOrder(int orderID, Func<OrderItem?, bool>? selector=null)
     {
-        int sizeOfNew = 0;
-        foreach (var p in DataSource.orderItems)
-        {
-            if(p?.ID == orderID)
-            {
-                sizeOfNew++;
-            }
-        }
         List<OrderItem?> specificItems = new List<OrderItem?>() { };
-        foreach (var p in DataSource.orderItems)
+        if (selector == null)
         {
-            if (p?.ID == orderID)
+            
+            foreach (var p in DataSource.orderItems)
             {
-                specificItems.Add(p);
+                if (p?.ID == orderID)
+                {
+                    specificItems.Add(p);
+                }
+            }
+
+            if (specificItems == null)
+            {
+                throw new NotFoundException();
             }
         }
-
-        if (sizeOfNew == 0)
+        else
         {
-            throw new NotFoundException();
+            foreach (var p in DataSource.orderItems)
+            {
+                if ((p?.ID == orderID) && ( selector(p)))
+                {
+                    specificItems.Add(p);
+                }
+            }
         }
         return specificItems;
     }
+       
     //returns an array of all products
-    public IEnumerable<OrderItem?> GetAll()
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? selector=null)
     {
-        List<OrderItem?> allItems = new List<OrderItem?>() { };
-        foreach (var p in DataSource.orderItems)
+        if(selector == null)
         {
-            allItems.Add(p);
+            List<OrderItem?> allItems = new List<OrderItem?>() { };
+            foreach (var p in DataSource.orderItems)
+            {
+                allItems.Add(p);
+            }
+            return allItems;
         }
-        return allItems;
+        else
+        {
+            List<OrderItem?> allItems = new List<OrderItem?>() { };
+            foreach (var p in DataSource.orderItems)
+            {
+                if (selector(p))
+                {
+                    allItems.Add(p);
+                }
+
+            }
+            return allItems;
+        }
+        
     }
 
     public void Delete(OrderItem entity)

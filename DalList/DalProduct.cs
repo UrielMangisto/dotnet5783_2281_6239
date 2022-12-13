@@ -66,15 +66,42 @@ public class DalProduct: IProduct
         }
         throw new Exception("Product Not Found");
     }
-
-    public IEnumerable<Product?> GetAll()
+    public Product? Get(Func<Product?, bool>? selector)
     {
-        List<Product?> products = new List<Product?>();
         foreach (var p in DataSource.products)
         {
-            products.Add(p);
+            if (selector(p) == null)
+                throw new mayBeNullException();
+            if (selector(p))
+                return p;
         }
-        return products;
+        throw new Exception("Product Not Found");
+    }
+
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? selector=null)
+    {
+        if(selector==null)
+        {
+            List<Product?> products = new List<Product?>();
+            foreach (var p in DataSource.products)
+            {
+                products.Add(p);
+            }
+            return products;
+        }
+        else
+        {
+            List<Product?> products = new List<Product?>();
+            foreach (var p in DataSource.products)
+            {
+                if(selector(p))
+                {
+                    products.Add(p);
+                }
+            }
+            return products;
+        }
+        
     }
 }
 

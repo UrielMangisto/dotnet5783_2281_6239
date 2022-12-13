@@ -1,5 +1,7 @@
 ﻿using DO;
 using DalApi;
+using static DalApi.ICrud<DO.Order>;
+
 namespace Dal;
 /// <summary>
 /// Implementation of the CRUB functions on Order
@@ -49,13 +51,40 @@ public class DalOrder : IOrder
         }
         throw new NotFoundException();
     }
-    public IEnumerable<Order?> GetAll()
+    public Order? Get(Func<Order?, bool>? selector)
     {
-        List <Order?> orders = new List <Order?> ();
+
         foreach (var p in DataSource.orders)
         {
-            orders.Add(p);
+            if (selector(p))
+                return p;
         }
-        return orders;
+        throw new NotFoundException();
+    }
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? selector=null)
+    {
+        if(selector==null)
+        { 
+            List <Order?> orders = new List <Order?> ();
+            foreach (var p in DataSource.orders)
+            {
+                orders.Add(p);
+            }
+            return orders;
+        }
+        else
+        {
+            List<Order?> orders = new List<Order?>();
+            foreach (var p in DataSource.orders)
+            {
+                if (selector(p))
+                {
+                    orders.Add(p);
+                }
+                
+            }
+            return orders;
+
+        }
     }
 }
