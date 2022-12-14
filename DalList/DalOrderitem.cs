@@ -2,7 +2,7 @@
 using DalApi;
 namespace Dal;
 /// <summary>
-/// Implementation of the CRUB functions on Order item
+/// Implementation of the CRUD functions on Order item
 /// </summary>
 public class DalOrderitem :  IOrderItem
 {
@@ -34,11 +34,16 @@ public class DalOrderitem :  IOrderItem
     /// 
     public OrderItem? Get(Func<OrderItem?, bool>? selector)
     {
-        foreach (var p in DataSource.orderItems)
+        if (selector == null)
         {
-            if (selector(p))
+            throw new mayBeNullException();
+        }
+        else
+        {
+            foreach (var p in DataSource.orderItems)
             {
-                return p;
+                if (selector(p))
+                    return p;
             }
         }
         throw new NotFoundException();

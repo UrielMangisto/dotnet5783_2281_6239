@@ -4,7 +4,7 @@ using static DalApi.ICrud<DO.Order>;
 
 namespace Dal;
 /// <summary>
-/// Implementation of the CRUB functions on Order
+/// Implementation of the CRUD functions on Order
 /// </summary>
 public class DalOrder : IOrder
 {
@@ -53,19 +53,26 @@ public class DalOrder : IOrder
     }
     public Order? Get(Func<Order?, bool>? selector)
     {
-
-        foreach (var p in DataSource.orders)
+        if (selector == null)
         {
-            if (selector(p))
-                return p;
+            throw new mayBeNullException();
+        }
+        else
+        {
+            foreach (var p in DataSource.orders)
+            {
+                if (selector(p))
+                    return p;
+            }
         }
         throw new NotFoundException();
     }
-    public IEnumerable<Order?> GetAll(Func<Order?, bool>? selector=null)
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? selector = null)
     {
-        if(selector==null)
+        List<Order?> orders = new List<Order?>();
+
+        if (selector==null)
         { 
-            List <Order?> orders = new List <Order?> ();
             foreach (var p in DataSource.orders)
             {
                 orders.Add(p);
@@ -74,7 +81,6 @@ public class DalOrder : IOrder
         }
         else
         {
-            List<Order?> orders = new List<Order?>();
             foreach (var p in DataSource.orders)
             {
                 if (selector(p))
@@ -84,7 +90,6 @@ public class DalOrder : IOrder
                 
             }
             return orders;
-
         }
     }
 }

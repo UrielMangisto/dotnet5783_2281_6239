@@ -72,7 +72,6 @@ press 1 to add Order
                             }
                             break;
                         case (int)OrderChoice.getOrderBysomeTerm:
-                            לשאול את עמוס
                             break;
                             default:
                             Console.WriteLine("ERROR");

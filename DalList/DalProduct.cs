@@ -3,7 +3,7 @@ using DalApi;
 namespace Dal;
 
 /// <summary>
-/// Implementation of the CRUB functions on Product
+/// Implementation of the CRUD functions on Product
 /// </summary>
 public class DalProduct: IProduct
 {
@@ -68,14 +68,19 @@ public class DalProduct: IProduct
     }
     public Product? Get(Func<Product?, bool>? selector)
     {
-        foreach (var p in DataSource.products)
+        if (selector == null)
         {
-            if (selector(p) == null)
-                throw new mayBeNullException();
-            if (selector(p))
-                return p;
+            throw new mayBeNullException();
         }
-        throw new Exception("Product Not Found");
+        else
+        {
+            foreach (var p in DataSource.products)
+            {
+                if (selector(p))
+                    return p;
+            }
+        }
+        throw new NotFoundException();
     }
 
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? selector=null)
