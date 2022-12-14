@@ -28,6 +28,8 @@ internal static class DataSource
         products.Add ( new Product { Category = Category.Kids, ID = 843902, InStock = 0, Name = "Harry Poter 8", Price = 160.0 });
         products.Add ( new Product { Category = Category.Comics, ID = 123455, InStock = 25, Name = "Spiderman", Price = 60.0 });
         products.Add ( new Product { Category = Category.Comics, ID = 541235, InStock = 18, Name = "Superman", Price = 70.0 });
+        products.Add(new Product { Category = Category.Comics, ID = 548735, InStock = 5, Name = "Bon", Price = 80.0 });
+
     }
     public static void addOrderToTheArray()
     {
