@@ -10,7 +10,7 @@ public class OrderTracking
 {
     public int Id { get; set; }
     public Enums.OrderStatus? Status { get; set; }
-    public List<(DateTime?, string?)>? TrackList { get; set; }
+    public List<(DateTime?, string?)>? TrackList { get; set; } = new List<(DateTime?, string?)>();
 
     public override string ToString()
     {

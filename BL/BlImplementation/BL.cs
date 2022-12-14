@@ -10,8 +10,13 @@ namespace BlImplementation;
 public class BL : IBl
 {
     public static IBl instance { get; } = new BL();
-    public BL() { }
-    public IOrder Order { get; set; } = new BoOrder();
-    public IProduct Product { get; set; } = new BoProduct();
-    public ICart Cart { get; set; } = new BoCart();
+    public IOrder Order { get; }
+    public IProduct Product { get; }
+    public ICart Cart { get; }
+    public BL()
+    {
+        Order = new BoOrder();
+        Product = new BoProduct();
+        Cart = new BoCart();
+    }
 }

@@ -36,7 +36,44 @@ public class BoProduct : BlApi.IProduct
             }
             catch
             {
-                throw new BO.AlreadyExistException();
+                throw new BO.NotFoundException();
+            }
+        }
+        return blProducts;
+    }
+    /// <summary>
+    /// Get Product List By Term
+    /// </summary>
+    /// <param name="selector"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.NotFoundException"></exception>
+    public IEnumerable<ProductForList?> GetProductsByTerm(Func<DO.Product?, bool>? selector = null)
+    {
+        List<DO.Product?> dalProducts = new List<DO.Product?>();
+        dalProducts = dal.Product.GetAll().ToList();
+
+        List<BO.ProductForList> blProducts = new List<BO.ProductForList>();
+
+        if (selector != null)
+        {
+            foreach (var dalProduct in dalProducts)
+            {
+                if (selector(dalProduct))
+                {
+                    try
+                    {
+                        BO.ProductForList blProduct = new BO.ProductForList();
+                        blProduct.Id = dalProduct?.ID ?? throw new BO.mayBeNullException();
+                        blProduct.Name = dalProduct?.Name;
+                        blProduct.Price = dalProduct?.Price ?? throw new BO.mayBeNullException();
+                        blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new BO.mayBeNullException());
+                        blProducts.Add(blProduct);
+                    }
+                    catch
+                    {
+                        throw new BO.NotFoundException();
+                    }
+                }
             }
         }
         return blProducts;

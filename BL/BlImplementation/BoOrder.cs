@@ -60,6 +60,7 @@ public class BoOrder : BlApi.IOrder
         return bOrdersForList;
     }
 
+
     public Order DetailsOfOrderForManager(int id)
     {
         try

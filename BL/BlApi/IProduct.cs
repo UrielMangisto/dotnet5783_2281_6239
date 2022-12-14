@@ -17,7 +17,12 @@ public interface IProduct
     /// </summary>
     /// <returns></returns>
     public IEnumerable<ProductForList?> GetProductList();
-
+    /// <summary>
+    /// Get Product List By Term
+    /// </summary>
+    /// <param name="selector"></param>
+    /// <returns></returns>
+    public IEnumerable<ProductForList?> GetProductsByTerm(Func<DO.Product?, bool>? selector = null);
     /// <summary>
     /// Product Details For Manager
     /// </summary>

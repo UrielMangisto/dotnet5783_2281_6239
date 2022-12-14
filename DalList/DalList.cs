@@ -11,8 +11,15 @@ namespace Dal
     {
         //public static IDal Instence { get; } = new DalList();
         //private DalList() { }
-        public IOrder Order => new DalOrder();
-        public IProduct Product => new DalProduct();
-        public IOrderItem OrderItem => new DalOrderitem();
+        public IOrder Order { get; }
+        public IProduct Product { get; }
+        public IOrderItem OrderItem { get; }
+
+        public DalList()
+        {
+            Order = new DalOrder();
+            Product = new DalProduct();
+            OrderItem = new DalOrderitem();
+        }
     }
 }
