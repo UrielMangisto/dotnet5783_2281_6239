@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace PL
         private void ProductsSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Enums.Category category = (BO.Enums.Category)ProductsSelector.SelectedItem;
-            //ProductListView.ItemsSource = bl.Product.GetProductsByTerm( x => x?.C== );
+            ProductListView.ItemsSource = bl.Product.GetProductsByTerm( x => x?.Category.ToString() == category.ToString());
         }
     }
 }
