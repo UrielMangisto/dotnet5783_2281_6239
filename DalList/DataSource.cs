@@ -18,8 +18,8 @@ internal static class DataSource
 
     public static void addProductsToTheArray()
     {
-        products.Add(new Product { Category = Category.Kids, ID = 769988, InStock = 7, Name = "Harry Poter 1", Price = 130.0 });  ;
-        products.Add (new Product { Category = Category.Kids, ID = 784848, InStock = 3, Name = "Harry Poter 2", Price = 120.0 });
+        products.Add ( new Product { Category = Category.Kids, ID = 769988, InStock = 7, Name = "Harry Poter 1", Price = 130.0 });  ;
+        products.Add ( new Product { Category = Category.Kids, ID = 784848, InStock = 3, Name = "Harry Poter 2", Price = 120.0 });
         products.Add ( new Product { Category = Category.Kids, ID = 939345, InStock = 5, Name = "Harry Poter 3", Price = 110.0 });
         products.Add ( new Product { Category = Category.Kids, ID = 923844, InStock = 2, Name = "Harry Poter 4", Price = 110.0 });
         products.Add ( new Product { Category = Category.Kids, ID = 493934, InStock = 0, Name = "Harry Poter 5", Price = 100.0 });
@@ -28,7 +28,7 @@ internal static class DataSource
         products.Add ( new Product { Category = Category.Kids, ID = 843902, InStock = 0, Name = "Harry Poter 8", Price = 160.0 });
         products.Add ( new Product { Category = Category.Comics, ID = 123455, InStock = 25, Name = "Spiderman", Price = 60.0 });
         products.Add ( new Product { Category = Category.Comics, ID = 541235, InStock = 18, Name = "Superman", Price = 70.0 });
-        products.Add(new Product { Category = Category.Comics, ID = 548735, InStock = 5, Name = "Bon", Price = 80.0 });
+        products.Add ( new Product { Category = Category.Comics, ID = 548735, InStock = 5, Name = "Bon", Price = 80.0 });
 
     }
     public static void addOrderToTheArray()
