@@ -260,7 +260,7 @@ press 1 to Get product list
 
             Console.WriteLine("enter category");
             int.TryParse(Console.ReadLine(), out cat);
-            product.Category = (DO.Category)(cat);
+            product.Category = (BO.Enums.Category)(cat);
 
             Console.WriteLine("enter Product price");
             product.Price = int.Parse(Console.ReadLine());

@@ -31,13 +31,13 @@ public class DalOrder : IOrder
     {
         int count = 0;
         foreach (var p in DataSource.orders)
-        {
-            count++;    
+        {   
             if (p?.ID == entity.ID)
             {
-                DataSource.orders.Insert(count, entity);
+                DataSource.orders[count] = entity;
                 return;
             }
+            count++;
         }
         throw new NotFoundException();
     }

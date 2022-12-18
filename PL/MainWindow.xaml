@@ -12,7 +12,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="ToListButton" Content="Prouducts List View" FontSize="50" Background="Red" Click="ToListButton_Click"/>
-        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"/>
+        <Button x:Name="ToListButton" Content="Admin" FontSize="50" Background="ForestGreen" Foreground="White" Click="ToListButton_Click"/>
     </Grid>
 </Window>

@@ -33,7 +33,17 @@ namespace PL
         private void ProductsSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Enums.Category category = (BO.Enums.Category)ProductsSelector.SelectedItem;
-            ProductListView.ItemsSource = bl.Product.GetProductsByTerm( x => x?.Category.ToString() == category.ToString());
+            ProductListView.ItemsSource = bl.Product.GetProductsByTerm( x => x?.Category == category);
+        }
+
+        private void AddProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductWindow().Show();
+        }
+
+        private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new ProductWindow((BO.ProductForList)ProductListView.SelectedItem).Show();
         }
     }
 }

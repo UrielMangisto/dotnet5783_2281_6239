@@ -8,7 +8,7 @@
         Title="ProductListWindow" Height="640" Width="800">
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
+            <RowDefinition Height="50*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -20,6 +20,7 @@
             <Label Name="ProductsLable" Foreground="White" FontWeight="Bold" Content="Books" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"  Grid.Column="0"/>
             <ComboBox Name="ProductsSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="ProductsSelector_SelectionChanged"/>
         </Grid>
-        <ListView x:Name="ProductListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Background="WhiteSmoke"/>
+        <ListView x:Name="ProductListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Background="WhiteSmoke" MouseDoubleClick="ProductListView_MouseDoubleClick"/>
+        <Button x:Name="AddProductButton" Content="Add new Book" Grid.Row="2" HorizontalAlignment="Right" Margin="5,5,5,5" Padding="5" Background="ForestGreen" Foreground="White" Click="AddProductButton_Click" />
     </Grid>
 </Window>

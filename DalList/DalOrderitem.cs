@@ -143,12 +143,12 @@ public class DalOrderitem :  IOrderItem
         int count = 0;
         foreach (var p in DataSource.orderItems)
         {
-            count++;
             if(entity.ID == p?.ID)
             {
-                DataSource.orderItems.Insert(count, entity);
+                DataSource.orderItems[count] = entity;
                 return;
             }
+            count++;
         }
         
         throw new NotFoundException();

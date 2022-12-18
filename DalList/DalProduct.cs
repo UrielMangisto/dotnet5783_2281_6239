@@ -47,12 +47,12 @@ public class DalProduct: IProduct
         int count = 0;
         foreach(var p in DataSource.products)
         {
-            count++;
             if(p?.ID == entity.ID)
             {
-                DataSource.products.Insert(count, entity);
+                DataSource.products[count] = entity;
                 return;
             }
+            count++;
         }
         throw new Exception("Product Not Found");
     }

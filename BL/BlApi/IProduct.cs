@@ -22,7 +22,7 @@ public interface IProduct
     /// </summary>
     /// <param name="selector"></param>
     /// <returns></returns>
-    public IEnumerable<ProductForList?> GetProductsByTerm(Func<DO.Product?, bool>? selector = null);
+    public IEnumerable<ProductForList?> GetProductsByTerm(Func<BO.ProductForList?, bool>? selector = null);
     /// <summary>
     /// Product Details For Manager
     /// </summary>

@@ -47,7 +47,7 @@ public class BoProduct : BlApi.IProduct
     /// <param name="selector"></param>
     /// <returns></returns>
     /// <exception cref="BO.NotFoundException"></exception>
-    public IEnumerable<ProductForList?> GetProductsByTerm(Func<DO.Product?, bool>? selector = null)
+    public IEnumerable<ProductForList?> GetProductsByTerm(Func<BO.ProductForList?, bool>? selector = null)
     {
         List<DO.Product?> dalProducts = new List<DO.Product?>();
         dalProducts = dal.Product.GetAll().ToList();
@@ -58,21 +58,19 @@ public class BoProduct : BlApi.IProduct
         {
             foreach (var dalProduct in dalProducts)
             {
-                if (selector(dalProduct))
+                try
                 {
-                    try
-                    {
-                        BO.ProductForList blProduct = new BO.ProductForList();
-                        blProduct.Id = dalProduct?.ID ?? throw new BO.mayBeNullException();
-                        blProduct.Name = dalProduct?.Name;
-                        blProduct.Price = dalProduct?.Price ?? throw new BO.mayBeNullException();
-                        blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new BO.mayBeNullException());
+                    BO.ProductForList blProduct = new BO.ProductForList();
+                    blProduct.Id = dalProduct?.ID ?? throw new BO.mayBeNullException();
+                    blProduct.Name = dalProduct?.Name;
+                    blProduct.Price = dalProduct?.Price ?? throw new BO.mayBeNullException();
+                    blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new BO.mayBeNullException());
+                    if(selector(blProduct))
                         blProducts.Add(blProduct);
-                    }
-                    catch
-                    {
-                        throw new BO.NotFoundException();
-                    }
+                }
+                catch
+                {
+                    throw new BO.NotFoundException();
                 }
             }
         }
@@ -97,7 +95,7 @@ public class BoProduct : BlApi.IProduct
                 BProduct.ID = DProduct?.ID ?? throw new BO.mayBeNullException();
                 BProduct.Name = DProduct?.Name;
                 BProduct.Price = DProduct?.Price ?? throw new BO.mayBeNullException();
-                BProduct.Category = DProduct?.Category;
+                BProduct.Category = (BO.Enums.Category)(DProduct?.Category ?? throw new BO.mayBeNullException());
                 BProduct.InStock = DProduct?.InStock ?? throw new BO.mayBeNullException();
                 return BProduct;
             }
