@@ -13,12 +13,12 @@ public class DalProduct: IProduct
         bool exict = true;
         while (exict)
         {
-            id = DataSource.Randomally.Next(100000, 999999);
+            id = entity.ID;
             try
             {
                 Get(id);
             }
-            catch(Exception exception)
+            catch(Exception)
             {
                 exict = false;
 
