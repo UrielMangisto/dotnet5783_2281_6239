@@ -1,5 +1,5 @@
 ﻿using BlApi;
-using Dal;
+
 using DalApi;
 using BO;
 using DO;
@@ -10,7 +10,8 @@ namespace BlImplementation;
 /// </summary>
 public class BoProduct : BlApi.IProduct
 {
-    private IDal dal = new Dal.DalList();
+    DalApi.IDal? dal = DalApi.Factory.Get();
+
     /// <summary>
     /// returns list of the dProducts
     /// </summary>
@@ -18,12 +19,14 @@ public class BoProduct : BlApi.IProduct
     /// <exception cref="Exception"></exception>
     public IEnumerable<BO.ProductForList?> GetProductList()
     {
+        
         List<DO.Product?> dalProducts = new List<DO.Product?>();
         dalProducts = dal.Product.GetAll().ToList();
 
+        
         List<BO.ProductForList> blProducts = new List<BO.ProductForList>();
 
-        foreach(var dalProduct in dalProducts)
+        foreach (var dalProduct in dalProducts)
         {
             try
             {

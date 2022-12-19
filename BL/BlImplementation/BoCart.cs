@@ -8,12 +8,12 @@ using DalApi;
 /// </summary>
 public class BoCart : BlApi.ICart
 {
-    private IDal dal = new Dal.DalList();
+    DalApi.IDal? dal = DalApi.Factory.Get();
 
     public BO.Cart Add(BO.Cart C, int id) 
     {
             DO.Product? Dproduct = new DO.Product?();
-            Dproduct = dal.Product.Get(id);
+            Dproduct = dal?.Product.Get(id);
             if (Dproduct?.InStock <= 0)
                 throw new NotInExistinStockException();
             if(C.OrderItems == null)

@@ -9,17 +9,12 @@ namespace Dal
 {
     sealed internal class DalList : IDal
     {
-        public static IDal Instence { get; } = new DalList();
+        public static IDal Instance { get; } = new DalList();
         //private DalList() { }
-        public IOrder Order { get; }
-        public IProduct Product { get; }
-        public IOrderItem OrderItem { get; }
+        public IOrder Order { get; } = new DalOrder();
+        public IProduct Product { get; } = new DalProduct();
+        public IOrderItem OrderItem { get; } = new DalOrderitem();
 
-        private DalList()
-        {
-            Order = new DalOrder();
-            Product = new DalProduct();
-            OrderItem = new DalOrderitem();
-        }
+        private DalList() { }
     }
 }

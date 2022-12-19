@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
-using Dal;
 using DalApi;
 /// <summary>
 /// The implementation of the order
@@ -14,7 +13,8 @@ namespace BlImplementation;
 
 public class BoOrder : BlApi.IOrder
 {
-    private IDal dal = new Dal.DalList();
+    DalApi.IDal? dal = DalApi.Factory.Get();
+
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {
         List<DO.Order?> dOrders = new List<DO.Order?>();
