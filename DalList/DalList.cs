@@ -7,15 +7,15 @@ using DO;
 using DalApi;
 namespace Dal
 {
-    sealed public class DalList : IDal
+    sealed internal class DalList : IDal
     {
-        //public static IDal Instence { get; } = new DalList();
+        public static IDal Instence { get; } = new DalList();
         //private DalList() { }
         public IOrder Order { get; }
         public IProduct Product { get; }
         public IOrderItem OrderItem { get; }
 
-        public DalList()
+        private DalList()
         {
             Order = new DalOrder();
             Product = new DalProduct();
