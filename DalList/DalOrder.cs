@@ -69,26 +69,15 @@ public class DalOrder : IOrder
     }
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? selector = null)
     {
-        List<Order?> orders = new List<Order?>();
-
+       
         if (selector==null)
-        { 
-            foreach (var p in DataSource.orders)
-            {
-                orders.Add(p);
-            }
+        {      
+            var orders = DataSource.orders.Select(Order => Order );
             return orders;
         }
         else
         {
-            foreach (var p in DataSource.orders)
-            {
-                if (selector(p))
-                {
-                    orders.Add(p);
-                }
-                
-            }
+            var orders = DataSource.orders.Where(selector);
             return orders;
         }
     }
