@@ -3,13 +3,25 @@
 using DalApi;
 using BO;
 using DO;
+using Dal;
 
 namespace BlImplementation;
 /// <summary>
 /// the implementation of the dProduct
 /// </summary>
+/// 
+
 public class BoProduct : BlApi.IProduct
 {
+    BO.ProductForList changeToBo(DO.Product? dalProduct)
+    {
+        BO.ProductForList blProduct = new BO.ProductForList();
+        blProduct.Id = dalProduct.Value.ID;
+        blProduct.Name = dalProduct.Value.Name;
+        blProduct.Price = dalProduct.Value.Price;
+        blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new BO.mayBeNullException());
+        return blProduct;
+    }
     DalApi.IDal? dal = DalApi.Factory.Get();
 
     /// <summary>
@@ -22,27 +34,19 @@ public class BoProduct : BlApi.IProduct
         
         List<DO.Product?> dalProducts = new List<DO.Product?>();
         dalProducts = dal.Product.GetAll().ToList();
-
-        
-        List<BO.ProductForList> blProducts = new List<BO.ProductForList>();
-
-        foreach (var dalProduct in dalProducts)
+      
+        try
         {
-            try
-            {
-                BO.ProductForList blProduct = new BO.ProductForList();
-                blProduct.Id = dalProduct?.ID ?? throw new BO.mayBeNullException();
-                blProduct.Name = dalProduct?.Name;
-                blProduct.Price = dalProduct?.Price ?? throw new BO.mayBeNullException();
-                blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new BO.mayBeNullException());
-                blProducts.Add(blProduct);
-            }
-            catch
-            {
-                throw new BO.NotFoundException();
-            }
+            
+            var blProducts = dalProducts.Select(Product => changeToBo(Product));
+            return blProducts;
+
         }
-        return blProducts;
+        catch
+        {
+            throw new BO.NotFoundException();
+        }
+        
     }
     /// <summary>
     /// Get Product List By Term
@@ -50,34 +54,32 @@ public class BoProduct : BlApi.IProduct
     /// <param name="selector"></param>
     /// <returns></returns>
     /// <exception cref="BO.NotFoundException"></exception>
+    /// 
     public IEnumerable<ProductForList?> GetProductsByTerm(Func<BO.ProductForList?, bool>? selector = null)
     {
         List<DO.Product?> dalProducts = new List<DO.Product?>();
         dalProducts = dal.Product.GetAll().ToList();
 
-        List<BO.ProductForList> blProducts = new List<BO.ProductForList>();
-
+       
         if (selector != null)
         {
-            foreach (var dalProduct in dalProducts)
+            try
             {
-                try
-                {
-                    BO.ProductForList blProduct = new BO.ProductForList();
-                    blProduct.Id = dalProduct?.ID ?? throw new BO.mayBeNullException();
-                    blProduct.Name = dalProduct?.Name;
-                    blProduct.Price = dalProduct?.Price ?? throw new BO.mayBeNullException();
-                    blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new BO.mayBeNullException());
-                    if(selector(blProduct))
-                        blProducts.Add(blProduct);
-                }
-                catch
-                {
-                    throw new BO.NotFoundException();
-                }
+                var blProducts = dalProducts.Select(Product => changeToBo(Product)).Where(selector);
+                return blProducts;
+
+            }
+            catch
+            {
+                throw new BO.NotFoundException();
             }
         }
-        return blProducts;
+        else
+        {
+            var blProducts = dalProducts.Select(Product => changeToBo(Product));
+            return blProducts;
+        }
+        
     }
     /// <summary>
     /// returns dProduct for manager
@@ -247,24 +249,26 @@ public class BoProduct : BlApi.IProduct
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<BO.ProductItem?> CatalogRequest()
+    public IEnumerable<ProductItem?> CatalogRequest()
     {
         List<DO.Product?> products = new List<DO.Product?>();
         products = dal.Product.GetAll().ToList();
+        var productItems = products.Select(Product => changeToBo(Product));
+        /*
+                List<BO.ProductItem> productItems = new List<BO.ProductItem>();
 
-        List<BO.ProductItem> productItems = new List<BO.ProductItem>();
-
-        foreach(var dProduct in products)
-        {
-            BO.ProductItem productItem = new BO.ProductItem();
-            productItem.Id = dProduct?.ID ?? throw new BO.mayBeNullException();
-            productItem.Name = dProduct?.Name;
-            productItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
-            productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
-            productItem.InStock = dProduct?.InStock > 0;
-            productItems.Add(productItem);
-        }
-        return productItems;
+                foreach(var dProduct in products)
+                {
+                    BO.ProductItem productItem = new BO.ProductItem();
+                    productItem.Id = dProduct?.ID ?? throw new BO.mayBeNullException();
+                    productItem.Name = dProduct?.Name;
+                    productItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
+                    productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
+                    productItem.InStock = dProduct?.InStock > 0;
+                    productItems.Add(productItem);
+                }
+        */
+        return (IEnumerable<ProductItem?>)productItems;
     }
 
     /// <summary>

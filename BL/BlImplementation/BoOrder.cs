@@ -15,49 +15,49 @@ public class BoOrder : BlApi.IOrder
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
 
+    BO.OrderForList changeToBo(DO.Order? dOrder)
+    {
+        int TotalAmount = 0;
+        double TotalPrice = 0;
+        BO.OrderForList b = new BO.OrderForList();
+        foreach (var it in dal.OrderItem.GetItemsByOrder(dOrder?.ID ?? throw new mayBeNullException()))
+        {
+            TotalAmount += it?.Amount ?? throw new mayBeNullException();
+            TotalPrice += (it?.Price ?? throw new mayBeNullException()) * (it?.Amount ?? throw new mayBeNullException());
+        }
+        b.AmountOfItems = TotalAmount;
+
+        b.TotalPrice = TotalPrice;
+
+        b.Id = dOrder?.ID ?? throw new mayBeNullException();
+
+        b.CostomerName = dOrder?.CostumerName ?? throw new mayBeNullException();
+
+        if (dOrder?.DeliveryDate != null)
+            b.Status = Enums.OrderStatus.Delivered;
+        else if (dOrder?.ShipDate != null)
+            b.Status = Enums.OrderStatus.Sent;
+        else if (dOrder?.OrderDate != null)
+            b.Status = Enums.OrderStatus.Confirmed;
+        else
+            b.Status = Enums.OrderStatus.NullStatus;
+        return b;
+    }
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {
         List<DO.Order?> dOrders = new List<DO.Order?>();
         dOrders = dal.Order.GetAll().ToList();
-
-        List<BO.OrderForList> bOrdersForList = new List<BO.OrderForList>();
-
-        foreach (var d in dOrders)
+        try
         {
-            try
-            {
-                int TotalAmount = 0;
-                double TotalPrice = 0;
-                BO.OrderForList b = new BO.OrderForList();
-                foreach (var it in dal.OrderItem.GetItemsByOrder(d?.ID ?? throw new mayBeNullException()))
-                {
-                    TotalAmount += it?.Amount ?? throw new mayBeNullException();
-                    TotalPrice += (it?.Price ?? throw new mayBeNullException()) * (it?.Amount ?? throw new mayBeNullException());
-                }
-                b.AmountOfItems = TotalAmount;
-
-                b.TotalPrice = TotalPrice;
-
-                b.Id = d?.ID ?? throw new mayBeNullException();
-
-                b.CostomerName = d?.CostumerName ?? throw new mayBeNullException();
-
-                if (d?.DeliveryDate != null)
-                    b.Status = Enums.OrderStatus.Delivered;
-                else if (d?.ShipDate != null)
-                    b.Status = Enums.OrderStatus.Sent;
-                else if (d?.OrderDate != null)
-                    b.Status = Enums.OrderStatus.Confirmed;
-                else
-                    b.Status = Enums.OrderStatus.NullStatus;
-                bOrdersForList.Add(b);
-            }
-            catch
-            {
-                throw new NotFoundException();
-            }
+            var bOrdersForList = dOrders.Select( dOrders =>  changeToBo(dOrders));
+            return bOrdersForList;
+            
         }
-        return bOrdersForList;
+        catch
+        {
+            throw new NotFoundException();
+        }
+        
     }
 
 

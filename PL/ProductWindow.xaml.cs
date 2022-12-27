@@ -44,6 +44,7 @@ namespace PL
             NameBox.Text = product.Name;
             PriceBox.Text = product.Price.ToString();
             InStockBox.Text = product.InStock.ToString();
+            
         }
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
@@ -59,6 +60,7 @@ namespace PL
                     newProduct.Price = double.Parse(PriceBox.Text);
                     newProduct.InStock = int.Parse(InStockBox.Text);
                     bl.Product.Add(newProduct);
+
                 }
                 catch
                 {
@@ -71,6 +73,8 @@ namespace PL
                 product.InStock = int.Parse(InStockBox.Text);
                 bl.Product.Update(product);
             }
+            this.Close();
+            return;
         }
     }
 }

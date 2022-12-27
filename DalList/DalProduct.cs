@@ -1,5 +1,8 @@
 ﻿using DO;
 using DalApi;
+using System.Linq;
+using System;
+
 namespace Dal;
 
 /// <summary>
@@ -31,6 +34,7 @@ public class DalProduct: IProduct
 
     public void Delete(Product entity)
     {
+         
         foreach (var p in DataSource.products)
         {
             if (p?.ID == entity.ID)
@@ -53,7 +57,9 @@ public class DalProduct: IProduct
                 return;
             }
             count++;
-        }
+        } 
+     
+
         throw new Exception("Product Not Found");
     }
 
@@ -87,24 +93,14 @@ public class DalProduct: IProduct
     {
         if(selector==null)
         {
-            List<Product?> products = new List<Product?>();
-            foreach (var p in DataSource.products)
-            {
-                products.Add(p);
-            }
+             var products = DataSource.products.Select(products => products);
             return products;
         }
         else
         {
-            List<Product?> products = new List<Product?>();
-            foreach (var p in DataSource.products)
-            {
-                if(selector(p))
-                {
-                    products.Add(p);
-                }
-            }
+            var products = DataSource.products.Where(selector);
             return products;
+
         }
         
     }
