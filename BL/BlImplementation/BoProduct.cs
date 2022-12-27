@@ -13,14 +13,24 @@ namespace BlImplementation;
 
 public class BoProduct : BlApi.IProduct
 {
-    BO.ProductForList changeToBo(DO.Product? dalProduct)
+    BO.ProductForList changeToBo1(DO.Product? dalProduct)
     {
         BO.ProductForList blProduct = new BO.ProductForList();
-        blProduct.Id = dalProduct.Value.ID;
-        blProduct.Name = dalProduct.Value.Name;
-        blProduct.Price = dalProduct.Value.Price;
+        blProduct.Id = dalProduct?.ID ?? throw new BO.mayBeNullException();
+        blProduct.Name = dalProduct?.Name ?? throw new BO.mayBeNullException();
+        blProduct.Price = dalProduct?.Price ?? throw new BO.mayBeNullException();
         blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new BO.mayBeNullException());
         return blProduct;
+    }
+    BO.ProductItem changeToBo2(DO.Product? dProduct)
+    {
+        BO.ProductItem productItem = new BO.ProductItem();
+        productItem.Id = dProduct?.ID ?? throw new BO.mayBeNullException();
+        productItem.Name = dProduct?.Name;
+        productItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
+        productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
+        productItem.InStock = dProduct?.InStock > 0;
+        return productItem;
     }
     DalApi.IDal? dal = DalApi.Factory.Get();
 
@@ -38,7 +48,7 @@ public class BoProduct : BlApi.IProduct
         try
         {
             
-            var blProducts = dalProducts.Select(Product => changeToBo(Product));
+            var blProducts = dalProducts.Select(Product => changeToBo1(Product));
             return blProducts;
 
         }
@@ -65,7 +75,7 @@ public class BoProduct : BlApi.IProduct
         {
             try
             {
-                var blProducts = dalProducts.Select(Product => changeToBo(Product)).Where(selector);
+                var blProducts = dalProducts.Select(Product => changeToBo1(Product)).Where(selector);
                 return blProducts;
 
             }
@@ -76,8 +86,9 @@ public class BoProduct : BlApi.IProduct
         }
         else
         {
-            var blProducts = dalProducts.Select(Product => changeToBo(Product));
+             var blProducts = dalProducts.Select (Product => changeToBo1(Product));
             return blProducts;
+            
         }
         
     }
@@ -253,21 +264,25 @@ public class BoProduct : BlApi.IProduct
     {
         List<DO.Product?> products = new List<DO.Product?>();
         products = dal.Product.GetAll().ToList();
-        var productItems = products.Select(Product => changeToBo(Product));
-        /*
-                List<BO.ProductItem> productItems = new List<BO.ProductItem>();
+        //var productItems = products.Select(Product => changeToBo2(Product));
+        products.OrderBy(p => p?.Name).ThenBy(p => p?.ID);
+        var productItems = from p in products
+                           
+                           select changeToBo2(p);
+                           /*
+                                   List<BO.ProductItem> productItems = new List<BO.ProductItem>();
 
-                foreach(var dProduct in products)
-                {
-                    BO.ProductItem productItem = new BO.ProductItem();
-                    productItem.Id = dProduct?.ID ?? throw new BO.mayBeNullException();
-                    productItem.Name = dProduct?.Name;
-                    productItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
-                    productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
-                    productItem.InStock = dProduct?.InStock > 0;
-                    productItems.Add(productItem);
-                }
-        */
+                                   foreach(var dProduct in products)
+                                   {
+                                       BO.ProductItem productItem = new BO.ProductItem();
+                                       productItem.Id = dProduct?.ID ?? throw new BO.mayBeNullException();
+                                       productItem.Name = dProduct?.Name;
+                                       productItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
+                                       productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
+                                       productItem.InStock = dProduct?.InStock > 0;
+                                       productItems.Add(productItem);
+                                   }
+                           */
         return (IEnumerable<ProductItem?>)productItems;
     }
 
@@ -285,19 +300,19 @@ public class BoProduct : BlApi.IProduct
         BO.ProductItem BproductItem = new BO.ProductItem();
 
         
-            foreach (var dProduct in Dproducts)
+        foreach (var dProduct in Dproducts)
+        {
+            if (dProduct?.ID == id)
             {
-                if (dProduct?.ID == id)
-                {
-                    BproductItem.Name = dProduct?.Name;
-                    BproductItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
-                    BproductItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
-                    BproductItem.Amount = dProduct?.InStock ?? throw new BO.mayBeNullException();
-                    return BproductItem;
-                }
+                BproductItem.Name = dProduct?.Name;
+                BproductItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
+                BproductItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
+                BproductItem.Amount = dProduct?.InStock ?? throw new BO.mayBeNullException();
+                return BproductItem;
             }
-            throw new BO.NotFoundException();
         }
+        throw new BO.NotFoundException();
+    }
         
 
 }
