@@ -1,5 +1,7 @@
 ﻿using DO;
 using DalApi;
+using System;
+
 namespace Dal;
 /// <summary>
 /// Implementation of the CRUD functions on Order item
@@ -67,59 +69,48 @@ public class DalOrderitem :  IOrderItem
     /// <exception cref="Exception"></exception>
     public IEnumerable<OrderItem?> GetItemsByOrder(int orderID, Func<OrderItem?, bool>? selector=null)
     {
-        List<OrderItem?> specificItems = new List<OrderItem?>() { };
+        
+        bool chacking(OrderItem? orderItem)
+        {
+            if (orderItem.Value.ID == orderID)
+            {
+                return true;
+            }
+            return false;
+        }
         if (selector == null)
         {
-            
-            foreach (var p in DataSource.orderItems)
-            {
-                if (p?.ID == orderID)
-                {
-                    specificItems.Add(p);
-                }
-            }
-
+            var specificItems = DataSource.orderItems.Where(chacking);
             if (specificItems == null)
             {
                 throw new NotFoundException();
             }
+            return specificItems;
         }
         else
         {
-            foreach (var p in DataSource.orderItems)
+           
+            var specificItems = DataSource.orderItems.Where(chacking).Where(selector);
+            if (specificItems == null)
             {
-                if ((p?.ID == orderID) && ( selector(p)))
-                {
-                    specificItems.Add(p);
-                }
+                throw new NotFoundException();
             }
+            return specificItems;
         }
-        return specificItems;
+        
     }
        
     //returns an array of all products
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? selector=null)
     {
         if(selector == null)
-        {
-            List<OrderItem?> allItems = new List<OrderItem?>() { };
-            foreach (var p in DataSource.orderItems)
-            {
-                allItems.Add(p);
-            }
+        { 
+            var allItems = DataSource.orderItems.Select(OrderItem => OrderItem);
             return allItems;
         }
         else
-        {
-            List<OrderItem?> allItems = new List<OrderItem?>() { };
-            foreach (var p in DataSource.orderItems)
-            {
-                if (selector(p))
-                {
-                    allItems.Add(p);
-                }
-
-            }
+        {  
+            var allItems = DataSource.orderItems.Where(selector);
             return allItems;
         }
         
