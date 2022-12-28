@@ -187,3 +187,46 @@ public class DalConfigException : Exception
     public DalConfigException(string msg) : base(msg) { }
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
+/*
+
+catch(DO.NotFoundException)
+{
+    throw new BO.NotFoundException();
+}
+catch (DO.AlreadyExistException)
+{
+    throw new BO.AlreadyExistException();
+}
+catch (DO.NotvalidException)
+{
+    throw new BO.NotvalidException();
+}
+catch (DO.RequestProductFaildException)
+{
+    throw new BO.RequestProductFaildException();
+}
+catch (DO.InCorrectDataException)
+{
+    throw new BO.InCorrectDataException();
+}
+catch (DO.ProductExistInOrderException)
+{
+    throw new BO.ProductExistInOrderException();
+}
+catch (DO.NotInExistinStockException)
+{
+    throw new BO.NotInExistinStockException();
+}
+catch (DO.mayBeNullException)
+{
+    throw new BO.mayBeNullException();
+}
+catch(DO.DalConfigException)
+{
+    throw new Exception();
+}
+catch
+{
+    throw new Exception();
+}
+*/

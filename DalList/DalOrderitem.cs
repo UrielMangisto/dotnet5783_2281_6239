@@ -104,8 +104,14 @@ public class DalOrderitem :  IOrderItem
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? selector=null)
     {
         if(selector == null)
-        { 
-            var allItems = DataSource.orderItems.Select(OrderItem => OrderItem);
+        {
+            var a = from di in DataSource.orderItems
+                    select new
+                    {
+                        di = di
+
+                    };
+             var allItems = DataSource.orderItems.Select(OrderItem => OrderItem);
             return allItems;
         }
         else

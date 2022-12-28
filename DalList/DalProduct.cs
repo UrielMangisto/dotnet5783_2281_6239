@@ -31,7 +31,11 @@ public class DalProduct: IProduct
         DataSource.products.Add(entity);
         return id;
     }
-
+    /*public void Delete(int id)
+{
+if (_ds._students.RemoveAll(p => p?.ID == id) == 0)
+throw new DoesNotExistException("Can't delete non-existing student");
+}*/
     public void Delete(Product entity)
     {
          
@@ -93,14 +97,18 @@ public class DalProduct: IProduct
     {
         if(selector==null)
         {
-             var products = DataSource.products.Select(products => products);
+            var products = from dp in DataSource.products 
+                           select (dp);
             return products;
         }
         else
         {
+            var a = from dp in DataSource.products
+                    group new { dp } by dp?.Name;
+
+
             var products = DataSource.products.Where(selector);
             return products;
-
         }
         
     }

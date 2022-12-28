@@ -18,7 +18,7 @@ internal static class DataSource
 
     public static void addProductsToTheArray()
     {
-        products.Add ( new Product { Category = Category.Kids, ID = 769988, InStock = 7, Name = "Harry Poter 1", Price = 130.0 });  ;
+        products.Add ( new Product { Category = Category.Kids, ID = 769988, InStock = 7, Name = "Harry Poter 1", Price = 130.0 });
         products.Add ( new Product { Category = Category.Kids, ID = 784848, InStock = 3, Name = "Harry Poter 2", Price = 120.0 });
         products.Add ( new Product { Category = Category.Kids, ID = 939345, InStock = 5, Name = "Harry Poter 3", Price = 110.0 });
         products.Add ( new Product { Category = Category.Kids, ID = 923844, InStock = 2, Name = "Harry Poter 4", Price = 110.0 });

@@ -49,7 +49,9 @@ public class BoOrder : BlApi.IOrder
         dOrders = dal.Order.GetAll().ToList();
         try
         {
-            var bOrdersForList = dOrders.Select( dOrders =>  changeToBo(dOrders));
+            var bOrdersForList = from dp in dOrders
+                                 let bp = changeToBo(dp)
+                                 select bp;
             return bOrdersForList;
             
         }

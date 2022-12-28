@@ -9,6 +9,7 @@ public class Enums
 {
     public enum OrderStatus { Confirmed, Sent, Delivered, NullStatus };
     public enum Category {All, Action, Fantasy, Romanticism, Kids, Comics };
+    public enum Category1 { Action = 1, Fantasy, Romanticism, Kids, Comics };
     public enum ClientName { Reuven, Simon, Levi, Juda, David, Jakob };
     public enum ClientAddress { };
     public enum MainChoise { Order = 1, Cart, Product };
