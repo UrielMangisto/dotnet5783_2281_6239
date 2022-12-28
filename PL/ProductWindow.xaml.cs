@@ -60,11 +60,11 @@ namespace PL
                     newProduct.Price = double.Parse(PriceBox.Text);
                     newProduct.InStock = int.Parse(InStockBox.Text);
                     bl.Product.Add(newProduct);
-
                 }
-                catch
+                catch()
                 {
-
+                    MessageBox.Show("Error!");
+                    this.Close();
                 }
             }
             else 

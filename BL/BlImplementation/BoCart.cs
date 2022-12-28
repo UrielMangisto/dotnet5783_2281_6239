@@ -12,13 +12,15 @@ public class BoCart : BlApi.ICart
 
     public BO.Cart Add(BO.Cart C, int id) 
     {
+        try
+        {
             DO.Product? Dproduct = new DO.Product?();
             Dproduct = dal?.Product.Get(id);
             if (Dproduct?.InStock <= 0)
                 throw new NotInExistinStockException();
-            if(C.OrderItems == null)
+            if (C.OrderItems == null)
             {
-                
+
                 BO.OrderItem BorderItem1 = new BO.OrderItem();
                 Random randNum1 = new Random();
                 int nId1 = randNum1.Next(10000);
@@ -38,7 +40,7 @@ public class BoCart : BlApi.ICart
                 if (pro?.Id == id)
                 {
                     pro.Amount++;
-                    C.TotalPrice+=pro.Price;
+                    C.TotalPrice += pro.Price;
                     return C;
                 }
             }
@@ -55,31 +57,74 @@ public class BoCart : BlApi.ICart
             C.OrderItems.Add(BorderItem);
             C.TotalPrice += Dproduct?.Price ?? throw new mayBeNullException();
             return C;
+        }
+        catch (DO.NotFoundException)
+        {
+            throw new BO.NotFoundException();
+        }
+        catch (DO.AlreadyExistException)
+        {
+            throw new BO.AlreadyExistException();
+        }
+        catch (DO.NotvalidException)
+        {
+            throw new BO.NotvalidException();
+        }
+        catch (DO.RequestProductFaildException)
+        {
+            throw new BO.RequestProductFaildException();
+        }
+        catch (DO.InCorrectDataException)
+        {
+            throw new BO.InCorrectDataException();
+        }
+        catch (DO.ProductExistInOrderException)
+        {
+            throw new BO.ProductExistInOrderException();
+        }
+        catch (DO.NotInExistinStockException)
+        {
+            throw new BO.NotInExistinStockException();
+        }
+        catch (DO.mayBeNullException)
+        {
+            throw new BO.mayBeNullException();
+        }
+        catch (DO.DalConfigException)
+        {
+            throw new Exception();
+        }
+        catch
+        {
+            throw new Exception();
+        }
     }
 
     public BO.Cart Update(BO.Cart C, int ID, int amount)
-    {      
+    {
+        try
+        {
             DO.Product Dproduct = new DO.Product();
-            foreach(var pro in C.OrderItems)
+            foreach (var pro in C.OrderItems)
             {
-                if(pro?.Id == ID)
+                if (pro?.Id == ID)
                 {
-                    if(amount == 0)
+                    if (amount == 0)
                     {
                         C.OrderItems.Remove(pro);
                         C.TotalPrice -= pro.Price * pro.Amount;
                         return C;
                     }
                     int diff = amount - pro.Amount;
-                    if(diff > 0)
+                    if (diff > 0)
                     {
-                        if(Dproduct.InStock < diff)
+                        if (Dproduct.InStock < diff)
                             throw new NotInExistinStockException();//there are no products in the stock
                         pro.Amount = amount;
                         C.TotalPrice += pro.Price * diff;
                         return C;
                     }
-                    if(diff < 0)
+                    if (diff < 0)
                     {
                         pro.Amount = amount;
                         C.TotalPrice += pro.Price * diff;
@@ -88,19 +133,61 @@ public class BoCart : BlApi.ICart
                 }
             }
             return C;
-        
-       
+        }
+        catch (DO.NotFoundException)
+        {
+            throw new BO.NotFoundException();
+        }
+        catch (DO.AlreadyExistException)
+        {
+            throw new BO.AlreadyExistException();
+        }
+        catch (DO.NotvalidException)
+        {
+            throw new BO.NotvalidException();
+        }
+        catch (DO.RequestProductFaildException)
+        {
+            throw new BO.RequestProductFaildException();
+        }
+        catch (DO.InCorrectDataException)
+        {
+            throw new BO.InCorrectDataException();
+        }
+        catch (DO.ProductExistInOrderException)
+        {
+            throw new BO.ProductExistInOrderException();
+        }
+        catch (DO.NotInExistinStockException)
+        {
+            throw new BO.NotInExistinStockException();
+        }
+        catch (DO.mayBeNullException)
+        {
+            throw new BO.mayBeNullException();
+        }
+        catch (DO.DalConfigException)
+        {
+            throw new Exception();
+        }
+        catch
+        {
+            throw new Exception();
+        }
+
     }
  
     public void Confirmation(BO.Cart C)
     {
+        try
+        {
             if (C.CostumerName == null)
                 throw new InCorrectDataException();
             if (C.CostumerEmail == null || !C.CostumerEmail.Contains('@'))
                 throw new InCorrectDataException();
             if (C.CostumerAddress == null)
                 throw new InCorrectDataException();
-           
+
             DO.Order Dorder = new DO.Order();
             //Dorder.ID = dal.Order.GetAll().Last().ID + 1;
             Dorder.CostumerName = C.CostumerName;
@@ -130,6 +217,46 @@ public class BoCart : BlApi.ICart
                 dal.OrderItem.Add(tempItem);
                 product.InStock -= item.Amount;
             }
-        
+        }
+        catch (DO.NotFoundException)
+        {
+            throw new BO.NotFoundException();
+        }
+        catch (DO.AlreadyExistException)
+        {
+            throw new BO.AlreadyExistException();
+        }
+        catch (DO.NotvalidException)
+        {
+            throw new BO.NotvalidException();
+        }
+        catch (DO.RequestProductFaildException)
+        {
+            throw new BO.RequestProductFaildException();
+        }
+        catch (DO.InCorrectDataException)
+        {
+            throw new BO.InCorrectDataException();
+        }
+        catch (DO.ProductExistInOrderException)
+        {
+            throw new BO.ProductExistInOrderException();
+        }
+        catch (DO.NotInExistinStockException)
+        {
+            throw new BO.NotInExistinStockException();
+        }
+        catch (DO.mayBeNullException)
+        {
+            throw new BO.mayBeNullException();
+        }
+        catch (DO.DalConfigException)
+        {
+            throw new Exception();
+        }
+        catch
+        {
+            throw new Exception();
+        }
     }
 }

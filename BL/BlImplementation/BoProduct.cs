@@ -173,23 +173,38 @@ public class BoProduct : BlApi.IProduct
     /// <exception cref="Exception"></exception>
     public void Add(BO.Product bProduct)
     {
-        if (bProduct.ID < 0)
-            throw new BO.InCorrectDataException();
-        if (bProduct.Name == null) 
-            throw new BO.InCorrectDataException();
-        if (bProduct.Price <= 0) 
-            throw new BO.InCorrectDataException();
-        if (bProduct.InStock < 0)
-            throw new BO.InCorrectDataException();
+        try
+        {
+            if (bProduct.ID < 0)
+                throw new BO.InCorrectDataException();
+            if (bProduct.Name == null)
+                throw new BO.InCorrectDataException();
+            if (bProduct.Price <= 0)
+                throw new BO.InCorrectDataException();
+            if (bProduct.InStock < 0)
+                throw new BO.InCorrectDataException();
 
-        DO.Product dProduct = new DO.Product();
-        dProduct.ID = (int)bProduct.ID;
-        dProduct.Name = bProduct.Name;
-        dProduct.Price = bProduct.Price;
-        dProduct.Category = (DO.Category)bProduct.Category;
-        dProduct.InStock = bProduct.InStock;
+            DO.Product dProduct = new DO.Product();
+            dProduct.ID = (int)bProduct.ID;
+            dProduct.Name = bProduct.Name;
+            dProduct.Price = bProduct.Price;
+            dProduct.Category = (DO.Category)bProduct.Category;
+            dProduct.InStock = bProduct.InStock;
 
-        dal.Product.Add(dProduct);
+            dal.Product.Add(dProduct);
+        }
+        catch(BO.AlreadyExistException)
+        {
+            throw new BO.AlreadyExistException();
+        }
+        catch(BO.InCorrectDataException)
+        {
+            throw new BO.InCorrectDataException();
+        }
+        catch
+        {
+            throw new Exception();
+        }
     }
 
 
@@ -200,29 +215,44 @@ public class BoProduct : BlApi.IProduct
     /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        int i = 0;
-        List<DO.Product?> dProducts = new List<DO.Product?>();
-        dProducts = dal.Product.GetAll().ToList();
-        foreach (DO.Product? dProduct in dProducts)
+        try
         {
-            if (id == dProduct?.ID)
+            int i = 0;
+            List<DO.Product?> dProducts = new List<DO.Product?>();
+            dProducts = dal.Product.GetAll().ToList();
+            foreach (DO.Product? dProduct in dProducts)
             {
-                break;
+                if (id == dProduct?.ID)
+                {
+                    break;
+                }
+                i++;
             }
-            i++;
+            List<DO.OrderItem?> DoOrderitems = new List<DO.OrderItem?>();
+            DoOrderitems = dal.OrderItem.GetAll().ToList();
+            foreach (var dor in DoOrderitems)
+            {
+                if (id == dor?.ProductID)
+                    throw new BO.ProductExistInOrderException();
+            }
+            if (i == dProducts.Count)
+            {
+                throw new BO.NotFoundException();
+            }
+            dal.Product.Delete(dal.Product.Get(id) ?? throw new BO.mayBeNullException());
         }
-        List <DO.OrderItem?> DoOrderitems = new List<DO.OrderItem?>();
-        DoOrderitems = dal.OrderItem.GetAll().ToList();
-        foreach(var dor in DoOrderitems)
-        {
-           if(id == dor?.ProductID)
-                throw new BO.ProductExistInOrderException();    
-        }
-        if (i == dProducts.Count)
+        catch (BO.NotFoundException)
         {
             throw new BO.NotFoundException();
         }
-        dal.Product.Delete(dal.Product.Get(id) ?? throw new BO.mayBeNullException());
+        catch (BO.InCorrectDataException)
+        {
+            throw new BO.InCorrectDataException();
+        }
+        catch
+        {
+            throw new Exception();
+        }
     }
 
 
