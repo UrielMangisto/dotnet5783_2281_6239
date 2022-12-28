@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,12 @@ namespace PL
     /// <summary>
     /// Interaction logic for ProductsListWindow.xaml
     /// </summary>
-    public partial class ProductsListWindow : Window
+    public partial class ProductsListWindow : Window ,INotifyPropertyChanged
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public ProductsListWindow()
         {
             InitializeComponent();
@@ -50,6 +54,16 @@ namespace PL
         private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             new ProductWindow((BO.ProductForList)ProductListView.SelectedItem).Show();
+        }
+        private BO.ProductForList selectedProduct;
+        public BO.ProductForList SelectedProduct 
+        {
+            get => selectedProduct;
+            set
+            {
+                selectedProduct = value;
+                OnPropertyChanged(nameof(SelectedProduct));
+            }
         }
     }
 }
