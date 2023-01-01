@@ -33,6 +33,7 @@ namespace PL
             ProductsSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
         }
 
+
         private void ProductsSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Enums.Category category = (BO.Enums.Category)ProductsSelector.SelectedItem;
