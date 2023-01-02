@@ -20,18 +20,18 @@ public class BoOrder : BlApi.IOrder
         int TotalAmount = 0;
         double TotalPrice = 0;
         BO.OrderForList b = new BO.OrderForList();
-        foreach (var it in dal.OrderItem.GetItemsByOrder(dOrder?.ID ?? throw new mayBeNullException()))
+        foreach (var it in dal.OrderItem.GetItemsByOrder(dOrder?.ID ?? throw new DO.mayBeNullException()))
         {
-            TotalAmount += it?.Amount ?? throw new mayBeNullException();
-            TotalPrice += (it?.Price ?? throw new mayBeNullException()) * (it?.Amount ?? throw new mayBeNullException());
+            TotalAmount += it?.Amount ?? throw new DO.mayBeNullException();
+            TotalPrice += (it?.Price ?? throw new DO.mayBeNullException()) * (it?.Amount ?? throw new DO.mayBeNullException());
         }
         b.AmountOfItems = TotalAmount;
 
         b.TotalPrice = TotalPrice;
 
-        b.Id = dOrder?.ID ?? throw new mayBeNullException();
+        b.Id = dOrder?.ID ?? throw new DO.mayBeNullException();
 
-        b.CostomerName = dOrder?.CostumerName ?? throw new mayBeNullException();
+        b.CostomerName = dOrder?.CostumerName ?? throw new DO.mayBeNullException();
 
         if (dOrder?.DeliveryDate != null)
             b.Status = Enums.OrderStatus.Delivered;
@@ -55,9 +55,13 @@ public class BoOrder : BlApi.IOrder
             return bOrdersForList;
             
         }
-        catch
+        catch(DO.NotFoundException)
         {
-            throw new NotFoundException();
+            throw new BO.NotFoundException();
+        }
+        catch(DO.mayBeNullException)
+        {
+            throw new BO.mayBeNullException();
         }
         
     }
@@ -72,7 +76,7 @@ public class BoOrder : BlApi.IOrder
                 DO.Order? Dorder = new DO.Order();
                 BO.Order Border = new BO.Order();
 
-                Dorder = dal.Order.Get(id) ?? throw new mayBeNullException();
+                Dorder = dal.Order.Get(id) ?? throw new DO.mayBeNullException();
 
                 Border.Id = id;
                 Border.CostomerName = Dorder?.CostumerName;
@@ -97,12 +101,12 @@ public class BoOrder : BlApi.IOrder
                 {
                     BO.OrderItem item2 = new BO.OrderItem();
                     //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-                    item2.Id = item?.ID ?? throw new mayBeNullException();
-                    item2.ProductId = item?.ProductID ?? throw new mayBeNullException();
+                    item2.Id = item?.ID ?? throw new DO.mayBeNullException();
+                    item2.ProductId = item?.ProductID ?? throw new DO.mayBeNullException();
                     item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
-                    item2.Price = item?.Price ?? throw new mayBeNullException();
-                    item2.Amount = item?.Amount ?? throw new mayBeNullException();
-                    item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNullException();
+                    item2.Price = item?.Price ?? throw new DO.mayBeNullException();
+                    item2.Amount = item?.Amount ?? throw new DO.mayBeNullException();
+                    item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new DO.mayBeNullException();
                     //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
                     Border.OrderItems.Add(item2);
                 }
@@ -115,12 +119,16 @@ public class BoOrder : BlApi.IOrder
             }
             else
             {
-                throw new InCorrectDataException();
+                throw new DO.InCorrectDataException();
             }
         }
-        catch
+        catch(DO.mayBeNullException)
         {
-            throw new InCorrectDataException();
+            throw new BO.InCorrectDataException();
+        }
+        catch(DO.InCorrectDataException)
+        {
+            throw new BO.InCorrectDataException();
         }
     }
 
@@ -131,93 +139,111 @@ public class BoOrder : BlApi.IOrder
 
     public Order ShippingUpdate(int id)
     {
-        DO.Order? Dorder = new DO.Order();
-        Dorder = dal.Order.Get(id);
-        if (Dorder?.ShipDate != null || Dorder?.OrderDate == null)
+        try
         {
-            throw new NotFoundException();
+            DO.Order? Dorder = new DO.Order();
+            Dorder = dal.Order.Get(id);
+            if (Dorder?.ShipDate != null || Dorder?.OrderDate == null)
+            {
+                throw new DO.NotFoundException();
+            }
+
+            DO.Order updateOrder = Dorder ?? throw new DO.mayBeNullException();
+            updateOrder.ShipDate = DateTime.Now;
+            dal.Order.Update(updateOrder);
+            BO.Order Border = new BO.Order();
+            Border.OrderItems = new List<OrderItem?>();
+            Border.Id = id;
+            Border.CostomerName = Dorder?.CostumerName;
+            Border.CostomerEmail = Dorder?.CostumerEmail;
+            Border.CostomerAdress = Dorder?.CostumerAddress;
+            Border.DeliveryDate = Dorder?.DeliveryDate;
+            Border.ShipDate = Dorder?.ShipDate;
+            Border.OrderDate = Dorder?.OrderDate;
+            Border.Status = Enums.OrderStatus.Sent;
+
+            List<DO.OrderItem?> DorderItems = new List<DO.OrderItem?>();
+            DorderItems = dal.OrderItem.GetItemsByOrder(id).ToList();
+            foreach (DO.OrderItem? item in DorderItems)
+            {
+                BO.OrderItem item2 = new BO.OrderItem();
+                //לאתחל את האורדר אייטם2 הזה לפי אייטם 
+                item2.Id = item?.ID ?? throw new DO.mayBeNullException();
+                item2.ProductId = item?.ProductID ?? throw new DO.mayBeNullException();
+                item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
+                item2.Price = item?.Price ?? throw new DO.mayBeNullException();
+                item2.Amount = item?.Amount ?? throw new DO.mayBeNullException();
+                item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new DO.mayBeNullException();
+                //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
+                Border.OrderItems.Add(item2);
+            }
+            Border.TotalPrice = 0;
+            foreach (var item in Border.OrderItems)
+            {
+                Border.TotalPrice += item.TotalPrice;
+            }
+            return Border;
         }
-
-        DO.Order updateOrder = Dorder ?? throw new mayBeNullException();
-        updateOrder.ShipDate = DateTime.Now;
-        dal.Order.Update(updateOrder);
-        BO.Order Border = new BO.Order();
-        Border.OrderItems = new List<OrderItem?>();
-        Border.Id = id;
-        Border.CostomerName = Dorder?.CostumerName;
-        Border.CostomerEmail = Dorder?.CostumerEmail;
-        Border.CostomerAdress = Dorder?.CostumerAddress;
-        Border.DeliveryDate = Dorder?.DeliveryDate;
-        Border.ShipDate = Dorder?.ShipDate;
-        Border.OrderDate = Dorder?.OrderDate;
-        Border.Status = Enums.OrderStatus.Sent;
-
-        List<DO.OrderItem?> DorderItems = new List<DO.OrderItem?>();
-        DorderItems = dal.OrderItem.GetItemsByOrder(id).ToList();
-        foreach (DO.OrderItem? item in DorderItems)
+        catch(DO.NotFoundException)
         {
-            BO.OrderItem item2 = new BO.OrderItem();
-            //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-            item2.Id = item?.ID ?? throw new mayBeNullException();
-            item2.ProductId = item?.ProductID ?? throw new mayBeNullException();
-            item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
-            item2.Price = item?.Price ?? throw new mayBeNullException();
-            item2.Amount = item?.Amount ?? throw new mayBeNullException();
-            item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNullException();
-            //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
-            Border.OrderItems.Add(item2);
-        }
-        Border.TotalPrice = 0;
-        foreach (var item in Border.OrderItems)
+            throw new BO.NotFoundException();
+        } 
+        catch(DO.mayBeNullException)
         {
-            Border.TotalPrice += item.TotalPrice;
+            throw new BO.mayBeNullException();
         }
-        return Border;
-
     }
 
     public Order UpdateDelivery(int id)
     {
-        DO.Order? Dorder = new DO.Order?();
-        Dorder = dal.Order.Get(id);
-        if (Dorder?.DeliveryDate != null || Dorder?.ShipDate == null || Dorder?.OrderDate == null)
+        try
         {
-            throw new mayBeNullException();//NEED TO CHACK   
-        }
-        DO.Order updateOrder = Dorder ?? throw new mayBeNullException();
-        updateOrder.DeliveryDate = DateTime.Now;
-        dal.Order.Update(updateOrder);;
-        BO.Order Border = new BO.Order();
-        Border.Id = id;
-        Border.CostomerName = Dorder?.CostumerName;
-        Border.CostomerEmail = Dorder?.CostumerEmail;
-        Border.CostomerAdress = Dorder?.CostumerAddress;
-        Border.DeliveryDate = Dorder?.DeliveryDate;
-        Border.ShipDate = Dorder?.ShipDate;
-        Border.OrderDate = Dorder?.OrderDate;
-        Border.Status = Enums.OrderStatus.Delivered;
+            DO.Order? Dorder = new DO.Order?();
+            Dorder = dal.Order.Get(id);
+            if (Dorder?.DeliveryDate != null || Dorder?.ShipDate == null || Dorder?.OrderDate == null)
+            {
+                throw new DO.mayBeNullException();//NEED TO CHACK   
+            }
+            DO.Order updateOrder = Dorder ?? throw new DO.mayBeNullException();
+            updateOrder.DeliveryDate = DateTime.Now;
+            dal.Order.Update(updateOrder); ;
+            BO.Order Border = new BO.Order();
+            Border.Id = id;
+            Border.CostomerName = Dorder?.CostumerName;
+            Border.CostomerEmail = Dorder?.CostumerEmail;
+            Border.CostomerAdress = Dorder?.CostumerAddress;
+            Border.DeliveryDate = Dorder?.DeliveryDate;
+            Border.ShipDate = Dorder?.ShipDate;
+            Border.OrderDate = Dorder?.OrderDate;
+            Border.Status = Enums.OrderStatus.Delivered;
 
-        List<DO.OrderItem?> DorderItems = new List<DO.OrderItem?>();
-        DorderItems = dal.OrderItem.GetItemsByOrder(id).ToList();
-        foreach (DO.OrderItem? item in DorderItems)
-        {
-            BO.OrderItem item2 = new BO.OrderItem();
-            //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-            item2.Id = item?.ID ?? throw new mayBeNullException();
-            item2.ProductId = item?.ProductID ?? throw new mayBeNullException();
-            item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
-            item2.Price = item?.Price ?? throw new mayBeNullException();
-            item2.Amount = item?.Amount ?? throw new mayBeNullException();
-            item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new mayBeNullException();
-            //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
-            Border.OrderItems.Add(item2);
+            List<DO.OrderItem?> DorderItems = new List<DO.OrderItem?>();
+            DorderItems = dal.OrderItem.GetItemsByOrder(id).ToList();
+            foreach (DO.OrderItem? item in DorderItems)
+            {
+                BO.OrderItem item2 = new BO.OrderItem();
+                //לאתחל את האורדר אייטם2 הזה לפי אייטם 
+                item2.Id = item?.ID ?? throw new DO.mayBeNullException();
+                item2.ProductId = item?.ProductID ?? throw new DO.mayBeNullException();
+                item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
+                item2.Price = item?.Price ?? throw new DO.mayBeNullException();
+                item2.Amount = item?.Amount ?? throw new DO.mayBeNullException();
+                item2.TotalPrice = (item?.Price * item?.Amount) ?? throw new DO.mayBeNullException();
+                //לשים את האייטם2 הזה בתוך הרשימה של האייטמים שמסוג 'בו', יעני לעשות אדד
+                Border.OrderItems.Add(item2);
+            }
+            Border.TotalPrice = 0;
+            foreach (var item in Border.OrderItems)
+            {
+                Border.TotalPrice += item.TotalPrice;
+            }
+            return Border;
         }
-        Border.TotalPrice = 0;
-        foreach (var item in Border.OrderItems)
+        catch(DO.mayBeNullException)
         {
-            Border.TotalPrice += item.TotalPrice;
+            throw new BO.mayBeNullException();
         }
-        return Border;
+        
 
     }
 
@@ -254,18 +280,26 @@ public class BoOrder : BlApi.IOrder
     }
     public void changeamountformnanager(int newAmount, OrderItem orderItem, Order order)
     {
-        if (order.Status != Enums.OrderStatus.Sent)
+        try
         {
-            foreach (var p in order.OrderItems)
+            if (order.Status != Enums.OrderStatus.Sent)
             {
-                if (p.Id <= orderItem.Id)
-                    p.Amount = newAmount;
+                foreach (var p in order.OrderItems)
+                {
+                    if (p.Id <= orderItem.Id)
+                        p.Amount = newAmount;
+                }
+            }
+            else
+            {
+                throw new DO.NotvalidException("order alredy sent");
             }
         }
-        else
+        catch(DO.NotvalidException)
         {
-            throw new NotvalidException("order alredy sent");
+            throw new BO.NotvalidException();
         }
+        
     }
 
 }

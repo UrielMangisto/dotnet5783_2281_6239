@@ -64,7 +64,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
         } 
      
 
-        throw new Exception("Product Not Found");
+        throw new ("Product Not Found");
     }
 
     public Product? Get(int id)
@@ -74,7 +74,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
            if (p?.ID == id)
                 return p;
         }
-        throw new Exception("Product Not Found");
+        throw new NotFoundException("Product Not Found");
     }
     public Product? Get(Func<Product?, bool>? selector)
     {

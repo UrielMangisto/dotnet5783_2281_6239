@@ -17,7 +17,7 @@ public class BoCart : BlApi.ICart
             DO.Product? Dproduct = new DO.Product?();
             Dproduct = dal?.Product.Get(id);
             if (Dproduct?.InStock <= 0)
-                throw new NotInExistinStockException();
+                throw new DO.NotExistInStockException();
             if (C.OrderItems == null)
             {
 
@@ -27,12 +27,12 @@ public class BoCart : BlApi.ICart
                 BorderItem1.Id = nId1;
                 BorderItem1.ProductId = id;
                 BorderItem1.ItemName = Dproduct?.Name;
-                BorderItem1.Price = Dproduct?.Price ?? throw new mayBeNullException();
+                BorderItem1.Price = Dproduct?.Price ?? throw new DO.mayBeNullException();
                 BorderItem1.Amount = 1;
                 BorderItem1.TotalPrice = BorderItem1.Price;
                 C.OrderItems = new List<OrderItem?>();
                 C.OrderItems.Add(BorderItem1);
-                C.TotalPrice += Dproduct?.Price ?? throw new mayBeNullException();
+                C.TotalPrice += Dproduct?.Price ?? throw new DO.mayBeNullException();
                 return C;
             }
             foreach (var pro in C.OrderItems)
@@ -50,12 +50,12 @@ public class BoCart : BlApi.ICart
             int nId = randNum.Next(10000);
             BorderItem.Id = nId;
             BorderItem.ProductId = id;
-            BorderItem.ItemName = Dproduct?.Name ?? throw new mayBeNullException();
-            BorderItem.Price = Dproduct?.Price ?? throw new mayBeNullException();
+            BorderItem.ItemName = Dproduct?.Name ?? throw new DO.mayBeNullException();
+            BorderItem.Price = Dproduct?.Price ?? throw new DO.mayBeNullException();
             BorderItem.Amount = 1;
             BorderItem.TotalPrice = BorderItem.Price;
             C.OrderItems.Add(BorderItem);
-            C.TotalPrice += Dproduct?.Price ?? throw new mayBeNullException();
+            C.TotalPrice += Dproduct?.Price ?? throw new DO.mayBeNullException();
             return C;
         }
         catch (DO.NotFoundException)
@@ -82,9 +82,9 @@ public class BoCart : BlApi.ICart
         {
             throw new BO.ProductExistInOrderException();
         }
-        catch (DO.NotInExistinStockException)
+        catch (DO.NotExistInStockException)
         {
-            throw new BO.NotInExistinStockException();
+            throw new BO.NotExistInStockException();
         }
         catch (DO.mayBeNullException)
         {
@@ -119,7 +119,7 @@ public class BoCart : BlApi.ICart
                     if (diff > 0)
                     {
                         if (Dproduct.InStock < diff)
-                            throw new NotInExistinStockException();//there are no products in the stock
+                            throw new DO.NotExistInStockException();//there are no products in the stock
                         pro.Amount = amount;
                         C.TotalPrice += pro.Price * diff;
                         return C;
@@ -134,46 +134,12 @@ public class BoCart : BlApi.ICart
             }
             return C;
         }
-        catch (DO.NotFoundException)
+        catch (DO.NotExistInStockException)
         {
-            throw new BO.NotFoundException();
+            throw new BO.NotExistInStockException();
         }
-        catch (DO.AlreadyExistException)
-        {
-            throw new BO.AlreadyExistException();
-        }
-        catch (DO.NotvalidException)
-        {
-            throw new BO.NotvalidException();
-        }
-        catch (DO.RequestProductFaildException)
-        {
-            throw new BO.RequestProductFaildException();
-        }
-        catch (DO.InCorrectDataException)
-        {
-            throw new BO.InCorrectDataException();
-        }
-        catch (DO.ProductExistInOrderException)
-        {
-            throw new BO.ProductExistInOrderException();
-        }
-        catch (DO.NotInExistinStockException)
-        {
-            throw new BO.NotInExistinStockException();
-        }
-        catch (DO.mayBeNullException)
-        {
-            throw new BO.mayBeNullException();
-        }
-        catch (DO.DalConfigException)
-        {
-            throw new Exception();
-        }
-        catch
-        {
-            throw new Exception();
-        }
+        
+         
 
     }
  
@@ -182,11 +148,11 @@ public class BoCart : BlApi.ICart
         try
         {
             if (C.CostumerName == null)
-                throw new InCorrectDataException();
+                throw new DO.InCorrectDataException();
             if (C.CostumerEmail == null || !C.CostumerEmail.Contains('@'))
-                throw new InCorrectDataException();
+                throw new DO.InCorrectDataException();
             if (C.CostumerAddress == null)
-                throw new InCorrectDataException();
+                throw new DO.InCorrectDataException();
 
             DO.Order Dorder = new DO.Order();
             //Dorder.ID = dal.Order.GetAll().Last().ID + 1;
@@ -203,60 +169,33 @@ public class BoCart : BlApi.ICart
                 DO.Product? Dproduct = new DO.Product?();
                 Dproduct = dal.Product.Get(item.Id);
                 if (Dproduct?.InStock <= 0)
-                    throw new NotvalidException();
+                    throw new DO.NotvalidException();
                 if (item?.Amount <= 0)
-                    throw new NotvalidException();
+                    throw new DO.NotvalidException();
                 BorderItems.Add(item);
             }
             foreach (BO.OrderItem item in BorderItems)
             {
                 DO.Product product = new DO.Product();
-                product = dal.Product.Get(item.Id) ?? throw new mayBeNullException();
+                product = dal.Product.Get(item.Id) ?? throw new DO.mayBeNullException();
                 DO.OrderItem tempItem = new DO.OrderItem();
                 tempItem.OrderID = Dorder.ID;
                 dal.OrderItem.Add(tempItem);
                 product.InStock -= item.Amount;
             }
         }
-        catch (DO.NotFoundException)
-        {
-            throw new BO.NotFoundException();
-        }
-        catch (DO.AlreadyExistException)
-        {
-            throw new BO.AlreadyExistException();
-        }
         catch (DO.NotvalidException)
         {
             throw new BO.NotvalidException();
-        }
-        catch (DO.RequestProductFaildException)
-        {
-            throw new BO.RequestProductFaildException();
-        }
+        }   
         catch (DO.InCorrectDataException)
         {
             throw new BO.InCorrectDataException();
-        }
-        catch (DO.ProductExistInOrderException)
-        {
-            throw new BO.ProductExistInOrderException();
-        }
-        catch (DO.NotInExistinStockException)
-        {
-            throw new BO.NotInExistinStockException();
         }
         catch (DO.mayBeNullException)
         {
             throw new BO.mayBeNullException();
         }
-        catch (DO.DalConfigException)
-        {
-            throw new Exception();
-        }
-        catch
-        {
-            throw new Exception();
-        }
+        
     }
 }

@@ -10,9 +10,12 @@ public class DalOrder : IOrder
 {
     public int Add(Order entity)
     {
-        entity.ID = DataSource.Config.NextOrderId;
-        DataSource.orders.Add(entity);
-        return entity.ID;
+  
+       entity.ID = DataSource.Config.NextOrderId;
+       DataSource.orders.Add(entity);
+       return entity.ID;
+        
+        
     }
 
     public void Delete(Order entity)

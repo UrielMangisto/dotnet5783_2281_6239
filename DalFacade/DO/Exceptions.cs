@@ -140,21 +140,21 @@ public class ProductExistInOrderException : Exception
 }
 
 [Serializable]
-public class NotInExistinStockException : Exception
+public class NotExistInStockException : Exception
 {
-    public NotInExistinStockException()
+    public NotExistInStockException()
     {
         Console.WriteLine("Not In Exist in Stock Exception");
     }
-    public NotInExistinStockException(string massge) : base(massge)
+    public NotExistInStockException(string massge) : base(massge)
     {
 
     }
-    public NotInExistinStockException(string massge, Exception inner) : base(massge, inner)
+    public NotExistInStockException(string massge, Exception inner) : base(massge, inner)
     {
 
     }
-    public NotInExistinStockException(SerializationInfo info, StreamingContext context) : base(info, context)
+    public NotExistInStockException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
 
     }
