@@ -15,12 +15,16 @@ public class BoProduct : BlApi.IProduct
 {
     BO.ProductForList changeToBo1(DO.Product? dalProduct)
     {
-        BO.ProductForList blProduct = new BO.ProductForList();
-        blProduct.Id = dalProduct?.ID ?? throw new BO.mayBeNullException();
-        blProduct.Name = dalProduct?.Name ?? throw new BO.mayBeNullException();
-        blProduct.Price = dalProduct?.Price ?? throw new BO.mayBeNullException();
-        blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new BO.mayBeNullException());
-        return blProduct;
+  
+        
+         BO.ProductForList blProduct = new BO.ProductForList();
+         blProduct.Id = dalProduct?.ID ?? throw new DO.mayBeNullException();
+         blProduct.Name = dalProduct?.Name ?? throw new DO.mayBeNullException();
+         blProduct.Price = dalProduct?.Price ?? throw new DO.mayBeNullException();
+         blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new DO.mayBeNullException());
+         return blProduct;
+       
+        
     }
     BO.ProductItem changeToBo2(DO.Product? dProduct)
     {
@@ -52,7 +56,7 @@ public class BoProduct : BlApi.IProduct
             return blProducts;
 
         }
-        catch
+        catch(DO.NotFoundException)
         {
             throw new BO.NotFoundException();
         }
@@ -79,7 +83,7 @@ public class BoProduct : BlApi.IProduct
                 return blProducts;
 
             }
-            catch
+            catch(DO.NotFoundException)
             {
                 throw new BO.NotFoundException();
             }
@@ -117,10 +121,10 @@ public class BoProduct : BlApi.IProduct
             }
             else
             {
-                throw new BO.RequestProductFaildException();
+                throw new DO.RequestProductFaildException();
             }
         }
-        catch(Exception)
+        catch(DO.RequestProductFaildException)
         {
             throw new BO.RequestProductFaildException();
         }
@@ -134,37 +138,50 @@ public class BoProduct : BlApi.IProduct
     /// <returns></returns>
     public ProductItem ProductDetailsForCostumer(int id, Cart cart)
     {
-        if (cart.OrderItems == null)
+        try
+        {
+            if (cart.OrderItems == null)
+            {
+                throw new DO.NotvalidException();
+            }
+            if (id >= 0)
+            {
+                DO.Product? dProduct = new DO.Product?();
+                dProduct = dal.Product.Get(id);
+                BO.ProductItem pItem = new BO.ProductItem();
+                pItem.Id = dProduct?.ID ?? throw new DO.mayBeNullException();
+                pItem.Name = dProduct?.Name ?? throw new DO.mayBeNullException();
+                pItem.Price = dProduct?.Price ?? throw new DO.mayBeNullException();
+                pItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new DO.mayBeNullException());
+                if (dProduct?.InStock > 0)
+                {
+                    pItem.InStock = true;
+                }
+                else
+                {
+                    pItem.InStock = false;
+                }
+                pItem.Amount = 0;
+                foreach (BO.OrderItem orderItem in cart.OrderItems)
+                {
+                    if (orderItem.Id == pItem.Id)
+                        pItem.Amount += orderItem.Amount;
+                }
+                return pItem;
+            }
+            throw new DO.RequestProductFaildException();
+        }
+        catch(DO.NotvalidException)
         {
             throw new BO.NotvalidException();
         }
-        if (id >= 0)
+        catch(DO.mayBeNullException)
         {
-            DO.Product? dProduct = new DO.Product?();
-            dProduct = dal.Product.Get(id);
-            BO.ProductItem pItem = new BO.ProductItem();
-            pItem.Id = dProduct?.ID ?? throw new BO.mayBeNullException();
-            pItem.Name = dProduct?.Name ?? throw new BO.mayBeNullException();
-            pItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
-            pItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
-            if (dProduct?.InStock > 0)
-            {
-                pItem.InStock = true;
-            }
-            else
-            {
-                pItem.InStock = false;
-            }
-            pItem.Amount = 0;
-            foreach (BO.OrderItem orderItem in cart.OrderItems)
-            {
-                if (orderItem.Id == pItem.Id)
-                    pItem.Amount += orderItem.Amount;
-            }
-            return pItem;
+            throw new BO.mayBeNullException();
         }
-        throw new BO.RequestProductFaildException();
+
     }
+        
 
     /// <summary>
     /// adding a new bProduct
@@ -176,13 +193,13 @@ public class BoProduct : BlApi.IProduct
         try
         {
             if (bProduct.ID < 0)
-                throw new BO.InCorrectDataException();
+                throw new DO.InCorrectDataException();
             if (bProduct.Name == null)
-                throw new BO.InCorrectDataException();
+                throw new DO.InCorrectDataException();
             if (bProduct.Price <= 0)
-                throw new BO.InCorrectDataException();
+                throw new DO.InCorrectDataException();
             if (bProduct.InStock < 0)
-                throw new BO.InCorrectDataException();
+                throw new DO.InCorrectDataException();
 
             DO.Product dProduct = new DO.Product();
             dProduct.ID = (int)bProduct.ID;
@@ -193,11 +210,11 @@ public class BoProduct : BlApi.IProduct
 
             dal.Product.Add(dProduct);
         }
-        catch(BO.AlreadyExistException)
+        catch(DO.AlreadyExistException)
         {
             throw new BO.AlreadyExistException();
         }
-        catch(BO.InCorrectDataException)
+        catch(DO.InCorrectDataException)
         {
             throw new BO.InCorrectDataException();
         }
@@ -233,19 +250,19 @@ public class BoProduct : BlApi.IProduct
             foreach (var dor in DoOrderitems)
             {
                 if (id == dor?.ProductID)
-                    throw new BO.ProductExistInOrderException();
+                    throw new DO.ProductExistInOrderException();
             }
             if (i == dProducts.Count)
             {
-                throw new BO.NotFoundException();
+                throw new DO.NotFoundException();
             }
-            dal.Product.Delete(dal.Product.Get(id) ?? throw new BO.mayBeNullException());
+            dal.Product.Delete(dal.Product.Get(id) ?? throw new DO.mayBeNullException());
         }
-        catch (BO.NotFoundException)
+        catch (DO.NotFoundException)
         {
             throw new BO.NotFoundException();
         }
-        catch (BO.InCorrectDataException)
+        catch (DO.InCorrectDataException)
         {
             throw new BO.InCorrectDataException();
         }
@@ -263,24 +280,31 @@ public class BoProduct : BlApi.IProduct
     /// <exception cref="Exception"></exception>
     public void Update(BO.Product bProduct)
     {
-        if (bProduct.ID < 0)
-            throw new BO.InCorrectDataException();
-        if (bProduct.Name == null)
-            throw new BO.InCorrectDataException();
-        if (bProduct.Price <= 0)
-            throw new BO.InCorrectDataException();
-        if (bProduct.InStock < 0)
-            throw new BO.InCorrectDataException();
+        try
+        {
+            if (bProduct.ID < 0)
+                throw new DO.InCorrectDataException();
+            if (bProduct.Name == null)
+                throw new DO.InCorrectDataException();
+            if (bProduct.Price <= 0)
+                throw new DO.InCorrectDataException();
+            if (bProduct.InStock < 0)
+                throw new DO.InCorrectDataException();
 
-        DO.Product dProduct = new DO.Product();
-        //exceptions
-        
-         dProduct.ID = (int)bProduct.ID;
-         dProduct.Name = bProduct.Name;
-         dProduct.Price = bProduct.Price;
-         dProduct.Category = (DO.Category)bProduct.Category;
-         dProduct.InStock = bProduct.InStock;
-         dal.Product.Update(dProduct);
+            DO.Product dProduct = new DO.Product();
+            //exceptions
+
+            dProduct.ID = (int)bProduct.ID;
+            dProduct.Name = bProduct.Name;
+            dProduct.Price = bProduct.Price;
+            dProduct.Category = (DO.Category)bProduct.Category;
+            dProduct.InStock = bProduct.InStock;
+            dal.Product.Update(dProduct);
+        }
+        catch(DO.InCorrectDataException)
+        {
+            throw new BO.InCorrectDataException();
+        }
        
 
     }
@@ -297,22 +321,7 @@ public class BoProduct : BlApi.IProduct
         //var productItems = products.Select(Product => changeToBo2(Product));
         products.OrderBy(p => p?.Name).ThenBy(p => p?.ID);
         var productItems = from p in products
-                           
                            select changeToBo2(p);
-                           /*
-                                   List<BO.ProductItem> productItems = new List<BO.ProductItem>();
-
-                                   foreach(var dProduct in products)
-                                   {
-                                       BO.ProductItem productItem = new BO.ProductItem();
-                                       productItem.Id = dProduct?.ID ?? throw new BO.mayBeNullException();
-                                       productItem.Name = dProduct?.Name;
-                                       productItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
-                                       productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
-                                       productItem.InStock = dProduct?.InStock > 0;
-                                       productItems.Add(productItem);
-                                   }
-                           */
         return (IEnumerable<ProductItem?>)productItems;
     }
 
@@ -324,24 +333,35 @@ public class BoProduct : BlApi.IProduct
     /// <exception cref="Exception"></exception>
     public ProductItem RequestDetailsFromCostumer(int id)
     {
-        List<DO.Product?> Dproducts = new List<DO.Product?>();
-        Dproducts = dal.Product.GetAll().ToList();
-
-        BO.ProductItem BproductItem = new BO.ProductItem();
-
-        
-        foreach (var dProduct in Dproducts)
+        try
         {
-            if (dProduct?.ID == id)
+            List<DO.Product?> Dproducts = new List<DO.Product?>();
+            Dproducts = dal.Product.GetAll().ToList();
+
+            BO.ProductItem BproductItem = new BO.ProductItem();
+
+
+            foreach (var dProduct in Dproducts)
             {
-                BproductItem.Name = dProduct?.Name;
-                BproductItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
-                BproductItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
-                BproductItem.Amount = dProduct?.InStock ?? throw new BO.mayBeNullException();
-                return BproductItem;
+                if (dProduct?.ID == id)
+                {
+                    BproductItem.Name = dProduct?.Name;
+                    BproductItem.Price = dProduct?.Price ?? throw new DO.mayBeNullException();
+                    BproductItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new DO.mayBeNullException());
+                    BproductItem.Amount = dProduct?.InStock ?? throw new DO.mayBeNullException();
+                    return BproductItem;
+                }
             }
+            throw new BO.NotFoundException();
         }
-        throw new BO.NotFoundException();
+        catch(DO.mayBeNullException)
+        {
+            throw new BO.mayBeNullException();
+        }
+        catch(DO.NotFoundException)
+        {
+            throw new BO.NotFoundException();
+        }
     }
         
 

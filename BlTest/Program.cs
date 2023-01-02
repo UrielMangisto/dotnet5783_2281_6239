@@ -236,7 +236,7 @@ press 1 to Get product list
             {
 
             }
-            catch (NotInExistinStockException)
+            catch (NotExistInStockException)
             {
 
             }
@@ -270,7 +270,7 @@ press 1 to Get product list
 
             Console.WriteLine("enter category");
             int.TryParse(Console.ReadLine(), out cat);
-            product.Category = (BO.Enums.Category)(cat);
+            product.Category = (BO.Enums.Category1)(cat);
 
             Console.WriteLine("enter Product price");
             product.Price = int.Parse(Console.ReadLine());
