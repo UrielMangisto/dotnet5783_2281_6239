@@ -363,6 +363,7 @@ public class BoProduct : BlApi.IProduct
             throw new BO.NotFoundException();
         }
     }
-        
 
+    public ProductForList GetProductForList(int productId)
+   => changeToBo1(dal.Product.Get(productId));
 }

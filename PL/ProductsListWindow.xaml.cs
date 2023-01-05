@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Common;
 using System.Linq;
@@ -20,16 +21,30 @@ namespace PL
     /// <summary>
     /// Interaction logic for ProductsListWindow.xaml
     /// </summary>
-    public partial class ProductsListWindow : Window ,INotifyPropertyChanged
+    public partial class ProductsListWindow : Window //,INotifyPropertyChanged
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+
+
+        public ObservableCollection<BO.ProductForList> ProductForLists
+        {
+            get { return (ObservableCollection<BO.ProductForList>)GetValue(ProductForListsProperty); }
+            set { SetValue(ProductForListsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ProductForLists.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ProductForListsProperty =
+            DependencyProperty.Register("ProductForLists", typeof(ObservableCollection<BO.ProductForList>), typeof(ProductsListWindow));
+
+        //public event PropertyChangedEventHandler? PropertyChanged;
 
         public ProductsListWindow()
         {
             InitializeComponent();
-            ProductListView.ItemsSource = bl.Product.GetProductList();
+           
+            ProductForLists = new ObservableCollection<BO.ProductForList>(bl.Product.GetProductList()!);
+            
             ProductsSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
         }
 
@@ -39,19 +54,22 @@ namespace PL
             BO.Enums.Category category = (BO.Enums.Category)ProductsSelector.SelectedItem;
             if(category == BO.Enums.Category.All)
             {
-                ProductListView.ItemsSource = bl.Product.GetProductList();
+                ProductForLists = new ObservableCollection<BO.ProductForList>(bl.Product.GetProductList()!);
             }
             else
             {
-                ProductListView.ItemsSource = bl.Product.GetProductsByTerm(x => x?.Category == category);
+                ProductForLists = new ObservableCollection<BO.ProductForList>(bl.Product.GetProductsByTerm(x => x?.Category == category));
             }
         }
-
+        
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
-            new ProductWindow().Show();
+            new ProductWindow(addProductForList).Show();
         }
-
+        private void addProductForList(int productId)
+        {
+            ProductForLists.Add(bl.Product.GetProductForList(productId));
+        }
         private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             new ProductWindow((BO.ProductForList)ProductListView.SelectedItem).Show();

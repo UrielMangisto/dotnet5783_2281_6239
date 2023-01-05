@@ -22,10 +22,14 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
         private bool add;//if false update mode
-        private BO.Product product;
-        public ProductWindow()
+        
+        private BO.Product product = new BO.Product();
+
+        private Action<int> action;
+        public ProductWindow(Action<int> action)
         {
             InitializeComponent();
+            this.action = action;   
             add = true;
             CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category1));
         }
@@ -34,16 +38,14 @@ namespace PL
             InitializeComponent();
             add = false;
             product = bl.Product.ProductDetailsForManager(productForList.Id);
+            this.DataContext = product;
             AddProductButton.Content = "Update";
             IdBox.IsReadOnly = true;
             CategoryComboBox.IsReadOnly = true;
             NameBox.IsReadOnly = true;
-            IdBox.Text = product.ID.ToString();
+
             CategoryComboBox.Items.Add(product.Category.ToString());
             CategoryComboBox.SelectedValue = product.Category.ToString();
-            NameBox.Text = product.Name;
-            PriceBox.Text = product.Price.ToString();
-            InStockBox.Text = product.InStock.ToString();
         }
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
@@ -59,6 +61,7 @@ namespace PL
                     newProduct.Price = double.Parse(PriceBox.Text);
                     newProduct.InStock = int.Parse(InStockBox.Text);
                     bl.Product.Add(newProduct);
+                    action?.Invoke(newProduct.ID);
                     MessageBox.Show("Product added succesfully!");
                 }
                 catch

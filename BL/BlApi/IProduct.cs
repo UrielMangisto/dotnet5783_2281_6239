@@ -69,4 +69,5 @@ public interface IProduct
     /// <param name="id"></param>
     /// <returns></returns>
     public ProductItem RequestDetailsFromCostumer(int id);
+    ProductForList GetProductForList(int productId);
 }
