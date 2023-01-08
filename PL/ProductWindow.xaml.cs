@@ -25,6 +25,9 @@ namespace PL
         
         private BO.Product product = new BO.Product();
 
+        public BO.ProductForList Product { get; set; }
+
+
         private Action<int> action;
         public int ID
         { 
@@ -41,10 +44,15 @@ namespace PL
             add = true;
             CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category1));
         }
-        public ProductWindow(BO.ProductForList productForList)
+        public ProductWindow(BO.ProductForList productForList, Action<int> action)
         {
             InitializeComponent();
             add = false;
+
+            this.action = action;
+
+            Product = productForList;
+
             product = bl.Product.ProductDetailsForManager(productForList.Id);
             this.DataContext = product;
             AddProductButton.Content = "Update";
@@ -82,7 +90,11 @@ namespace PL
             { 
                 product.Price = double.Parse(PriceBox.Text);
                 product.InStock = int.Parse(InStockBox.Text);
+
                 bl.Product.Update(product);
+
+                action?.Invoke(product.ID);
+
                 MessageBox.Show("Product updated succesfully!");
             }
             this.Close();

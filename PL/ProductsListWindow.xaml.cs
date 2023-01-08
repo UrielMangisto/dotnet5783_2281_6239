@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -35,7 +36,7 @@ namespace PL
         public static readonly DependencyProperty ProductForListsProperty =
             DependencyProperty.Register("ProductForLists", typeof(ObservableCollection<BO.ProductForList>), typeof(ProductsListWindow));
 
-        //public event PropertyChangedEventHandler? PropertyChanged;
+        //public event PropertyChangedEventHandler? PropertyChanged; 
 
         public ProductsListWindow()
         {
@@ -44,6 +45,8 @@ namespace PL
             ProductForLists = new ObservableCollection<BO.ProductForList>(bl.Product.GetProductList()!);
             
             ProductsSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
+
+            ProductListView.ItemsSource = ProductForLists;
         }
 
 
@@ -68,9 +71,17 @@ namespace PL
         {
             ProductForLists.Add(bl.Product.GetProductForList(productId));
         }
+
+        private void updateProductForList(int productId)
+        {
+            int index = ProductListView.SelectedIndex;
+            ProductForLists[index] = bl.Product.GetProductForList(productId);
+        }
+
         private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            new ProductWindow((BO.ProductForList)ProductListView.SelectedItem).Show();
+            var prod = (BO.ProductForList)ProductListView.SelectedItem;
+            new ProductWindow(prod, updateProductForList).Show();
         }
     }
 }
