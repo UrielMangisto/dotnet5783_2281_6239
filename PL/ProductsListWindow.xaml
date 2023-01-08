@@ -27,8 +27,7 @@
                   VerticalAlignment="Stretch"
                   Grid.Row="1" 
                   Background="WhiteSmoke"
-                  MouseDoubleClick="ProductListView_MouseDoubleClick"
-                  SelectedValue="{Binding SelectedProduct}">
+                  MouseDoubleClick="ProductListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" 

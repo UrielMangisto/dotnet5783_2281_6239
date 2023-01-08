@@ -21,11 +21,9 @@ namespace PL
     /// <summary>
     /// Interaction logic for ProductsListWindow.xaml
     /// </summary>
-    public partial class ProductsListWindow : Window //,INotifyPropertyChanged
+    public partial class ProductsListWindow : Window 
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-
-
 
         public ObservableCollection<BO.ProductForList> ProductForLists
         {
@@ -74,16 +72,5 @@ namespace PL
         {
             new ProductWindow((BO.ProductForList)ProductListView.SelectedItem).Show();
         }
-        /*private BO.ProductForList selectedProduct;
-        public BO.ProductForList SelectedProduct 
-        {
-            get => selectedProduct;
-            set
-            {
-                selectedProduct = value;
-                OnPropertyChanged(nameof(SelectedProduct));
-               
-            }
-        }*/
     }
 }

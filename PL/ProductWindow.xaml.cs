@@ -26,6 +26,14 @@ namespace PL
         private BO.Product product = new BO.Product();
 
         private Action<int> action;
+        public int ID
+        { 
+            get { return (int)GetValue(IdProperty); } 
+            set { SetValue(IdProperty, value); }
+        }
+
+        public static DependencyProperty IdProperty =
+            DependencyProperty.Register("ID", typeof(int), typeof(ProductWindow));
         public ProductWindow(Action<int> action)
         {
             InitializeComponent();
