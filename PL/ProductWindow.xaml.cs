@@ -18,6 +18,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for AddProductWindow.xaml
     /// </summary>
+    
     public partial class ProductWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
@@ -25,24 +26,79 @@ namespace PL
         
         private BO.Product product = new BO.Product();
 
+        #region Depedency Properties
         public BO.ProductForList Product { get; set; }
 
 
         private Action<int> action;
-        public int ID
-        { 
-            get { return (int)GetValue(IdProperty); } 
-            set { SetValue(IdProperty, value); }
+        public Array EnumValuesArray
+        {
+            get { return (Array)GetValue(EnumValuesArrayProperty); }
+            set { SetValue(EnumValuesArrayProperty, value); }
         }
 
-        public static DependencyProperty IdProperty =
+        // Using a DependencyProperty as the backing store for EnumValuesArray.  This enables animation, styling, binding, etc...
+        public static DependencyProperty EnumValuesArrayProperty =
+            DependencyProperty.Register("EnumValuesArray", typeof(Array), typeof(ProductWindow));
+
+
+
+        public int ID
+        {
+            get { return (int)GetValue(IDProperty); }
+            set { SetValue(IDProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ID.  This enables animation, styling, binding, etc...
+        public static DependencyProperty IDProperty =
             DependencyProperty.Register("ID", typeof(int), typeof(ProductWindow));
+
+
+
+        public string Name
+        {
+            get { return (string)GetValue(NameProperty); }
+            set { SetValue(NameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Name.  This enables animation, styling, binding, etc...
+        public static DependencyProperty NameProperty =
+            DependencyProperty.Register("Name", typeof(string), typeof(ProductWindow));
+
+
+
+        public double Price
+        {
+            get { return (double)GetValue(PriceProperty); }
+            set { SetValue(PriceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Price.  This enables animation, styling, binding, etc...
+        public static DependencyProperty PriceProperty =
+            DependencyProperty.Register("Price", typeof(double), typeof(ProductWindow));
+
+
+
+        public int InStock
+        {
+            get { return (int)GetValue(InStockProperty); }
+            set { SetValue(InStockProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for InStock.  This enables animation, styling, binding, etc...
+        public static DependencyProperty InStockProperty =
+            DependencyProperty.Register("InStock", typeof(int), typeof(ProductWindow));
+
+
+
+        #endregion
+
         public ProductWindow(Action<int> action)
         {
             InitializeComponent();
             this.action = action;   
             add = true;
-            CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category1));
+            EnumValuesArray = Enum.GetValues(typeof(BO.Enums.Category1));
         }
         public ProductWindow(BO.ProductForList productForList, Action<int> action)
         {
@@ -54,12 +110,14 @@ namespace PL
             Product = productForList;
 
             product = bl.Product.ProductDetailsForManager(productForList.Id);
-            this.DataContext = product;
+            ID = product.ID;
+            Name = product.Name;
+            Price = product.Price;
+            InStock = product.InStock;
             AddProductButton.Content = "Update";
             IdBox.IsReadOnly = true;
             CategoryComboBox.IsReadOnly = true;
             NameBox.IsReadOnly = true;
-
             CategoryComboBox.Items.Add(product.Category.ToString());
             CategoryComboBox.SelectedValue = product.Category.ToString();
         }
@@ -71,11 +129,11 @@ namespace PL
                 try
                 {
                     BO.Product newProduct = new BO.Product();
-                    newProduct.ID = int.Parse(IdBox.Text);
+                    newProduct.ID = ID;
                     newProduct.Category = (BO.Enums.Category1)CategoryComboBox.SelectedItem;
-                    newProduct.Name = NameBox.Text;
-                    newProduct.Price = double.Parse(PriceBox.Text);
-                    newProduct.InStock = int.Parse(InStockBox.Text);
+                    newProduct.Name = Name;
+                    newProduct.Price = Price;
+                    newProduct.InStock = InStock;
                     bl.Product.Add(newProduct);
                     action?.Invoke(newProduct.ID);
                     MessageBox.Show("Product added succesfully!");

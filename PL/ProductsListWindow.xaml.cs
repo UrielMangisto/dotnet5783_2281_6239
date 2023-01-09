@@ -25,7 +25,8 @@ namespace PL
     public partial class ProductsListWindow : Window 
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-
+        //לא הספקתי להגדיר חריגות, טפל בזה בבקשה
+        //וגם צריך ליצור את שאר החלונות (אותו רעיון כמו פה, זה מופיע בתיאור הכללי) י
         public ObservableCollection<BO.ProductForList> ProductForLists
         {
             get { return (ObservableCollection<BO.ProductForList>)GetValue(ProductForListsProperty); }
@@ -33,11 +34,12 @@ namespace PL
         }
 
         // Using a DependencyProperty as the backing store for ProductForLists.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ProductForListsProperty =
+        private static readonly DependencyProperty ProductForListsProperty =
             DependencyProperty.Register("ProductForLists", typeof(ObservableCollection<BO.ProductForList>), typeof(ProductsListWindow));
 
         //public event PropertyChangedEventHandler? PropertyChanged; 
 
+        
         public ProductsListWindow()
         {
             InitializeComponent();
@@ -46,7 +48,7 @@ namespace PL
             
             ProductsSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
 
-            ProductListView.ItemsSource = ProductForLists;
+           // ProductListView.ItemsSource = ProductForLists;
         }
 
 

@@ -36,7 +36,7 @@
             <TextBlock Text="In Stock:" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" FontWeight="Bold" FontSize="30"/>
             
             <TextBox x:Name="IdBox" Text="{Binding ID}" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" FontSize="30"/>
-            <ComboBox x:Name="CategoryComboBox" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center"  FontSize="30"/>
+            <ComboBox x:Name="CategoryComboBox" ItemsSource="{Binding EnumValuesArray}" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center"  FontSize="30"/>
             <TextBox x:Name="NameBox" Text="{Binding Name}"  Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" FontSize="30"/>
             <TextBox x:Name="PriceBox" Text="{Binding Price}" Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" FontSize="30"/>
             <TextBox x:Name="InStockBox" Text="{Binding InStock}" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center"  FontSize="30"/>
