@@ -10,28 +10,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using BlApi;
+using BO;
 
-namespace PL
+namespace PL.Order
 {
-    
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for OrderWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OrderWindow : Window
     {
-        BlApi.IBl? bl = BlApi.Factory.Get();
-        public MainWindow()
+        private readonly IBl bl = Factory.Get();
+
+        public OrderWindow(int orderId)
         {
             InitializeComponent();
-        }
-        private void ToListButton_Click(object sender, RoutedEventArgs e)
-        {
-            var managerWindow = new ManagerPanel();
-            this.Close();
-            managerWindow.Show();
+
+            Title = $"Order id: {orderId}";
+            lblOrderDetails.Text = bl.Order.DetailsOfOrderForManager(orderId)?.ToString();
         }
     }
 }

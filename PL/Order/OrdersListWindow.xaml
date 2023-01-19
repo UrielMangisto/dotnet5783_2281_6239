@@ -1,0 +1,52 @@
+﻿<Window x:Class="PL.Order.OrdersListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="OrderForList" Height="640" Width="800">
+    <Grid>
+        <ListView x:Name="lstOrders" 
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Grid.Row="1" 
+                  Background="WhiteSmoke"
+                  MouseDoubleClick="lstOrders_MouseDoubleClick">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Send Order"
+                              Click="MenuItem_SendOrder_Click" />
+                    <MenuItem Header="Change Order Delivery"
+                              Click="MenuItem_OrderDelivery_Click" />
+                    <MenuItem Header="Order Tracking"
+                              Click="MenuItem_OrderTracking_Click" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" 
+                                    Header="Id"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding CustomerName}"
+                                    Header="Name"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Status}"
+                                    Header="Status"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding AmountOfItems}"
+                                    Header="Amount Of Items"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}"
+                                    Header="Price"
+                                    Width="Auto" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid> 
+        
+        
+
+
+
+</Window>

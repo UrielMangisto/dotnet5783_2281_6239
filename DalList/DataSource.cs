@@ -45,19 +45,19 @@ internal static class DataSource
             order.OrderDate = dateOfStart + new TimeSpan(Randomally.Next(180), 0, 0, 0);
             if (i<= 16)
             {
-                order.ShipDate = order.OrderDate + new TimeSpan(Randomally.Next(90),0, 0, 0);
+                //order.ShipDate = order.OrderDate + new TimeSpan(Randomally.Next(90),0, 0, 0);
             }
             else
             {
-                order.ShipDate = DateTime.MinValue;
+                //order.ShipDate = DateTime.MinValue;
             }
             if (i<= 10)
             {
-                order.DeliveryDate = order.OrderDate + new TimeSpan(90, 0, 0, 0);
+                //order.DeliveryDate = order.OrderDate + new TimeSpan(90, 0, 0, 0);
             }
             else
             {
-                order.DeliveryDate= DateTime.MinValue;
+                //order.DeliveryDate= DateTime.MinValue;
             }
             orders.Add (order);
         }
