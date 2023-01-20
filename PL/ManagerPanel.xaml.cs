@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PL.Cart;
 
 namespace PL
 {
@@ -34,6 +35,12 @@ namespace PL
         {
             var ordersWindow = new Order.OrdersListWindow();
             ordersWindow.Show();
+        }
+
+        private void btnCartList_Click(object sender, RoutedEventArgs e)
+        {
+            var cartWindow = new CartWindow();
+            cartWindow.Show();
         }
     }
 }

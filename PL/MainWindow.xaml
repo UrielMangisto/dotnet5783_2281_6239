@@ -12,6 +12,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="ToListButton" Content="Admin" FontSize="50" Background="ForestGreen" Foreground="White" Click="ToListButton_Click"/>
+        <Button x:Name="ToListButton"
+                Content="Admin"
+                FontSize="50" Background="ForestGreen" Foreground="White"
+                Click="ToListButton_Click"/>
     </Grid>
 </Window>

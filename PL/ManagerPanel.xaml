@@ -26,6 +26,8 @@
             <Button x:Name="btnOdersList"
                     Click="btnOdersList_Click"
                     Content="Orders" />
+            <Button x:Name="btnCartList"
+                    Content="Cart" Click="btnCartList_Click"/>
         </StackPanel>
     </Grid>
 </Window>
