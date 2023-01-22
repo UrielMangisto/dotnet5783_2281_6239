@@ -39,10 +39,11 @@ namespace PL
 
         //public event PropertyChangedEventHandler? PropertyChanged; 
 
-        
+
         public ProductsListWindow()
         {
             InitializeComponent();
+            
            
             ProductForLists = new ObservableCollection<BO.ProductForList>(bl.Product.GetProductList()!);
             
@@ -55,7 +56,7 @@ namespace PL
         private void ProductsSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Enums.Category category = (BO.Enums.Category)ProductsSelector.SelectedItem;
-            if(category == BO.Enums.Category.All)
+            if (category == BO.Enums.Category.All)
             {
                 ProductForLists = new ObservableCollection<BO.ProductForList>(bl.Product.GetProductList()!);
             }

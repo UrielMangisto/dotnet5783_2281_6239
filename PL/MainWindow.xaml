@@ -12,9 +12,19 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
         <Button x:Name="ToListButton"
+                Grid.Row="0"
                 Content="Admin"
                 FontSize="50" Background="ForestGreen" Foreground="White"
                 Click="ToListButton_Click"/>
+        <Button x:Name="NewOrderButton"
+                Grid.Row="1"
+                Content="New Order"
+                FontSize="50" Background="ForestGreen" Foreground="White"/>
+        <Button x:Name="OrderTrackingButton"
+                Grid.Row="2"
+                Content="Order Tracking"
+                FontSize="50" Background="ForestGreen" Foreground="White"/>
     </Grid>
 </Window>

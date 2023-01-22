@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
-        Title="OrderTrackingWindow" Height="450" Width="800">
+        Title="OrderTrackingWindow" Height="640" Width="800">
     <Grid>
         <TextBlock x:Name="lblOrderTrack"
                    FontSize="13"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
-                   Margin="10" />
+                   Margin="10"/>
     </Grid>
 </Window>

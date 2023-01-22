@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using BlApi;
+using BO;
 
 namespace PL.Order
 {
@@ -23,21 +24,36 @@ namespace PL.Order
     public partial class OrdersListWindow : Window
     {
         private readonly IBl bl = Factory.Get();
-        ObservableCollection<BO.OrderForList> Orders = new ObservableCollection<BO.OrderForList>();
+
+
+        public ObservableCollection<BO.OrderForList> Orders
+        {
+            get { return (ObservableCollection<BO.OrderForList>)GetValue(OrdersProperty); }
+            set { SetValue(OrdersProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OrdersProperty =
+            DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList>), typeof(OrdersListWindow));
+
+        //ObservableCollection<BO.OrderForList> Orders = new ObservableCollection<BO.OrderForList>();
+
+
 
         public OrdersListWindow()
         {
             InitializeComponent();
+            Orders = new ObservableCollection<BO.OrderForList>(bl.Order.GetOrderList());
 
-            try
+            /*try
             {
-                lstOrders.ItemsSource = Orders;
+                //lstOrders.ItemsSource = Orders;
                 LoadOrders();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
         }
 
         private void LoadOrders()
@@ -52,7 +68,7 @@ namespace PL.Order
 
         private void lstOrders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var orderWindow = new OrderWindow(((BO.OrderForList)lstOrders.SelectedItem).Id);
+            var orderWindow = new OrderWindow(((BO.OrderForList)((ListView)sender).SelectedItem).Id);
             orderWindow.ShowDialog();
         }
 

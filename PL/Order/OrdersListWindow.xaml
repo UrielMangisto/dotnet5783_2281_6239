@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         mc:Ignorable="d"
         Title="OrderForList" Height="640" Width="800">
     <Grid>
@@ -12,7 +13,8 @@
                   VerticalAlignment="Stretch"
                   Grid.Row="1" 
                   Background="WhiteSmoke"
-                  MouseDoubleClick="lstOrders_MouseDoubleClick">
+                  MouseDoubleClick="lstOrders_MouseDoubleClick"
+                  ItemsSource="{Binding Orders}">
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Send Order"
