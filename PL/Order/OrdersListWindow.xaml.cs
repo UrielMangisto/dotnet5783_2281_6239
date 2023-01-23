@@ -78,6 +78,9 @@ namespace PL.Order
             {
                 int orderId = ((BO.OrderForList)lstOrders.SelectedItem).Id;
                 bl.Order.ShippingUpdate(orderId);
+
+                LoadOrders();
+
                 MessageBox.Show("Order was sent successfuly.");
             }
             catch (Exception )
@@ -92,10 +95,14 @@ namespace PL.Order
             {
                 int orderId = ((BO.OrderForList)lstOrders.SelectedItem).Id;
                 bl.Order.UpdateDelivery(orderId);
+
+                LoadOrders();
+
                 MessageBox.Show("Order was delivered successfuly.");
             }
             catch (Exception ex)
             {
+                if()
                 MessageBox.Show("already delivered");
             }
         }

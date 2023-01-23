@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Product;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,8 +32,13 @@ namespace PL
         private void ToListButton_Click(object sender, RoutedEventArgs e)
         {
             var managerWindow = new ManagerPanel();
-            this.Close();
             managerWindow.Show();
+        }
+
+        private void NewOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            var catalogWindow = new ProductItemListWindow();
+            catalogWindow.Show();
         }
     }
 }

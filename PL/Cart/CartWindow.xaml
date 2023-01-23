@@ -6,7 +6,58 @@
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
         Title="CartWindow" Height="640" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="lblTotalPrice" />
+
+        <ListView x:Name="lstCartOrders" 
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Grid.Row="1" 
+                  Background="WhiteSmoke"
+                  MouseDoubleClick="lstCartOrders_MouseDoubleClick"
+                  ItemsSource="{Binding Orders}">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Remove Product"
+                              Click="MenuItem_Remove_Click" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" 
+                                    Header="Id"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductId}"
+                                    Header="ProductId"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ItemName}"
+                                    Header="ItemName"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Amount}"
+                                    Header="Amount Of Items"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Price}"
+                                    Header="Price"
+                                    Width="Auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}"
+                                    Header="TotalPrice"
+                                    Width="Auto" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name ="btnConfirmation" Content="Confirmatiom" Grid.Row="2"/>
     </Grid>
 </Window>

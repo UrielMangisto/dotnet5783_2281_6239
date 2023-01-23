@@ -21,7 +21,7 @@
         <Button x:Name="NewOrderButton"
                 Grid.Row="1"
                 Content="New Order"
-                FontSize="50" Background="ForestGreen" Foreground="White"/>
+                FontSize="50" Background="ForestGreen" Foreground="White" Click="NewOrderButton_Click"/>
         <Button x:Name="OrderTrackingButton"
                 Grid.Row="2"
                 Content="Order Tracking"

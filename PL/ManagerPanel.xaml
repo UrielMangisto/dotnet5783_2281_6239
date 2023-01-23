@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ManagerPanel" Height="450" Width="800">
+        Title="ManagerPanel" Height="640" Width="800">
 
     <Window.Resources>
         <Style TargetType="Button">
@@ -26,8 +26,7 @@
             <Button x:Name="btnOdersList"
                     Click="btnOdersList_Click"
                     Content="Orders" />
-            <Button x:Name="btnCartList"
-                    Content="Cart" Click="btnCartList_Click"/>
+            
         </StackPanel>
     </Grid>
 </Window>

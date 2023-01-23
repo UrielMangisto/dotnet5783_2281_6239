@@ -14,17 +14,13 @@ namespace BlImplementation;
 public class BoProduct : BlApi.IProduct
 {
     BO.ProductForList changeToBo1(DO.Product? dalProduct)
-    {
-  
-        
+    {   
          BO.ProductForList blProduct = new BO.ProductForList();
          blProduct.Id = dalProduct?.ID ?? throw new DO.mayBeNullException();
          blProduct.Name = dalProduct?.Name ?? throw new DO.mayBeNullException();
          blProduct.Price = dalProduct?.Price ?? throw new DO.mayBeNullException();
          blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new DO.mayBeNullException());
          return blProduct;
-       
-        
     }
     BO.ProductItem changeToBo2(DO.Product? dProduct)
     {
@@ -73,15 +69,12 @@ public class BoProduct : BlApi.IProduct
     {
         List<DO.Product?> dalProducts = new List<DO.Product?>();
         dalProducts = dal.Product.GetAll().ToList();
-
-       
         if (selector != null)
         {
             try
             {
                 var blProducts = dalProducts.Select(Product => changeToBo1(Product)).Where(selector);
                 return blProducts;
-
             }
             catch(DO.NotFoundException)
             {
@@ -90,11 +83,37 @@ public class BoProduct : BlApi.IProduct
         }
         else
         {
-             var blProducts = dalProducts.Select (Product => changeToBo1(Product));
+            var blProducts = dalProducts.Select (Product => changeToBo1(Product));
             return blProducts;
-            
         }
-        
+    }
+
+    public IEnumerable<ProductItem?> GetItemsByTerm(Func<BO.ProductItem?, bool>? selector = null)
+    {
+        List<DO.Product?> dalProducts = new List<DO.Product?>();
+        dalProducts = dal.Product.GetAll().ToList();
+
+
+        if (selector != null)
+        {
+            try
+            {
+                var blProducts = dalProducts.Select(Product => changeToBo2(Product)).Where(selector);
+                return blProducts;
+
+            }
+            catch (DO.NotFoundException)
+            {
+                throw new BO.NotFoundException();
+            }
+        }
+        else
+        {
+            var blProducts = dalProducts.Select(Product => changeToBo2(Product));
+            return blProducts;
+
+        }
+
     }
     /// <summary>
     /// returns dProduct for manager

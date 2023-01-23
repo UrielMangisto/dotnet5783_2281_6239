@@ -64,6 +64,12 @@ public interface IProduct
     public IEnumerable<ProductItem?> CatalogRequest();
 
     /// <summary>
+    /// Get Items List By Term
+    /// </summary>
+    /// <param name="selector"></param>
+    /// <returns></returns>
+    public IEnumerable<ProductItem?> GetItemsByTerm(Func<BO.ProductItem?, bool>? selector = null);
+    /// <summary>
     /// Request Details From Costumer
     /// </summary>
     /// <param name="id"></param>

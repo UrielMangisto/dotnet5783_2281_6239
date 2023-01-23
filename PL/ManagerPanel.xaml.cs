@@ -36,11 +36,5 @@ namespace PL
             var ordersWindow = new Order.OrdersListWindow();
             ordersWindow.Show();
         }
-
-        private void btnCartList_Click(object sender, RoutedEventArgs e)
-        {
-            var cartWindow = new CartWindow();
-            cartWindow.Show();
-        }
     }
 }
