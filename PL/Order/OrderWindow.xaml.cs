@@ -22,6 +22,8 @@ namespace PL.Order
     /// </summary>
     public partial class OrderWindow : Window
     {
+
+        #region Dependency Properties
         public int Id
         {
             get { return (int)GetValue(IdProperty); }
@@ -129,9 +131,7 @@ namespace PL.Order
             DependencyProperty.Register("Price", typeof(double), typeof(OrderWindow));
 
 
-
-
-
+        #endregion
 
         private readonly IBl bl = Factory.Get();
 
@@ -141,7 +141,7 @@ namespace PL.Order
             var porder = bl.Order.DetailsOfOrderForManager(orderId);
             Id = porder.Id;
             CostumerName = porder.CostomerName;
-            CostumerEmail= porder.CostomerEmail;
+            CostumerEmail= porder.CostomerEmail.ToString();
             CostumerAddress = porder.CostomerAdress;
             Status = porder.Status.ToString();
             OrderDate = porder.OrderDate;

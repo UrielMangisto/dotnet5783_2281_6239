@@ -13,7 +13,11 @@
             <RowDefinition Height="500*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Label Name="ProductsLable" Background="ForestGreen" Foreground="White" HorizontalContentAlignment="Center" FontWeight="Bold" Content="Order" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="30"/>
+        <Label Name="OrderLable"
+               Background="ForestGreen" Foreground="White" 
+               HorizontalContentAlignment="Center" FontWeight="Bold" 
+               Content="Order" HorizontalAlignment="Stretch" 
+               VerticalAlignment="Stretch" FontSize="30"/>
         <Grid x:Name="InputGrid" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

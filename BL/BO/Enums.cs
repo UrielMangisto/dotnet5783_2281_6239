@@ -11,7 +11,7 @@ public class Enums
     public enum Category {All, Action, Fantasy, Romanticism, Kids, Comics };
     public enum Category1 { Action = 1, Fantasy, Romanticism, Kids, Comics };
     public enum ClientName { Reuven, Simon, Levi, Juda, David, Jakob };
-    public enum ClientAddress { };
+    public enum ClientAddress {Rehovot, Ramle, Petah_Tikva, Jerusalem, Beit_Shemesh, Lod };
     public enum MainChoise { Order = 1, Cart, Product };
     public enum OrderChoice { GetOrderList = 1, DetailsOfOrderForManager, DetailsOfOrderForCustomer, ShippingUpdate, UpdateDelivery, Track };
     public enum CartChoise { addCart = 1, updateCart, ConfirmationCart };
