@@ -1,4 +1,5 @@
-﻿using PL.Product;
+﻿using PL.Order;
+using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,12 @@ namespace PL
         {
             var catalogWindow = new ProductItemListWindow();
             catalogWindow.Show();
+        }
+
+        private void OrderTrackingButton_Click(object sender, RoutedEventArgs e)
+        {
+            var track = new TrackShowWindow();
+            track.Show();
         }
     }
 }

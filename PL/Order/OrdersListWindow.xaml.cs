@@ -98,12 +98,18 @@ namespace PL.Order
 
                 LoadOrders();
 
-                MessageBox.Show("Order was delivered successfuly.");
+                MessageBox.Show("Order was delivered successfuly!");
             }
             catch (Exception ex)
             {
-                if()
-                MessageBox.Show("already delivered");
+                if(((BO.OrderForList)lstOrders.SelectedItem).Status == Enums.OrderStatus.Delivered)
+                {
+                    MessageBox.Show("Already delivered!");
+                }
+                else
+                {
+                    MessageBox.Show("You need to send it first");
+                }
             }
         }
 

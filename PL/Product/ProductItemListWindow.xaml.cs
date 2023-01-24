@@ -61,7 +61,7 @@ namespace PL.Product
 
         private void btnCartList_Click(object sender, RoutedEventArgs e)
         {
-            var cartWindow = new CartWindow();
+            var cartWindow = new CartWindow((BO.Cart)sender);
             cartWindow.Show();
         }
     }
