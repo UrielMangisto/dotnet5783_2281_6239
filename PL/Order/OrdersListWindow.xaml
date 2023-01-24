@@ -30,7 +30,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" 
                                     Header="Id"
                                     Width="Auto" />
-                    <GridViewColumn DisplayMemberBinding="{Binding CustomerName}"
+                    <GridViewColumn DisplayMemberBinding="{Binding CostomerName}"
                                     Header="Name"
                                     Width="Auto" />
                     <GridViewColumn DisplayMemberBinding="{Binding Status}"

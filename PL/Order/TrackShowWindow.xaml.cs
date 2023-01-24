@@ -25,23 +25,24 @@ namespace PL.Order
 
 
 
-        public ObservableCollection<BO.OrderTracking?> OrderTrackings
+        public ObservableCollection<BO.OrderTracking> OrderTrackings
         {
-            get { return (ObservableCollection<BO.OrderTracking?>)GetValue(OrderTrackingsProperty); }
+            get { return (ObservableCollection<BO.OrderTracking>)GetValue(OrderTrackingsProperty); }
             set { SetValue(OrderTrackingsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OrderTrackingsProperty =
-            DependencyProperty.Register("OrderTrackings", typeof(ObservableCollection<BO.OrderTracking?>), typeof(TrackShowWindow));
+            DependencyProperty.Register("OrderTrackings", typeof(ObservableCollection<BO.OrderTracking>), typeof(TrackShowWindow));
 
 
         public TrackShowWindow()
         {
             InitializeComponent();
+            var tracklst = new ObservableCollection<BO.OrderTracking>(bl.Order.GetOrderList());
             foreach (var r in bl.Order.GetOrderList())
             {
-                OrderTrackings.Add(bl.Order.Track((r ?? throw new Exception()).Id));
+                OrderTrackings.Add(bl.Order.Track(r.Id));
             }
         }
     }

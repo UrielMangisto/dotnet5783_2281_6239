@@ -81,11 +81,11 @@ namespace PL.Order
 
                 LoadOrders();
 
-                MessageBox.Show("Order was sent successfuly.");
+                MessageBox.Show("Order was sent successfuly!");
             }
             catch (Exception )
             {
-                MessageBox.Show("already sent");
+                MessageBox.Show("already sent!");
             }
         }
 
@@ -108,7 +108,7 @@ namespace PL.Order
                 }
                 else
                 {
-                    MessageBox.Show("You need to send it first");
+                    MessageBox.Show("You need to send it first!");
                 }
             }
         }

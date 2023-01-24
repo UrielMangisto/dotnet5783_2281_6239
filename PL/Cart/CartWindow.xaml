@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="CartWindow" Height="640" Width="800">
     <Window.Resources>
         <Style TargetType="Button">
@@ -58,6 +59,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name ="btnConfirmation" Content="Confirmatiom" Grid.Row="2"/>
+        <Button x:Name ="btnConfirmation" Content="Confirm" Grid.Row="1" Margin="300,524,400,10" />
     </Grid>
 </Window>

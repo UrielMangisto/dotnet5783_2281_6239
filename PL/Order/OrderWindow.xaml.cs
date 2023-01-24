@@ -56,7 +56,7 @@ namespace PL.Order
 
         // Using a DependencyProperty as the backing store for  CostumerEmail.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty  CostumerEmailProperty =
-            DependencyProperty.Register(" CostumerEmail", typeof(string), typeof(OrderWindow));
+            DependencyProperty.Register("CostumerEmail", typeof(string), typeof(OrderWindow));
 
 
 
@@ -141,7 +141,7 @@ namespace PL.Order
             var porder = bl.Order.DetailsOfOrderForManager(orderId);
             Id = porder.Id;
             CostumerName = porder.CostomerName;
-            CostumerEmail= porder.CostomerEmail.ToString();
+            CostumerEmail = porder.CostomerEmail;
             CostumerAddress = porder.CostomerAdress;
             Status = porder.Status.ToString();
             OrderDate = porder.OrderDate;
@@ -152,5 +152,6 @@ namespace PL.Order
             //Title = $"Order id: {orderId}";
             //lblOrderDetails.Text = bl.Order.DetailsOfOrderForManager(orderId)?.ToString();
         }
+
     }
 }

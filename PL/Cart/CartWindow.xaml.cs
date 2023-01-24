@@ -34,7 +34,7 @@ namespace PL.Cart
         public static readonly DependencyProperty OrdersProperty =
             DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList>), typeof(CartWindow));
 
-        public CartWindow(BO.Cart cart)
+        public CartWindow()
         {
             InitializeComponent();
 

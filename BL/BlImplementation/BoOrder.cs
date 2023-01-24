@@ -15,7 +15,7 @@ public class BoOrder : BlApi.IOrder
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
 
-    BO.OrderForList changeToBo(DO.Order? dOrder)
+    BO.OrderForList changeToBo1(DO.Order? dOrder)
     {
         int TotalAmount = 0;
         double TotalPrice = 0;
@@ -50,7 +50,7 @@ public class BoOrder : BlApi.IOrder
         try
         {
             var bOrdersForList = from dp in dOrders
-                                 let bp = changeToBo(dp)
+                                 let bp = changeToBo1(dp)
                                  select bp;
             return bOrdersForList;
             
