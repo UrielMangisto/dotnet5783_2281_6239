@@ -47,7 +47,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
                 return;
             }
         }
-        throw new Exception("Product Not Found");
+        throw new DO.NotFoundException("Product Not Found");
     }
 
     public void Update(Product entity)
