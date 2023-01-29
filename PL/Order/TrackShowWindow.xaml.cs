@@ -39,7 +39,7 @@ namespace PL.Order
         public TrackShowWindow()
         {
             InitializeComponent();
-            var tracklst = new ObservableCollection<BO.OrderTracking>(bl.Order.GetOrderList());
+            var tracklst = new ObservableCollection<BO.OrderTracking>((IEnumerable<BO.OrderTracking>)bl.Order.GetOrderList());
             foreach (var r in bl.Order.GetOrderList())
             {
                 OrderTrackings.Add(bl.Order.Track(r.Id));

@@ -25,8 +25,7 @@ namespace PL
     public partial class ProductsListWindow : Window 
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        //לא הספקתי להגדיר חריגות, טפל בזה בבקשה
-        //וגם צריך ליצור את שאר החלונות (אותו רעיון כמו פה, זה מופיע בתיאור הכללי) י
+        
         public ObservableCollection<BO.ProductForList> ProductForLists
         {
             get { return (ObservableCollection<BO.ProductForList>)GetValue(ProductForListsProperty); }
@@ -68,7 +67,7 @@ namespace PL
         
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
-            new ProductWindow(addProductForList).Show();
+            new ProductWindow(addProductForList).Show(); 
         }
         private void addProductForList(int productId)
         {

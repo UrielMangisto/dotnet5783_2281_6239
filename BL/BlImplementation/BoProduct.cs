@@ -211,7 +211,7 @@ public class BoProduct : BlApi.IProduct
     {
         try
         {
-            if (bProduct.ID < 0)
+            if (bProduct.ID <= 0)
                 throw new DO.InCorrectDataException();
             if (bProduct.Name == null)
                 throw new DO.InCorrectDataException();

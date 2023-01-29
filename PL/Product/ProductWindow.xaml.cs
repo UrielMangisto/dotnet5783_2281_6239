@@ -18,12 +18,12 @@ namespace PL
     /// <summary>
     /// Interaction logic for AddProductWindow.xaml
     /// </summary>
-    
+
     public partial class ProductWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
         private bool add;//if false update mode
-        
+
         private BO.Product product = new BO.Product();
 
         #region Depedency Properties
@@ -96,7 +96,7 @@ namespace PL
         public ProductWindow(Action<int> action)
         {
             InitializeComponent();
-            this.action = action;   
+            this.action = action;
             add = true;
             EnumValuesArray = Enum.GetValues(typeof(BO.Enums.Category1));
         }
@@ -124,10 +124,11 @@ namespace PL
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
-            if (add)
+            try
             {
-                try
+                if (add)
                 {
+
                     BO.Product newProduct = new BO.Product();
                     newProduct.ID = ID;
                     newProduct.Category = (BO.Enums.Category1)CategoryComboBox.SelectedItem;
@@ -138,25 +139,26 @@ namespace PL
                     action?.Invoke(newProduct.ID);
                     MessageBox.Show("Product added succesfully!");
                 }
-                catch
+                else
                 {
-                    MessageBox.Show("Error!");
-                    this.Close();
+                    product.Price = double.Parse(PriceBox.Text);
+                    product.InStock = int.Parse(InStockBox.Text);
+
+                    bl.Product.Update(product);
+
+                    action?.Invoke(product.ID);
+
+                    MessageBox.Show("Product updated succesfully!");
                 }
+                this.Close();
+                return;
             }
-            else 
-            { 
-                product.Price = double.Parse(PriceBox.Text);
-                product.InStock = int.Parse(InStockBox.Text);
-
-                bl.Product.Update(product);
-
-                action?.Invoke(product.ID);
-
-                MessageBox.Show("Product updated succesfully!");
+            catch (BO.InCorrectDataException)
+            {
+                MessageBox.Show("Incorrect Data");
+                this.Close();
             }
-            this.Close();
-            return;
         }
     }
 }
+

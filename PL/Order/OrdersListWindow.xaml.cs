@@ -83,7 +83,7 @@ namespace PL.Order
 
                 MessageBox.Show("Order was sent successfuly!");
             }
-            catch (Exception )
+            catch (BO.NotFoundException )
             {
                 MessageBox.Show("already sent!");
             }
@@ -100,7 +100,7 @@ namespace PL.Order
 
                 MessageBox.Show("Order was delivered successfuly!");
             }
-            catch (Exception ex)
+            catch (BO.mayBeNullException)
             {
                 if(((BO.OrderForList)lstOrders.SelectedItem).Status == Enums.OrderStatus.Delivered)
                 {
