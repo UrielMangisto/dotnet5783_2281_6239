@@ -113,7 +113,7 @@ namespace Dal
                 ListProduct[index] = entity;
             }
             if (found == false)
-                throw new DO.NotFoundException("order item id not found");
+                throw new DO.NotFoundException("Order item id not found");
             XmlTools.SaveListToXMLSerializer(ListProduct, ProductPath);
         }
     }

@@ -81,7 +81,7 @@ public class RequestProductFaildException : Exception
 {
     public RequestProductFaildException()
     {
-        Console.WriteLine("request product faild");
+        Console.WriteLine("request Product faild");
     }
     public RequestProductFaildException(string massge) : base(massge)
     {

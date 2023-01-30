@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 using DO;
 namespace DalApi;
 /// <summary>
-/// abstract of order
+/// abstract of Order
 /// </summary>
 public interface IOrder : ICrud <Order> { }

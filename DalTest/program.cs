@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DO;
-namespace Dal;
+namespace DalTest;
 public class program
 {
+    public static DalApi.IDal? dal = DalApi.Factory.Get();
+
     public static void Main(String[] args)
     {
         bool tryparse;
@@ -14,13 +16,11 @@ public class program
         int id;
         int input;
         Order order = new Order();
-        DalOrder dalOrder = new DalOrder();
 
         OrderItem item = new OrderItem();
-        DalOrderitem dalItem = new DalOrderitem();
 
         Product product = new Product();
-        DalProduct dalProduct = new DalProduct();
+
         do
         {
             Console.WriteLine(
@@ -33,7 +33,7 @@ press 0 to exit
             tryparse = int.TryParse(Console.ReadLine(), out choice);
             switch(choice)
             {
-                case (int)MainChoise.order:
+                case (int)MainChoise.Order:
                     Console.WriteLine(
                         @$"
 press 1 to add Order
@@ -49,24 +49,24 @@ press 1 to add Order
                         case (int)OrderChoice.addOrder:
                             order = orderInput(order);
 
-                            dalOrder.Add(order);
+                            dal.Order.Add(order);
                             break;
                         case (int)OrderChoice.deleteOrder:
                             Console.WriteLine("enter id Order");
                             order = orderInput(order);
-                            dalOrder.Delete(order);
+                            dal.Order.Delete(order);
                             break;
                         case (int)OrderChoice.updateOrder:
                             order = orderInput(order);
-                            dalOrder.Update(order);
+                            dal.Order.Update(order);
                             break;
                         case (int)OrderChoice.getOrder:
                             Console.WriteLine("enter id Order");
                             tryparse = int.TryParse(Console.ReadLine(), out id);
-                            Console.WriteLine(dalOrder.Get(id));
+                            Console.WriteLine(dal.Order.Get(id));
                             break;
                         case (int)OrderChoice.getAllOrder:
-                            foreach(var ordr in dalOrder.GetAll())
+                            foreach(var ordr in dal.Order.GetAll())
                             {
                                 Console.WriteLine(ordr);
                             }
@@ -78,7 +78,7 @@ press 1 to add Order
                             break;
                     }
                     break;
-                case (int)MainChoise.orderItem:
+                case (int)MainChoise.OrderItem:
                     Console.WriteLine(
                         @$"
 press 
@@ -89,43 +89,43 @@ press
 5 to get Specific Item
 6 to get Items By Order
 7 to get all items
-8 to get order item by some term
+8 to get Order item by some term
                                             ");
                     tryparse = int.TryParse(Console.ReadLine(), out choice);                    
                     switch (choice)
                     {
                         case (int)orderItemChoise.addOrderItem:
                             item = orderItempInput(item);
-                            dalItem.Add(item);
+                            dal.OrderItem.Add(item);
                             break;
                         case (int)orderItemChoise.deleteOrderItem:
                             Console.WriteLine("enter Order item id");
                             item = orderItempInput(item);
-                            dalItem.Delete(item);
+                            dal.OrderItem.Delete(item);
                             break;
                         case (int)orderItemChoise.updateOrderItem:
                             item=orderItempInput(item);
-                            dalItem.Update(item);
+                            dal.OrderItem.Update(item);
                             break;
                         case (int)orderItemChoise.getOrderItem:
                             Console.WriteLine("enter Order item id");
                             tryparse = int.TryParse(Console.ReadLine(), out id);
-                            Console.WriteLine(dalItem.GetItemsByOrder(id));
+                            Console.WriteLine(dal.OrderItem.GetItemsByOrder(id));
                             break;
                         case (int)orderItemChoise.getSpecificItem:
                             Console.WriteLine("enter Product id");
                             tryparse = int.TryParse(Console.ReadLine(), out id);                            
                             Console.WriteLine("enter Order id");
                             tryparse = int.TryParse(Console.ReadLine(), out input);
-                            Console.WriteLine(dalItem.specificItemGet(id,input));
+                            Console.WriteLine(dal.OrderItem.specificItemGet(id,input));
                             break;
                         case (int)orderItemChoise.getItemsByOrder:
                             Console.WriteLine("enter Order id");
                             tryparse = int.TryParse(Console.ReadLine(), out id);
-                            Console.WriteLine(dalItem.GetItemsByOrder(id));
+                            Console.WriteLine(dal.OrderItem.GetItemsByOrder(id));
                             break;
                         case (int)orderItemChoise.getAllItems:
-                            foreach(var itm in dalItem.GetAll())
+                            foreach(var itm in dal.OrderItem.GetAll())
                             {
                                 Console.WriteLine(itm);
                             }
@@ -139,7 +139,7 @@ press
                             break;
                     }
                     break;
-                case (int)MainChoise.product:
+                case (int)MainChoise.Product:
                     Console.WriteLine(
                         @$"
 press 
@@ -148,34 +148,34 @@ press
 3 to update Product
 4 to get Product
 5 to get all Product
-6 to get product item by some term
+6 to get Product item by some term
                                             ");
                     tryparse = int.TryParse(Console.ReadLine(), out choice);
                     switch (choice)
                     {
                         case (int)ProductChoice.addProduct:
                             product = productInput(product);
-                            dalProduct.Add(product);
+                            dal.Product.Add(product);
 
                             break;
                         case (int)ProductChoice.deleteProduct:
                             Console.WriteLine("enter Product id:");
                             product = productInput(product);
-                            dalProduct.Delete(product);
+                            dal.Product.Delete(product);
                             
                             break;
                         case (int)ProductChoice.updateProduct:
                             product= productInput(product);
-                            dalProduct.Update(product);
+                            dal.Product.Update(product);
 
                             break;
                         case (int)ProductChoice.getProduct:
                             Console.WriteLine("enter Product id:");
                             tryparse = int.TryParse(Console.ReadLine(), out id);
-                            Console.WriteLine(dalProduct.Get(id));
+                            Console.WriteLine(dal.Product.Get(id));
                             break;
                         case (int)ProductChoice.getAllProduct:                          
-                            foreach(Product p in dalProduct.GetAll())
+                            foreach(Product p in dal.Product.GetAll())
                             {
                                 Console.WriteLine(p);
                             }
@@ -187,6 +187,17 @@ press
                         default:
                             break;
                     }
+                    break;
+
+                    case (int)MainChoise.XmlChange:
+                    XmlTools.SaveListToXMLSerializer(dal.Product.GetAll().ToList(), "Product");
+                    XmlTools.SaveListToXMLSerializer(dal.Order.GetAll().ToList(), "Order");
+                    XmlTools.SaveListToXMLSerializer(dal.OrderItem.GetAll().ToList(), "OrderItem");
+
+                    int lastOrderItemID = dal.OrderItem.GetAll().Last()?.ID ?? 0;
+                    int lastOrderID = dal.Order.GetAll().Last()?.ID ?? 0;
+                    XmlTools.SaveConfigXElement("ID", lastOrderID);
+                    XmlTools.SaveConfigXElement("ID", lastOrderItemID);
                     break;
 
                 default:

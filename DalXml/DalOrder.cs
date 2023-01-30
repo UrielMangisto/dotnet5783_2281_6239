@@ -37,7 +37,7 @@ namespace Dal
             if (ListOrder.Any(order => order?.ID == entity.ID))
                 ListOrder.Remove(Get(entity.ID));
             else
-                throw new DO.NotFoundException("order does not exist");
+                throw new DO.NotFoundException("Order does not exist");
             XmlTools.SaveListToXMLSerializer(ListOrder, OrderPath);
         }
 

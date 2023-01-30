@@ -7,7 +7,7 @@ using BO;
 
 namespace BlApi;
 /// <summary>
-/// The implementation of the logic order entity
+/// The implementation of the logic Order entity
 /// </summary>
 public interface IOrder
 {

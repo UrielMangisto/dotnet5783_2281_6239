@@ -8,7 +8,7 @@ using BO;
 namespace BlApi;
 
 /// <summary>
-/// The implementation of the logic product entity
+/// The implementation of the logic Product entity
 /// </summary>
 public interface IProduct
 {
@@ -39,19 +39,19 @@ public interface IProduct
     public ProductItem ProductDetailsForCostumer(int id, Cart cart);
 
     /// <summary>
-    /// Adding a product to the list
+    /// Adding a Product to the list
     /// </summary>
     /// <param name="product"></param>
     public void Add(Product product);
 
     /// <summary>
-    /// Deleting the product from the list
+    /// Deleting the Product from the list
     /// </summary>
     /// <param name="id"></param>
     public void Delete(int id);
 
     /// <summary>
-    /// Updating a product from the list by received product
+    /// Updating a Product from the list by received Product
     /// </summary>
     /// <param name="product"></param>
     public void Update(Product product);

@@ -3,8 +3,8 @@ using System.Xml.Linq;
 
 namespace DO;
 /// <summary>
-/// Hear is the struct of the order item,
-/// the ID number of itselfe, the product and the order, his name,
+/// Hear is the struct of the Order item,
+/// the ID number of itselfe, the Product and the Order, his name,
 /// category, price and the amount.
 /// </summary>
 public struct OrderItem

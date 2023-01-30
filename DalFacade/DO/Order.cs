@@ -1,7 +1,7 @@
 ﻿
 namespace DO;
 /// <summary>
-/// Hear is the struct of the order,
+/// Hear is the struct of the Order,
 /// it's ID number, Costumer Name, Costumer Email,Costumer Adress,
 /// Order Date, Ship Date and the Delivery Date.
 /// </summary>

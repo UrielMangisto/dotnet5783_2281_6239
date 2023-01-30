@@ -24,7 +24,7 @@ public class DalOrder : IOrder
         {
             if (p?.ID == entity.ID)
             {
-                DataSource.orders.Remove(p); //in order to delete it
+                DataSource.orders.Remove(p); //in Order to delete it
                 return;
             }
         }

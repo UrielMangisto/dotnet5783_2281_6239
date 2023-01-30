@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Product>
+    <ID>769988</ID>
+    <Name>Harry Poter 1</Name>
+    <Category>Kids</Category>
+    <Price>130</Price>
+    <InStock>7</InStock>
+  </Product>
+  <Product>
+    <ID>784848</ID>
+    <Name>Harry Poter 2</Name>
+    <Category>Kids</Category>
+    <Price>120</Price>
+    <InStock>3</InStock>
+  </Product>
+  <Product>
+    <ID>939345</ID>
+    <Name>Harry Poter 3</Name>
+    <Category>Kids</Category>
+    <Price>110</Price>
+    <InStock>5</InStock>
+  </Product>
+  <Product>
+    <ID>923844</ID>
+    <Name>Harry Poter 4</Name>
+    <Category>Kids</Category>
+    <Price>110</Price>
+    <InStock>2</InStock>
+  </Product>
+  <Product>
+    <ID>493934</ID>
+    <Name>Harry Poter 5</Name>
+    <Category>Kids</Category>
+    <Price>100</Price>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ID>847922</ID>
+    <Name>Harry Poter 6</Name>
+    <Category>Kids</Category>
+    <Price>100</Price>
+    <InStock>4</InStock>
+  </Product>
+  <Product>
+    <ID>759329</ID>
+    <Name>Harry Poter 7</Name>
+    <Category>Kids</Category>
+    <Price>90</Price>
+    <InStock>12</InStock>
+  </Product>
+  <Product>
+    <ID>843902</ID>
+    <Name>Harry Poter 8</Name>
+    <Category>Kids</Category>
+    <Price>160</Price>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ID>123455</ID>
+    <Name>Spiderman</Name>
+    <Category>Comics</Category>
+    <Price>60</Price>
+    <InStock>25</InStock>
+  </Product>
+  <Product>
+    <ID>541235</ID>
+    <Name>Superman</Name>
+    <Category>Comics</Category>
+    <Price>70</Price>
+    <InStock>18</InStock>
+  </Product>
+  <Product>
+    <ID>548735</ID>
+    <Name>Bon</Name>
+    <Category>Comics</Category>
+    <Price>80</Price>
+    <InStock>5</InStock>
+  </Product>
+</ArrayOfProduct>

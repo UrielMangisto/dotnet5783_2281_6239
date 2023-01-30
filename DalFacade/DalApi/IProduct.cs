@@ -7,6 +7,6 @@ using DO;
 
 namespace DalApi;
 /// <summary>
-/// abstract of product
+/// abstract of Product
 /// </summary>
 public interface IProduct : ICrud<Product> { }

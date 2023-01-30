@@ -21,7 +21,7 @@ namespace BlTest
                 Product product = new Product();
                 
 
-                 BlApi.IBl? bl = BlApi.Factory.Get();
+                BlApi.IBl? bl = BlApi.Factory.Get();
                 
                
                 
@@ -47,8 +47,8 @@ press 0 to exit
                         case (int)BO.Enums.MainChoise.Order:
                             Console.WriteLine(
                             @$"
-press 1 to get order list
-2 to Details of order for manager
+press 1 to get Order list
+2 to Details of Order for manager
 3 to Details of Order for customer
 4 to Shipping Update
 5 to Update Delivery
@@ -68,31 +68,31 @@ press 1 to get order list
                                     break;
                                 case (int)BO.Enums.OrderChoice.DetailsOfOrderForManager:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     Console.WriteLine(bl.Order.DetailsOfOrderForManager(id));
                                     break;
                                 case (int)BO.Enums.OrderChoice.DetailsOfOrderForCustomer:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     Console.WriteLine(bl.Order.DetailsOfOrderForCustomer(id));
                                     break;
                                 case (int)BO.Enums.OrderChoice.ShippingUpdate:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     Console.WriteLine(bl.Order.ShippingUpdate(id));
                                     break;
                                 case (int)BO.Enums.OrderChoice.UpdateDelivery:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     Console.WriteLine(bl.Order.UpdateDelivery(id));
                                     break;
                                 case (int)BO.Enums.OrderChoice.Track:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     Console.WriteLine(bl.Order.Track(id));
                                     break;
@@ -115,7 +115,7 @@ press 1 to add Cart
                                 case (int)BO.Enums.CartChoise.addCart:
                                     cart = cartInput(cart);
                                     Console.WriteLine(
-    @$" enter the id of the product ");
+    @$" enter the id of the Product ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     mycart = bl.Cart.Add(cart, id);
                                     Console.WriteLine(mycart);
@@ -123,7 +123,7 @@ press 1 to add Cart
                                 case (int)BO.Enums.CartChoise.updateCart:
                                     cart = cartInput(cart);
                                     Console.WriteLine(
-    @$" enter the id of the product ");
+    @$" enter the id of the Product ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
 
                                     Console.WriteLine(
@@ -143,9 +143,9 @@ press 1 to add Cart
                         case (int)BO.Enums.MainChoise.Product:
                             Console.WriteLine(
                          @$"
-press 1 to Get product list
-2 to product details for manager
-3 to product details for costumer
+press 1 to Get Product list
+2 to Product details for manager
+3 to Product details for costumer
 4 to Add
 5 to Delete
 6 to Update
@@ -165,13 +165,13 @@ press 1 to Get product list
                                     break;
                                 case (int)BO.Enums.ProductChoice.ProductDetailsForManager:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     Console.WriteLine(bl.Product.ProductDetailsForManager(id));
                                     break;
                                 case (int)BO.Enums.ProductChoice.ProductDetailsForCostumer:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     cart = cartInput(cart);
                                     Console.WriteLine(bl.Product.ProductDetailsForCostumer(id, cart));
@@ -182,7 +182,7 @@ press 1 to Get product list
                                     break;
                                 case (int)BO.Enums.ProductChoice.Delete:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     bl.Product.Delete(id);
                                     break;
@@ -198,7 +198,7 @@ press 1 to Get product list
                                     break;
                                 case (int)BO.Enums.ProductChoice.RequestDetailsFromCostumer:
                                     Console.WriteLine(
-    @$" enter the id of the order ");
+    @$" enter the id of the Order ");
                                     tryparse = int.TryParse(Console.ReadLine(), out id);
                                     Console.WriteLine(bl.Product.RequestDetailsFromCostumer(id));
                                     break;

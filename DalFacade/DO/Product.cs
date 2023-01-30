@@ -1,7 +1,7 @@
 ﻿
 namespace DO;
 /// <summary>
-/// Hear is the struct of the product of our store,
+/// Hear is the struct of the Product of our store,
 /// it's ID number, name, category,price and 
 /// the current amount in the store.
 /// </summary>

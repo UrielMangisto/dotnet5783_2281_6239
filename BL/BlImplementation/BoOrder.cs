@@ -7,7 +7,7 @@ using BlApi;
 using BO;
 using DalApi;
 /// <summary>
-/// The implementation of the order
+/// The implementation of the Order
 /// </summary>
 namespace BlImplementation;
 
@@ -264,14 +264,14 @@ public class BoOrder : BlApi.IOrder
             orderTracking.Status = Enums.OrderStatus.NullStatus;
         if (Dorder?.OrderDate != null)
         {
-            orderTracking.TrackList.Add((Dorder?.OrderDate, " the order was created"));
+            orderTracking.TrackList.Add((Dorder?.OrderDate, " the Order was created"));
             if (Dorder?.ShipDate != null)
             {
-                orderTracking.TrackList.Add((Dorder?.ShipDate, " the order was shipped"));
+                orderTracking.TrackList.Add((Dorder?.ShipDate, " the Order was shipped"));
 
                 if (Dorder?.DeliveryDate != null)
                 {
-                    orderTracking.TrackList.Add((Dorder?.DeliveryDate, " the order was deliveried"));
+                    orderTracking.TrackList.Add((Dorder?.DeliveryDate, " the Order was deliveried"));
                 }
             }
         }
@@ -292,7 +292,7 @@ public class BoOrder : BlApi.IOrder
             }
             else
             {
-                throw new DO.NotvalidException("order alredy sent");
+                throw new DO.NotvalidException("Order alredy sent");
             }
         }
         catch(DO.NotvalidException)
