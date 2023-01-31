@@ -14,13 +14,13 @@ namespace BlImplementation;
 public class BoProduct : BlApi.IProduct
 {
     BO.ProductForList changeToBo1(DO.Product? dalProduct)
-    {   
-         BO.ProductForList blProduct = new BO.ProductForList();
-         blProduct.Id = dalProduct?.productID ?? throw new DO.mayBeNullException();
-         blProduct.Name = dalProduct?.Name ?? throw new DO.mayBeNullException();
-         blProduct.Price = dalProduct?.Price ?? throw new DO.mayBeNullException();
-         blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new DO.mayBeNullException());
-         return blProduct;
+    {
+        BO.ProductForList blProduct = new BO.ProductForList();
+        blProduct.Id = dalProduct?.productID ?? throw new DO.mayBeNullException();
+        blProduct.Name = dalProduct?.Name ?? throw new DO.mayBeNullException();
+        blProduct.Price = dalProduct?.Price ?? throw new DO.mayBeNullException();
+        blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new DO.mayBeNullException());
+        return blProduct;
     }
     BO.ProductItem changeToBo2(DO.Product? dProduct)
     {
@@ -41,22 +41,22 @@ public class BoProduct : BlApi.IProduct
     /// <exception cref="Exception"></exception>
     public IEnumerable<BO.ProductForList?> GetProductList()
     {
-        
+
         List<DO.Product?> dalProducts = new List<DO.Product?>();
         dalProducts = dal.Product.GetAll().ToList();
-      
+
         try
         {
-            
+
             var blProducts = dalProducts.Select(Product => changeToBo1(Product));
             return blProducts;
 
         }
-        catch(DO.NotFoundException)
+        catch (DO.NotFoundException)
         {
             throw new BO.NotFoundException();
         }
-        
+
     }
     /// <summary>
     /// Get Product List By Term
@@ -76,14 +76,14 @@ public class BoProduct : BlApi.IProduct
                 var blProducts = dalProducts.Select(Product => changeToBo1(Product)).Where(selector);
                 return blProducts;
             }
-            catch(DO.NotFoundException)
+            catch (DO.NotFoundException)
             {
                 throw new BO.NotFoundException();
             }
         }
         else
         {
-            var blProducts = dalProducts.Select (Product => changeToBo1(Product));
+            var blProducts = dalProducts.Select(Product => changeToBo1(Product));
             return blProducts;
         }
     }
@@ -143,11 +143,12 @@ public class BoProduct : BlApi.IProduct
                 throw new DO.RequestProductFaildException();
             }
         }
-        catch(DO.RequestProductFaildException)
+        catch (DO.RequestProductFaildException)
         {
             throw new BO.RequestProductFaildException();
         }
     }
+
 
     /// <summary>
     /// returns dProduct for costumer
@@ -190,17 +191,17 @@ public class BoProduct : BlApi.IProduct
             }
             throw new DO.RequestProductFaildException();
         }
-        catch(DO.NotvalidException)
+        catch (DO.NotvalidException)
         {
             throw new BO.NotvalidException();
         }
-        catch(DO.mayBeNullException)
+        catch (DO.mayBeNullException)
         {
             throw new BO.mayBeNullException();
         }
 
     }
-        
+
 
     /// <summary>
     /// adding a new bProduct
@@ -229,11 +230,11 @@ public class BoProduct : BlApi.IProduct
 
             dal.Product.Add(dProduct);
         }
-        catch(DO.AlreadyExistException)
+        catch (DO.AlreadyExistException)
         {
             throw new BO.AlreadyExistException();
         }
-        catch(DO.InCorrectDataException)
+        catch (DO.InCorrectDataException)
         {
             throw new BO.InCorrectDataException();
         }
@@ -320,11 +321,11 @@ public class BoProduct : BlApi.IProduct
             dProduct.InStock = bProduct.InStock;
             dal.Product.Update(dProduct);
         }
-        catch(DO.InCorrectDataException)
+        catch (DO.InCorrectDataException)
         {
             throw new BO.InCorrectDataException();
         }
-       
+
 
     }
 
@@ -343,6 +344,24 @@ public class BoProduct : BlApi.IProduct
                            select changeToBo2(p);
         return (IEnumerable<ProductItem?>)productItems;
     }
+    public IEnumerable<ProductItem?> catalogGrouping(IEnumerable<ProductItem?> productItems)
+    {
+        List<ProductItem?> productItems1 = new List<ProductItem?>();
+        var catalogGroup = from prductitem in productItems
+                           group prductitem by prductitem?.Category into groupproducts
+                           select groupproducts;
+        foreach(var mycategori in catalogGroup)
+        {
+            foreach(var oneItem in mycategori)
+            {
+                productItems1.Add(oneItem);
+            }
+        }
+        return productItems1;
+    }
+    
+
+
 
     /// <summary>
     /// Requests Details Of Products From The Costumer

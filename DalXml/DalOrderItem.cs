@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -71,6 +72,7 @@ namespace Dal
             var orderItems = ListOrderItem.Where(ordItem => selector == null || selector(ordItem)).ToList();
             return orderItems;
         }
+        
 
         public IEnumerable<OrderItem?> GetItemsByOrder(int orderId, Func<OrderItem?, bool>? selector = null)
         {
@@ -107,7 +109,6 @@ namespace Dal
             }
 
         }
-
         public OrderItem? specificItemGet(int idOfProduct, int idOfOrder)
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);

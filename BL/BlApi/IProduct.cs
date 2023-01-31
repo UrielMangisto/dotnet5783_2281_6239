@@ -76,4 +76,5 @@ public interface IProduct
     /// <returns></returns>
     public ProductItem RequestDetailsFromCostumer(int id);
     ProductForList GetProductForList(int productId);
+    public IEnumerable<ProductItem?> catalogGrouping(IEnumerable<ProductItem?> productItems);
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using BO;
+using Dal;
 using DalApi;
 /// <summary>
 /// The implementation of the Order
@@ -246,6 +247,18 @@ public class BoOrder : BlApi.IOrder
         
 
     }
+    IEnumerable<OrderTracking> getTracList()
+    {
+        List<OrderTracking> list = new List<OrderTracking>();
+        foreach(var order in dal.Order.GetAll())
+        {
+            list.Add(Track(order?.orderID ?? throw new DO.mayBeNullException()));
+        }
+        return list;
+
+
+    }
+
 
     public OrderTracking Track(int id)
     {
@@ -298,9 +311,9 @@ public class BoOrder : BlApi.IOrder
         catch(DO.NotvalidException)
         {
             throw new BO.NotvalidException();
-        }
-        
+        }   
     }
+
 
 }
 

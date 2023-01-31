@@ -47,4 +47,5 @@ public interface IOrder
     /// <param name="id"></param>
     /// <returns></returns>
     public Order DetailsOfOrderForCustomer(int id);
+    IEnumerable<OrderTracking> getTracList();
 }

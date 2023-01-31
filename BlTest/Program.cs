@@ -22,9 +22,14 @@ namespace BlTest
                 
 
                 BlApi.IBl? bl = BlApi.Factory.Get();
-                
-               
-                
+
+               var a = bl.Product.catalogGrouping(bl.Product.CatalogRequest());
+                foreach (var c in a)
+                {
+                    Console.WriteLine(c?.Category);
+                }
+
+
                // BoCart boCart = (BoCart)Enums.bl.Cart;
                // BoOrder boOrder = (BoOrder)Enums.bl.Order;
                // BoProduct boProduct = (BoProduct)Enums.bl.Product;
