@@ -20,7 +20,7 @@ public class BoOrder : BlApi.IOrder
         int TotalAmount = 0;
         double TotalPrice = 0;
         BO.OrderForList b = new BO.OrderForList();
-        foreach (var it in dal.OrderItem.GetItemsByOrder(dOrder?.ID ?? throw new DO.mayBeNullException()))
+        foreach (var it in dal.OrderItem.GetItemsByOrder(dOrder?.orderID ?? throw new DO.mayBeNullException()))
         {
             TotalAmount += it?.Amount ?? throw new DO.mayBeNullException();
             TotalPrice += (it?.Price ?? throw new DO.mayBeNullException()) * (it?.Amount ?? throw new DO.mayBeNullException());
@@ -29,7 +29,7 @@ public class BoOrder : BlApi.IOrder
 
         b.TotalPrice = TotalPrice;
 
-        b.Id = dOrder?.ID ?? throw new DO.mayBeNullException();
+        b.Id = dOrder?.orderID ?? throw new DO.mayBeNullException();
 
         b.CostomerName = dOrder?.CostumerName ?? throw new DO.mayBeNullException();
 
@@ -101,7 +101,7 @@ public class BoOrder : BlApi.IOrder
                 {
                     BO.OrderItem item2 = new BO.OrderItem();
                     //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-                    item2.Id = item?.ID ?? throw new DO.mayBeNullException();
+                    item2.Id = item?.orderItemID ?? throw new DO.mayBeNullException();
                     item2.ProductId = item?.ProductID ?? throw new DO.mayBeNullException();
                     item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
                     item2.Price = item?.Price ?? throw new DO.mayBeNullException();
@@ -168,7 +168,7 @@ public class BoOrder : BlApi.IOrder
             {
                 BO.OrderItem item2 = new BO.OrderItem();
                 //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-                item2.Id = item?.ID ?? throw new DO.mayBeNullException();
+                item2.Id = item?.orderItemID ?? throw new DO.mayBeNullException();
                 item2.ProductId = item?.ProductID ?? throw new DO.mayBeNullException();
                 item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
                 item2.Price = item?.Price ?? throw new DO.mayBeNullException();
@@ -223,7 +223,7 @@ public class BoOrder : BlApi.IOrder
             {
                 BO.OrderItem item2 = new BO.OrderItem();
                 //לאתחל את האורדר אייטם2 הזה לפי אייטם 
-                item2.Id = item?.ID ?? throw new DO.mayBeNullException();
+                item2.Id = item?.orderItemID ?? throw new DO.mayBeNullException();
                 item2.ProductId = item?.ProductID ?? throw new DO.mayBeNullException();
                 item2.ItemName = dal.Product.Get(item2.ProductId)?.Name;
                 item2.Price = item?.Price ?? throw new DO.mayBeNullException();

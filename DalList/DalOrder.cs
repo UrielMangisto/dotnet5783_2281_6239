@@ -11,9 +11,9 @@ public class DalOrder : IOrder
     public int Add(Order entity)
     {
   
-       entity.ID = DataSource.Config.NextOrderId;
+       entity.orderID = DataSource.Config.NextOrderId;
        DataSource.orders.Add(entity);
-       return entity.ID;
+       return entity.orderID;
         
         
     }
@@ -22,7 +22,7 @@ public class DalOrder : IOrder
     {
         foreach (var p in DataSource.orders)
         {
-            if (p?.ID == entity.ID)
+            if (p?.orderID == entity.orderID)
             {
                 DataSource.orders.Remove(p); //in Order to delete it
                 return;
@@ -35,7 +35,7 @@ public class DalOrder : IOrder
         int count = 0;
         foreach (var p in DataSource.orders)
         {   
-            if (p?.ID == entity.ID)
+            if (p?.orderID == entity.orderID)
             {
                 DataSource.orders[count] = entity;
                 return;
@@ -49,7 +49,7 @@ public class DalOrder : IOrder
         
         foreach (var p in DataSource.orders)
         {
-            if (p?.ID == entity)
+            if (p?.orderID == entity)
                 return p;
         }
         throw new NotFoundException();

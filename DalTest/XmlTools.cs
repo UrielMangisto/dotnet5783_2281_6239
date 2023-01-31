@@ -10,6 +10,7 @@ namespace DalTest;
 
 static class XmlTools
 {
+
     static string? s_dir = Directory.GetParent(Directory.GetCurrentDirectory())?.FullName + @"\xml\";
     static XmlTools()
     {

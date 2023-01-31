@@ -49,9 +49,9 @@ namespace PL
             set { SetValue(IDProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ID.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for orderID.  This enables animation, styling, binding, etc...
         public static DependencyProperty IDProperty =
-            DependencyProperty.Register("ID", typeof(int), typeof(ProductWindow));
+            DependencyProperty.Register("orderID", typeof(int), typeof(ProductWindow));
 
 
 

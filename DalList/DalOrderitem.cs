@@ -10,16 +10,16 @@ public class DalOrderItem :  IOrderItem
 {
     public int Add(OrderItem entity)
     {
-        entity.ID = DataSource.Config.NextOrderItemId;
+        entity.orderItemID = DataSource.Config.NextOrderItemId;
         DataSource.orderItems.Add(entity);
-        return entity.ID;
+        return entity.orderItemID;
     }
 
     public OrderItem? Get(int id)
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (p?.ID==id)
+            if (p?.orderItemID==id)
             {
                 return p;
             }
@@ -72,7 +72,7 @@ public class DalOrderItem :  IOrderItem
         
         bool chacking(OrderItem? orderItem)
         {
-            //if (orderItem.Value.ID == orderID)
+            //if (orderItem.Value.orderID == orderID)
             if (orderItem.Value.OrderID == orderID)
             {
                 return true;
@@ -131,7 +131,7 @@ public class DalOrderItem :  IOrderItem
     {
         foreach (var p in DataSource.orderItems)
         {
-            if(entity.ID == p?.ID)
+            if(entity.orderItemID == p?.orderItemID)
             {
                 DataSource.orderItems.Remove(p);
                 return;
@@ -145,7 +145,7 @@ public class DalOrderItem :  IOrderItem
         int count = 0;
         foreach (var p in DataSource.orderItems)
         {
-            if(entity.ID == p?.ID)
+            if(entity.orderItemID == p?.orderItemID)
             {
                 DataSource.orderItems[count] = entity;
                 return;

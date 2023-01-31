@@ -155,14 +155,14 @@ public class BoCart : BlApi.ICart
                 throw new DO.InCorrectDataException();
 
             DO.Order Dorder = new DO.Order();
-            //Dorder.ID = dal.Order.GetAll().Last().ID + 1;
+            //Dorder.orderID = dal.Order.GetAll().Last().orderID + 1;
             Dorder.CostumerName = C.CostumerName;
             Dorder.CostumerEmail = C.CostumerEmail;
             Dorder.CostumerAddress = C.CostumerAddress;
             Dorder.OrderDate = DateTime.Now;
             Dorder.ShipDate = null;
             Dorder.DeliveryDate = null;
-            Dorder.ID = dal.Order.Add(Dorder);
+            Dorder.orderID = dal.Order.Add(Dorder);
             List<BO.OrderItem> BorderItems = new List<BO.OrderItem>();
             foreach (BO.OrderItem item in C.OrderItems)
             {
@@ -179,7 +179,7 @@ public class BoCart : BlApi.ICart
                 DO.Product product = new DO.Product();
                 product = dal.Product.Get(item.Id) ?? throw new DO.mayBeNullException();
                 DO.OrderItem tempItem = new DO.OrderItem();
-                tempItem.OrderID = Dorder.ID;
+                tempItem.OrderID = Dorder.orderID;
                 dal.OrderItem.Add(tempItem);
                 product.InStock -= item.Amount;
             }

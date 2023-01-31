@@ -2,12 +2,12 @@
 namespace DO;
 /// <summary>
 /// Hear is the struct of the Order,
-/// it's ID number, Costumer Name, Costumer Email,Costumer Adress,
+/// it's orderID number, Costumer Name, Costumer Email,Costumer Adress,
 /// Order Date, Ship Date and the Delivery Date.
 /// </summary>
 public struct Order
 {
-    public int ID { get; set; }
+    public int orderID { get; set; }
     public string? CostumerName { get; set; }
     public string? CostumerEmail { get; set; }
     public string? CostumerAddress { get; set; }  
@@ -15,7 +15,7 @@ public struct Order
     public DateTime? ShipDate { get; set; }  
     public DateTime? DeliveryDate { get; set; }
     public override string ToString() => $@"
-    Order ID={ID}: {CostumerName}, 
+    Order orderID={orderID}: {CostumerName}, 
     CostumerEmail - {CostumerEmail}
    	CostumerAdress {CostumerAddress}
    	OrderDate {OrderDate}

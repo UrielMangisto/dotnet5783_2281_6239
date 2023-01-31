@@ -19,23 +19,23 @@ namespace Dal
         {
             List<DO.Order?> ListOrder = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
 
-            if (ListOrder.FirstOrDefault(orderItem => orderItem?.ID == entity.ID) != null)
+            if (ListOrder.FirstOrDefault(orderItem => orderItem?.orderID == entity.orderID) != null)
                 throw new Exception("id already exist");
 
-            entity.ID = int.Parse(config.Element("OrderID")!.Value) + 1;
+            entity.orderID = int.Parse(config.Element("OrderID")!.Value) + 1;
             ListOrder.Add(entity);
 
             XmlTools.SaveListToXMLSerializer(ListOrder, OrderPath);
 
-            return entity.ID;
+            return entity.orderID;
         }
 
         public void Delete(Order entity)
         {
             List<DO.Order?> ListOrder = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
 
-            if (ListOrder.Any(order => order?.ID == entity.ID))
-                ListOrder.Remove(Get(entity.ID));
+            if (ListOrder.Any(order => order?.orderID == entity.orderID))
+                ListOrder.Remove(Get(entity.orderID));
             else
                 throw new DO.NotFoundException("Order does not exist");
             XmlTools.SaveListToXMLSerializer(ListOrder, OrderPath);
@@ -45,7 +45,7 @@ namespace Dal
         {
             List<DO.Order?> ListOrder = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
 
-            var ord = ListOrder.FirstOrDefault(x => x?.ID == entity);
+            var ord = ListOrder.FirstOrDefault(x => x?.orderID == entity);
 
             if (ord == null)
                 throw new DO.NotFoundException("Order Id not found");
@@ -70,16 +70,16 @@ namespace Dal
             List<DO.Order?> Orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
 
             if (selector == null)
-                return Orders.Select(x => x).OrderBy(x => x?.ID);
+                return Orders.Select(x => x).OrderBy(x => x?.orderID);
             else
-                return Orders.Where(selector).OrderBy(x => x?.ID);
+                return Orders.Where(selector).OrderBy(x => x?.orderID);
         }
 
         public void Update(Order entity)
         {
             List<DO.Order?> Orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
             bool found = false;
-            var foundOrder = Orders.FirstOrDefault(ord => ord?.ID == entity.ID);
+            var foundOrder = Orders.FirstOrDefault(ord => ord?.orderID == entity.orderID);
             if (foundOrder != null)
             {
                 found = true;

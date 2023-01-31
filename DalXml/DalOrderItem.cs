@@ -17,23 +17,23 @@ namespace Dal
         {
             List<DO.OrderItem?> listOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
 
-            if (listOrderItem.FirstOrDefault(x => x?.ID == entity.ID) != null)
+            if (listOrderItem.FirstOrDefault(x => x?.orderItemID == entity.orderItemID) != null)
                 throw new DO.AlreadyExistException("OrderItem Id is already exist");
 
-            entity.ID = int.Parse(config.Element("ID")!.Value) + 1;
+            entity.orderItemID = int.Parse(config.Element("orderID")!.Value) + 1;
             listOrderItem.Add(entity);
 
             XmlTools.SaveListToXMLSerializer(listOrderItem, OrderItemPath);
 
-            return entity.ID;
+            return entity.orderItemID;
         }
 
         public void Delete(OrderItem entity)
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
 
-            if (ListOrderItem.Any(x => x?.ID == entity.ID))
-                ListOrderItem.Remove(Get(entity.ID));
+            if (ListOrderItem.Any(x => x?.orderItemID == entity.orderItemID))
+                ListOrderItem.Remove(Get(entity.orderItemID));
             else
                 throw new DO.NotFoundException("Order item not exist");
 
@@ -44,7 +44,7 @@ namespace Dal
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
 
-            var orderItem = ListOrderItem.FirstOrDefault(x => x?.ID == entity);
+            var orderItem = ListOrderItem.FirstOrDefault(x => x?.orderItemID == entity);
             if (orderItem == null)
                 throw new DO.NotFoundException("Order item id not isExist");
             else
@@ -79,7 +79,7 @@ namespace Dal
 
             bool chacking(OrderItem? orderItem)
             {
-                //if (orderItem.Value.ID == orderID)
+                //if (orderItem.Value.orderID == orderID)
                 if (orderItem.Value.OrderID == orderId)
                 {
                     return true;
@@ -113,7 +113,7 @@ namespace Dal
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
             foreach (var p in ListOrderItem)
             {
-                //if (idOfProduct == p?.ID && idOfOrder == p?.OrderID)
+                //if (idOfProduct == p?.orderID && idOfOrder == p?.OrderID)
                 if (idOfProduct == p?.ProductID && idOfOrder == p?.OrderID)
                 {
                     return p;
@@ -127,7 +127,7 @@ namespace Dal
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
 
             bool isExist = false;
-            var foundOrderItem = ListOrderItem.FirstOrDefault(x => x?.ID == entity.ID);
+            var foundOrderItem = ListOrderItem.FirstOrDefault(x => x?.orderItemID == entity.orderItemID);
             if (foundOrderItem != null)
             {
                 isExist = true;

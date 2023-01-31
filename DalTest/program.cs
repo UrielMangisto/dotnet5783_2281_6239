@@ -194,10 +194,12 @@ press
                     XmlTools.SaveListToXMLSerializer(dal.Order.GetAll().ToList(), "Order");
                     XmlTools.SaveListToXMLSerializer(dal.OrderItem.GetAll().ToList(), "OrderItem");
 
-                    int lastOrderItemID = dal.OrderItem.GetAll().Last()?.ID ?? 0;
-                    int lastOrderID = dal.Order.GetAll().Last()?.ID ?? 0;
-                    XmlTools.SaveConfigXElement("ID", lastOrderID);
-                    XmlTools.SaveConfigXElement("ID", lastOrderItemID);
+                    int lastOrderItemID = dal.OrderItem.GetAll().Last()?.orderItemID ?? 0;
+                    int lastOrderID = dal.Order.GetAll().Last()?.orderID ?? 0;
+                    int lastProductID = dal.Product.GetAll().Last()?.productID ?? 0;
+                    XmlTools.SaveConfigXElement("orderID", lastOrderID);
+                    XmlTools.SaveConfigXElement("orderItemID", lastOrderItemID);
+                    XmlTools.SaveConfigXElement("productID", lastProductID);
                     break;
 
                 default:

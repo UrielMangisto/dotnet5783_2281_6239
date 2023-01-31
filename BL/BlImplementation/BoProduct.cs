@@ -16,7 +16,7 @@ public class BoProduct : BlApi.IProduct
     BO.ProductForList changeToBo1(DO.Product? dalProduct)
     {   
          BO.ProductForList blProduct = new BO.ProductForList();
-         blProduct.Id = dalProduct?.ID ?? throw new DO.mayBeNullException();
+         blProduct.Id = dalProduct?.productID ?? throw new DO.mayBeNullException();
          blProduct.Name = dalProduct?.Name ?? throw new DO.mayBeNullException();
          blProduct.Price = dalProduct?.Price ?? throw new DO.mayBeNullException();
          blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new DO.mayBeNullException());
@@ -25,7 +25,7 @@ public class BoProduct : BlApi.IProduct
     BO.ProductItem changeToBo2(DO.Product? dProduct)
     {
         BO.ProductItem productItem = new BO.ProductItem();
-        productItem.Id = dProduct?.ID ?? throw new BO.mayBeNullException();
+        productItem.Id = dProduct?.productID ?? throw new BO.mayBeNullException();
         productItem.Name = dProduct?.Name;
         productItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
         productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
@@ -131,7 +131,7 @@ public class BoProduct : BlApi.IProduct
 
                 DProduct = dal.Product.Get(id);
 
-                BProduct.ID = DProduct?.ID ?? throw new BO.mayBeNullException();
+                BProduct.ID = DProduct?.productID ?? throw new BO.mayBeNullException();
                 BProduct.Name = DProduct?.Name;
                 BProduct.Price = DProduct?.Price ?? throw new BO.mayBeNullException();
                 BProduct.Category = (BO.Enums.Category1)(DProduct?.Category ?? throw new BO.mayBeNullException());
@@ -168,7 +168,7 @@ public class BoProduct : BlApi.IProduct
                 DO.Product? dProduct = new DO.Product?();
                 dProduct = dal.Product.Get(id);
                 BO.ProductItem pItem = new BO.ProductItem();
-                pItem.Id = dProduct?.ID ?? throw new DO.mayBeNullException();
+                pItem.Id = dProduct?.productID ?? throw new DO.mayBeNullException();
                 pItem.Name = dProduct?.Name ?? throw new DO.mayBeNullException();
                 pItem.Price = dProduct?.Price ?? throw new DO.mayBeNullException();
                 pItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new DO.mayBeNullException());
@@ -221,7 +221,7 @@ public class BoProduct : BlApi.IProduct
                 throw new DO.InCorrectDataException();
 
             DO.Product dProduct = new DO.Product();
-            dProduct.ID = (int)bProduct.ID;
+            dProduct.productID = (int)bProduct.ID;
             dProduct.Name = bProduct.Name;
             dProduct.Price = bProduct.Price;
             dProduct.Category = (DO.Category)bProduct.Category;
@@ -258,7 +258,7 @@ public class BoProduct : BlApi.IProduct
             dProducts = dal.Product.GetAll().ToList();
             foreach (DO.Product? dProduct in dProducts)
             {
-                if (id == dProduct?.ID)
+                if (id == dProduct?.productID)
                 {
                     break;
                 }
@@ -313,7 +313,7 @@ public class BoProduct : BlApi.IProduct
             DO.Product dProduct = new DO.Product();
             //exceptions
 
-            dProduct.ID = (int)bProduct.ID;
+            dProduct.productID = (int)bProduct.ID;
             dProduct.Name = bProduct.Name;
             dProduct.Price = bProduct.Price;
             dProduct.Category = (DO.Category)bProduct.Category;
@@ -338,7 +338,7 @@ public class BoProduct : BlApi.IProduct
         List<DO.Product?> products = new List<DO.Product?>();
         products = dal.Product.GetAll().ToList();
         //var productItems = products.Select(Product => changeToBo2(Product));
-        products.OrderBy(p => p?.Name).ThenBy(p => p?.ID);
+        products.OrderBy(p => p?.Name).ThenBy(p => p?.productID);
         var productItems = from p in products
                            select changeToBo2(p);
         return (IEnumerable<ProductItem?>)productItems;
@@ -362,7 +362,7 @@ public class BoProduct : BlApi.IProduct
 
             foreach (var dProduct in Dproducts)
             {
-                if (dProduct?.ID == id)
+                if (dProduct?.productID == id)
                 {
                     BproductItem.Name = dProduct?.Name;
                     BproductItem.Price = dProduct?.Price ?? throw new DO.mayBeNullException();

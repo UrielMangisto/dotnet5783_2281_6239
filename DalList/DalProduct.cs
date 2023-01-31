@@ -16,7 +16,7 @@ public class DalProduct: IProduct
         bool exict = true;
         while (exict)
         {
-            id = entity.ID;
+            id = entity.productID;
             try
             {
                 Get(id);
@@ -27,13 +27,13 @@ public class DalProduct: IProduct
 
             }
         }
-        entity.ID = id;
+        entity.productID = id;
         DataSource.products.Add(entity);
         return id;
     }
     /*public void Delete(int id)
 {
-if (_ds._students.RemoveAll(p => p?.ID == id) == 0)
+if (_ds._students.RemoveAll(p => p?.orderID == id) == 0)
 throw new DoesNotExistException("Can't delete non-existing student");
 }*/
     public void Delete(Product entity)
@@ -41,7 +41,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
          
         foreach (var p in DataSource.products)
         {
-            if (p?.ID == entity.ID)
+            if (p?.productID == entity.productID)
             {
                 DataSource.products.Remove(p);
                 return;
@@ -55,7 +55,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
         int count = 0;
         foreach(var p in DataSource.products)
         {
-            if(p?.ID == entity.ID)
+            if(p?.productID == entity.productID)
             {
                 DataSource.products[count] = entity;
                 return;
@@ -71,7 +71,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
     {
         foreach (var p in DataSource.products)
         {
-           if (p?.ID == id)
+           if (p?.productID == id)
                 return p;
         }
         throw new NotFoundException("Product Not Found");
