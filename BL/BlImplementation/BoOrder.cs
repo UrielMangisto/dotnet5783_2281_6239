@@ -247,7 +247,7 @@ public class BoOrder : BlApi.IOrder
         
 
     }
-    IEnumerable<OrderTracking> getTracList()
+    public IEnumerable<OrderTracking> getTracList()
     {
         List<OrderTracking> list = new List<OrderTracking>();
         foreach(var order in dal.Order.GetAll())
