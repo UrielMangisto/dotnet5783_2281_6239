@@ -6,20 +6,20 @@ namespace Dal;
 /// <summary>
 /// Implementation of the CRUD functions on Order item
 /// </summary>
-public class DalOrderitem :  IOrderItem
+public class DalOrderItem :  IOrderItem
 {
     public int Add(OrderItem entity)
     {
-        entity.ID = DataSource.Config.NextOrderItemId;
+        entity.orderItemID = DataSource.Config.NextOrderItemId;
         DataSource.orderItems.Add(entity);
-        return entity.ID;
+        return entity.orderItemID;
     }
 
     public OrderItem? Get(int id)
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (p?.ID==id)
+            if (p?.orderItemID==id)
             {
                 return p;
             }
@@ -54,7 +54,7 @@ public class DalOrderitem :  IOrderItem
     {
         foreach (var p in DataSource.orderItems)
         {
-            if (idOfProduct == p?.ID && idOfOrder == p?.OrderID)
+            if (idOfProduct == p?.ProductID && idOfOrder == p?.OrderID)
             {
                 return p;
             }
@@ -72,7 +72,8 @@ public class DalOrderitem :  IOrderItem
         
         bool chacking(OrderItem? orderItem)
         {
-            if (orderItem.Value.ID == orderID)
+            //if (orderItem.Value.orderID == orderID)
+            if (orderItem.Value.OrderID == orderID)
             {
                 return true;
             }
@@ -100,7 +101,11 @@ public class DalOrderitem :  IOrderItem
         
     }
        
-    //returns an array of all products
+    /// <summary>
+    /// returns an array of all products
+    /// </summary>
+    /// <param name="selector"></param>
+    /// <returns></returns>
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? selector=null)
     {
         if(selector == null)
@@ -126,7 +131,7 @@ public class DalOrderitem :  IOrderItem
     {
         foreach (var p in DataSource.orderItems)
         {
-            if(entity.ID == p?.ID)
+            if(entity.orderItemID == p?.orderItemID)
             {
                 DataSource.orderItems.Remove(p);
                 return;
@@ -140,7 +145,7 @@ public class DalOrderitem :  IOrderItem
         int count = 0;
         foreach (var p in DataSource.orderItems)
         {
-            if(entity.ID == p?.ID)
+            if(entity.orderItemID == p?.orderItemID)
             {
                 DataSource.orderItems[count] = entity;
                 return;
