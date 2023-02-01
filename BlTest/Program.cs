@@ -24,6 +24,7 @@ namespace BlTest
                 BlApi.IBl? bl = BlApi.Factory.Get();
 
                var a = bl.Product.catalogGrouping(bl.Product.CatalogRequest());
+                Console.WriteLine("List of the categories of the product list:");
                 foreach (var c in a)
                 {
                     Console.WriteLine(c?.Category);

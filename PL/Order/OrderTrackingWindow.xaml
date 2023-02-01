@@ -5,12 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="OrderTrackingWindow" Height="640" Width="800">
-    <Grid>
-        <TextBlock x:Name="lblOrderTrack"
-                   FontSize="13"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="10"/>
+    <Grid x:Name="MainGrid">
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+            <ListView 
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Grid.Row="0" 
+                  Grid.Column="3"
+                  Background="WhiteSmoke"
+                  ItemsSource="{Binding trackLst}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Date}" Header="Date" Width="Auto"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" Width="Auto"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock Text="Id:" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="30"/>
+            <TextBlock Text="Status:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="30"/>
+
+            <TextBox Text="{Binding ID}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="30" IsReadOnly="True"/>
+            <TextBox Text="{Binding Status}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"  FontSize="30" IsReadOnly="True"/>
+
+        </Grid>
     </Grid>
 </Window>

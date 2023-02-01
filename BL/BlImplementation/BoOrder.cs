@@ -265,7 +265,7 @@ public class BoOrder : BlApi.IOrder
         DO.Order? Dorder = new DO.Order();
         Dorder = dal.Order.Get(id);
         BO.OrderTracking orderTracking = new BO.OrderTracking();
-        orderTracking.TrackList = new List<(DateTime?, string?)>();
+        orderTracking.TrackList = new List<TrackLst>();
         orderTracking.Id = id;
         if (Dorder?.DeliveryDate != null)
             orderTracking.Status = Enums.OrderStatus.Delivered;
@@ -277,14 +277,22 @@ public class BoOrder : BlApi.IOrder
             orderTracking.Status = Enums.OrderStatus.NullStatus;
         if (Dorder?.OrderDate != null)
         {
-            orderTracking.TrackList.Add((Dorder?.OrderDate, " the Order was created"));
+            TrackLst lst = new TrackLst();
+            lst.Status = " the Order was created";
+            lst.Date = Dorder?.OrderDate;
+
+            orderTracking.TrackList.Add(lst);
             if (Dorder?.ShipDate != null)
             {
-                orderTracking.TrackList.Add((Dorder?.ShipDate, " the Order was shipped"));
+                lst.Status = " the Order was shipped";
+                lst.Date = Dorder?.ShipDate;
+                orderTracking.TrackList.Add(lst);
 
                 if (Dorder?.DeliveryDate != null)
                 {
-                    orderTracking.TrackList.Add((Dorder?.DeliveryDate, " the Order was deliveried"));
+                    lst.Status = " the Order was devliveried";
+                    lst.Date = Dorder?.DeliveryDate;
+                    orderTracking.TrackList.Add(lst);
                 }
             }
         }
