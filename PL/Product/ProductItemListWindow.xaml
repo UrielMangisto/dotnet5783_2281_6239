@@ -34,7 +34,7 @@
                   VerticalAlignment="Stretch"
                   Grid.Row="1" 
                   Background="WhiteSmoke"
-                 
+                  MouseDoubleClick="ProductItemListView_MouseDoubleClick"
                   ItemsSource="{Binding ProductItems}">
             <ListView.View>
                 <GridView>

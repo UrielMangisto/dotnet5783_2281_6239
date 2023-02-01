@@ -1,6 +1,7 @@
 ﻿using BlImplementation;
 using BO;
 using PL.Cart;
+using PL.Order;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -63,6 +64,12 @@ namespace PL.Product
         {
             var cartWindow = new CartWindow();
             cartWindow.Show();
+        }
+
+        private void ProductItemListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var Item = new ProductItemWindow(((BO.ProductItem)((ListView)sender).SelectedItem));
+            Item.ShowDialog();
         }
     }
 }

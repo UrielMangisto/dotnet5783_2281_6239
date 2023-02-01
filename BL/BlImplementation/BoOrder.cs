@@ -322,6 +322,17 @@ public class BoOrder : BlApi.IOrder
         }   
     }
 
+    public IEnumerable<TrackLst> getListOfTrack(OrderTracking? ot)
+    {
+        ot = ot ?? new OrderTracking();
+        return ot.TrackList ?? throw new BO.mayBeNullException();
+    }
 
+    public IEnumerable<OrderItem?> getItemListFromOrder(int orderId)
+    {
+        BO.Order bord = new BO.Order();
+        bord = DetailsOfOrderForManager(orderId);
+        return bord.OrderItems?? throw new BO.mayBeNullException();
+    }
 }
 

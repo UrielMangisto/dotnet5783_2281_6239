@@ -68,17 +68,9 @@ namespace PL.Order
             var porder = bl.Order.Track(orderId);
             ID = porder.Id;
             Status = porder.Status;
-            LoadOrderTracks(porder);
+            trackLst = new ObservableCollection<TrackLst>(bl.Order.getListOfTrack(porder));
             
         }
-        private void LoadOrderTracks(OrderTracking? porder)
-        {
-            //trackLst.Clear();
-            foreach (var order in porder.TrackList ?? throw new BO.mayBeNullException())
-            {
-                if (order != null)
-                    trackLst.Add(order);
-            }
-        }
+
     }
 }

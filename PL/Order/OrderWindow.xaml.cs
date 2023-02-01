@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -131,6 +132,19 @@ namespace PL.Order
             DependencyProperty.Register("Price", typeof(double), typeof(OrderWindow));
 
 
+
+        public ObservableCollection<OrderItem?> Items
+        {
+            get { return (ObservableCollection<OrderItem?>)GetValue(ItemsProperty); }
+            set { SetValue(ItemsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemsProperty =
+            DependencyProperty.Register("Items", typeof(ObservableCollection<OrderItem?>), typeof(OrderWindow));
+
+
+
         #endregion
 
         private readonly IBl bl = Factory.Get();
@@ -148,10 +162,14 @@ namespace PL.Order
             ShipDate = porder.ShipDate;
             DeliveryDate= porder.DeliveryDate;
             Price = porder.TotalPrice;
-            
+            Items = new ObservableCollection<OrderItem?>(bl.Order.getItemListFromOrder(porder.Id));
             //Title = $"Order id: {orderId}";
             //lblOrderDetails.Text = bl.Order.DetailsOfOrderForManager(orderId)?.ToString();
         }
 
+        private void UpdateOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
