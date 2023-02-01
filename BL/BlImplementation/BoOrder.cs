@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace BlImplementation;
 public class BoOrder : BlApi.IOrder
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     BO.OrderForList changeToBo1(DO.Order? dOrder)
     {
@@ -44,6 +46,8 @@ public class BoOrder : BlApi.IOrder
             b.Status = Enums.OrderStatus.NullStatus;
         return b;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {
         List<DO.Order?> dOrders = new List<DO.Order?>();
@@ -67,6 +71,7 @@ public class BoOrder : BlApi.IOrder
         
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public Order DetailsOfOrderForManager(int id)
     {
@@ -132,11 +137,13 @@ public class BoOrder : BlApi.IOrder
             throw new BO.InCorrectDataException();
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public Order DetailsOfOrderForCustomer(int id)
     {
         return DetailsOfOrderForManager(id);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public Order ShippingUpdate(int id)
     {
@@ -194,6 +201,7 @@ public class BoOrder : BlApi.IOrder
             throw new BO.mayBeNullException();
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public Order UpdateDelivery(int id)
     {
@@ -247,6 +255,8 @@ public class BoOrder : BlApi.IOrder
         
 
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<OrderTracking> getTracList()
     {
         List<OrderTracking> list = new List<OrderTracking>();
@@ -260,6 +270,7 @@ public class BoOrder : BlApi.IOrder
     }
 
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderTracking Track(int id)
     {
         DO.Order? Dorder = new DO.Order();
@@ -299,6 +310,8 @@ public class BoOrder : BlApi.IOrder
         return orderTracking;
 
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void changeamountformnanager(int newAmount, OrderItem orderItem, Order order)
     {
         try
@@ -322,17 +335,42 @@ public class BoOrder : BlApi.IOrder
         }   
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<TrackLst> getListOfTrack(OrderTracking? ot)
     {
         ot = ot ?? new OrderTracking();
         return ot.TrackList ?? throw new BO.mayBeNullException();
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> getItemListFromOrder(int orderId)
     {
         BO.Order bord = new BO.Order();
         bord = DetailsOfOrderForManager(orderId);
-        return bord.OrderItems?? throw new BO.mayBeNullException();
+        return bord.OrderItems ?? throw new BO.mayBeNullException();
+    }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public int? GetOrderForHandle()//An helper function for stage 7, returns the next order to show...
+    {
+        var list = dal?.Order.GetAll();
+        if (list == null) return null;
+        DO.Order orderToHandle = list.FirstOrDefault() ?? throw new mayBeNullException();
+        foreach (var order in dal.Order.GetAll())
+        {
+            if (order?.DeliveryDate == null)
+            {
+                if (orderToHandle.ShipDate < order?.ShipDate)
+                {
+                    orderToHandle = order?? throw new mayBeNullException();
+                }
+                if (orderToHandle.OrderDate < order?.OrderDate)
+                {
+                    orderToHandle = order ?? throw new mayBeNullException();
+                }
+            }
+        }
+        return orderToHandle.orderID;
     }
 }
 

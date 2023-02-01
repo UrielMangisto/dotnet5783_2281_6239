@@ -1,5 +1,7 @@
 ﻿
 
+
+using System.Runtime.CompilerServices;
 using BlApi;
 using BO;
 using DalApi;
@@ -10,6 +12,7 @@ public class BoCart : BlApi.ICart
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Add(BO.Cart C, int id) 
     {
         try
@@ -99,6 +102,7 @@ public class BoCart : BlApi.ICart
             throw new Exception();
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public BO.Cart Update(BO.Cart C, int ID, int amount)
     {
@@ -142,7 +146,9 @@ public class BoCart : BlApi.ICart
          
 
     }
- 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Confirmation(BO.Cart C)
     {
         try

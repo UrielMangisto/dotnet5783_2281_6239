@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using System.Runtime.CompilerServices;
+using DO;
 using DalApi;
 using static DalApi.ICrud<DO.Order>;
 
@@ -8,6 +9,8 @@ namespace Dal;
 /// </summary>
 public class DalOrder : IOrder
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Add(Order entity)
     {
   
@@ -17,6 +20,7 @@ public class DalOrder : IOrder
         
         
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Delete(Order entity)
     {
@@ -30,6 +34,7 @@ public class DalOrder : IOrder
         }
         throw new NotFoundException();
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order entity)
     {
         int count = 0;
@@ -70,6 +75,8 @@ public class DalOrder : IOrder
         }
         throw new NotFoundException();
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? selector = null)
     {
        

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Dal
     {
         string ProductPath = "Product";
         static XElement config = XmlTools.LoadConfig();
+        [MethodImpl(MethodImplOptions.Synchronized)]
         static DO.Product? createProductfromXElement(XElement s)
         {
             return new DO.Product
@@ -24,6 +26,7 @@ namespace Dal
                 InStock = (int)s.Element("InStock")!
             };
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(Product entity)
         {
             XElement product_root = XmlTools.LoadListFromXMLElement(ProductPath);
@@ -47,7 +50,7 @@ namespace Dal
             XmlTools.SaveListToXMLElement(product_root, ProductPath);
             return entity.productID;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(Product entity)
         {
             XElement product_root = XmlTools.LoadListFromXMLElement(ProductPath);
@@ -59,7 +62,7 @@ namespace Dal
 
             XmlTools.SaveListToXMLElement(product_root, ProductPath);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Product? Get(int entity)
         {
             List<DO.Product?> ListProduct = XmlTools.LoadListFromXMLSerializer<DO.Product>(ProductPath);
@@ -71,7 +74,7 @@ namespace Dal
             else
                 return (DO.Product)product;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Product? Get(Func<Product?, bool>? selector)
         {
             if (selector == null)
@@ -82,7 +85,7 @@ namespace Dal
                      where selector(p.ConvertProduct_Xml_to_D0())
                      select p.ConvertProduct_Xml_to_D0()).FirstOrDefault());
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Product?> GetAll(Func<Product?, bool>? selector = null)
         {
             XElement? product_root = XmlTools.LoadListFromXMLElement(ProductPath);
@@ -99,7 +102,7 @@ namespace Dal
                        select createProductfromXElement(s);
             }
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(Product entity)
         {
             List<DO.Product?> ListProduct = XmlTools.LoadListFromXMLSerializer<DO.Product>(ProductPath);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Dal
     {
         const string OrderItemPath = "OrderItem";
         static XElement config = XmlTools.LoadConfig();
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(OrderItem entity)
         {
             List<DO.OrderItem?> listOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
@@ -28,7 +30,7 @@ namespace Dal
 
             return entity.orderItemID;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(OrderItem entity)
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
@@ -40,7 +42,7 @@ namespace Dal
 
             XmlTools.SaveListToXMLSerializer(ListOrderItem, OrderItemPath);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public OrderItem? Get(int entity)
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
@@ -51,7 +53,7 @@ namespace Dal
             else
                 return (DO.OrderItem)orderItem;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public OrderItem? Get(Func<OrderItem?, bool>? selector)
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
@@ -64,7 +66,7 @@ namespace Dal
             }
             throw new DO.NotFoundException("No object is of the delegate");
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? selector = null)
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
@@ -72,8 +74,8 @@ namespace Dal
             var orderItems = ListOrderItem.Where(ordItem => selector == null || selector(ordItem)).ToList();
             return orderItems;
         }
-        
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<OrderItem?> GetItemsByOrder(int orderId, Func<OrderItem?, bool>? selector = null)
         {
 
@@ -109,6 +111,7 @@ namespace Dal
             }
 
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public OrderItem? specificItemGet(int idOfProduct, int idOfOrder)
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
@@ -122,7 +125,7 @@ namespace Dal
             }
             throw new NotFoundException();
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(OrderItem entity)
         {
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);

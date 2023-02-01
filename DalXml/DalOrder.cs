@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -10,11 +11,13 @@ using DO;
 
 namespace Dal
 {
+    
+
     internal class DalOrder: IOrder
     {
         const string OrderPath = "Order";
         static XElement config = XmlTools.LoadConfig();
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(Order entity)
         {
             List<DO.Order?> ListOrder = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
@@ -29,7 +32,7 @@ namespace Dal
 
             return entity.orderID;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(Order entity)
         {
             List<DO.Order?> ListOrder = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
@@ -40,7 +43,7 @@ namespace Dal
                 throw new DO.NotFoundException("Order does not exist");
             XmlTools.SaveListToXMLSerializer(ListOrder, OrderPath);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Order? Get(int entity)
         {
             List<DO.Order?> ListOrder = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
@@ -52,7 +55,7 @@ namespace Dal
             else
                 return (DO.Order)ord;
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Order? Get(Func<Order?, bool>? selector)
         {
             List<DO.Order?> ListOrder = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
@@ -64,7 +67,7 @@ namespace Dal
             }
             throw new DO.NotFoundException("No object is of the delegate");
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Order?> GetAll(Func<Order?, bool>? selector = null)
         {
             List<DO.Order?> Orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
@@ -74,7 +77,7 @@ namespace Dal
             else
                 return Orders.Where(selector).OrderBy(x => x?.orderID);
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(Order entity)
         {
             List<DO.Order?> Orders = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);

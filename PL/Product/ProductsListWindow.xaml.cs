@@ -22,10 +22,11 @@ namespace PL
     /// <summary>
     /// Interaction logic for ProductsListWindow.xaml
     /// </summary>
-    public partial class ProductsListWindow : Window 
+    public partial class ProductsListWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        
+        //לא הספקתי להגדיר חריגות, טפל בזה בבקשה
+        //וגם צריך ליצור את שאר החלונות (אותו רעיון כמו פה, זה מופיע בתיאור הכללי) י
         public ObservableCollection<BO.ProductForList> ProductForLists
         {
             get { return (ObservableCollection<BO.ProductForList>)GetValue(ProductForListsProperty); }
@@ -42,13 +43,12 @@ namespace PL
         public ProductsListWindow()
         {
             InitializeComponent();
-            
-           
+
             ProductForLists = new ObservableCollection<BO.ProductForList>(bl.Product.GetProductList()!);
-            
+
             ProductsSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Category));
 
-           // ProductListView.ItemsSource = ProductForLists;
+            // ProductListView.ItemsSource = ProductForLists;
         }
 
 
@@ -64,10 +64,10 @@ namespace PL
                 ProductForLists = new ObservableCollection<BO.ProductForList>(bl.Product.GetProductsByTerm(x => x?.Category == category));
             }
         }
-        
+
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
-            new ProductWindow(addProductForList).Show(); 
+            new ProductWindow(addProductForList).Show();
         }
         private void addProductForList(int productId)
         {

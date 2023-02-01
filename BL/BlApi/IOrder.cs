@@ -64,4 +64,9 @@ public interface IOrder
     /// <param name="orderId"></param>
     /// <returns></returns>
     public IEnumerable<OrderItem?> getItemListFromOrder(int orderId);
+    /// <summary>
+    /// An helper function for stage 7, returns the next order to show...
+    /// </summary>
+    /// <returns></returns>
+    public int? GetOrderForHandle();
 }

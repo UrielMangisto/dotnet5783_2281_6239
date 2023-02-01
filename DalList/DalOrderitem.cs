@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using System.Runtime.CompilerServices;
+using DO;
 using DalApi;
 using System;
 
@@ -8,12 +9,16 @@ namespace Dal;
 /// </summary>
 public class DalOrderItem :  IOrderItem
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int Add(OrderItem entity)
     {
         entity.orderItemID = DataSource.Config.NextOrderItemId;
         DataSource.orderItems.Add(entity);
         return entity.orderItemID;
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public OrderItem? Get(int id)
     {
@@ -34,6 +39,8 @@ public class DalOrderItem :  IOrderItem
     /// <exception cref="Exception"></exception>
     /// </summary>
     /// 
+    
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem? Get(Func<OrderItem?, bool>? selector)
     {
         if (selector == null)
@@ -50,6 +57,7 @@ public class DalOrderItem :  IOrderItem
         }
         throw new NotFoundException();
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem? specificItemGet(int idOfProduct, int idOfOrder)
     {
         foreach (var p in DataSource.orderItems)
@@ -67,6 +75,7 @@ public class DalOrderItem :  IOrderItem
     /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetItemsByOrder(int orderID, Func<OrderItem?, bool>? selector=null)
     {
         
@@ -106,6 +115,7 @@ public class DalOrderItem :  IOrderItem
     /// </summary>
     /// <param name="selector"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? selector=null)
     {
         if(selector == null)
@@ -127,6 +137,7 @@ public class DalOrderItem :  IOrderItem
         
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(OrderItem entity)
     {
         foreach (var p in DataSource.orderItems)
@@ -140,6 +151,7 @@ public class DalOrderItem :  IOrderItem
         throw new NotFoundException();
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem entity)
     {
         int count = 0;

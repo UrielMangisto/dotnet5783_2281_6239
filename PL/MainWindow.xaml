@@ -11,6 +11,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
         <Button x:Name="ToListButton"
@@ -26,5 +27,9 @@
                 Grid.Row="2"
                 Content="Order Tracking"
                 FontSize="50" Background="ForestGreen" Foreground="White" Click="OrderTrackingButton_Click"/>
+        <Button x:Name="SimulatorButton"
+                Grid.Row="3"
+                Content="Simulator"
+                FontSize="50" Background="ForestGreen" Foreground="White" Click="SimulatorButton_Click" />
     </Grid>
 </Window>

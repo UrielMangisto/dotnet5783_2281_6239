@@ -47,5 +47,11 @@ namespace PL
             var track = new TrackShowWindow();
             track.Show();
         }
+
+        private void SimulatorButton_Click(object sender, RoutedEventArgs e)
+        {
+            var simu = new SimulatorWindow();
+            simu.Show();
+        }
     }
 }

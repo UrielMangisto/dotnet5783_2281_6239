@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using System.Runtime.CompilerServices;
+using DO;
 using DalApi;
 using System.Linq;
 using System;
@@ -10,6 +11,7 @@ namespace Dal;
 /// </summary>
 public class DalProduct: IProduct
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product entity)
     {
         int id = 0;
@@ -36,6 +38,7 @@ public class DalProduct: IProduct
 if (_ds._students.RemoveAll(p => p?.orderID == id) == 0)
 throw new DoesNotExistException("Can't delete non-existing student");
 }*/
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(Product entity)
     {
          
@@ -50,6 +53,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
         throw new DO.NotFoundException("Product Not Found");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product entity)
     {
         int count = 0;
@@ -67,6 +71,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
         throw new ("Product Not Found");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product? Get(int id)
     {
         foreach (var p in DataSource.products)
@@ -76,6 +81,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
         }
         throw new NotFoundException("Product Not Found");
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product? Get(Func<Product?, bool>? selector)
     {
         if (selector == null)
@@ -93,6 +99,7 @@ throw new DoesNotExistException("Can't delete non-existing student");
         throw new NotFoundException();
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? selector=null)
     {
         if(selector==null)

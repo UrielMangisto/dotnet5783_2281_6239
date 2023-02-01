@@ -1,5 +1,5 @@
-﻿using BlApi;
-
+﻿using System.Runtime.CompilerServices;
+using BlApi;
 using DalApi;
 using BO;
 using DO;
@@ -13,6 +13,8 @@ namespace BlImplementation;
 
 public class BoProduct : BlApi.IProduct
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     BO.ProductForList changeToBo1(DO.Product? dalProduct)
     {
         BO.ProductForList blProduct = new BO.ProductForList();
@@ -22,6 +24,7 @@ public class BoProduct : BlApi.IProduct
         blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new DO.mayBeNullException());
         return blProduct;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     BO.ProductItem changeToBo2(DO.Product? dProduct)
     {
         BO.ProductItem productItem = new BO.ProductItem();
@@ -39,6 +42,8 @@ public class BoProduct : BlApi.IProduct
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+     [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<BO.ProductForList?> GetProductList()
     {
 
@@ -65,6 +70,8 @@ public class BoProduct : BlApi.IProduct
     /// <returns></returns>
     /// <exception cref="BO.NotFoundException"></exception>
     /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<ProductForList?> GetProductsByTerm(Func<BO.ProductForList?, bool>? selector = null)
     {
         List<DO.Product?> dalProducts = new List<DO.Product?>();
@@ -87,6 +94,7 @@ public class BoProduct : BlApi.IProduct
             return blProducts;
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<ProductItem?> GetItemsByTerm(Func<BO.ProductItem?, bool>? selector = null)
     {
@@ -119,7 +127,10 @@ public class BoProduct : BlApi.IProduct
     /// returns dProduct for manager
     /// </summary>
     /// <param name="id"></param>
+
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Product ProductDetailsForManager(int id)
     {
         try
@@ -156,6 +167,8 @@ public class BoProduct : BlApi.IProduct
     /// <param name="id"></param>
     /// <param name="cart"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public ProductItem ProductDetailsForCostumer(int id, Cart cart)
     {
         try
@@ -208,6 +221,8 @@ public class BoProduct : BlApi.IProduct
     /// </summary>
     /// <param name="bProduct"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Add(BO.Product bProduct)
     {
         try
@@ -250,6 +265,8 @@ public class BoProduct : BlApi.IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Delete(int id)
     {
         try
@@ -298,6 +315,8 @@ public class BoProduct : BlApi.IProduct
     /// </summary>
     /// <param name="bProduct"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Update(BO.Product bProduct)
     {
         try
@@ -334,6 +353,8 @@ public class BoProduct : BlApi.IProduct
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<ProductItem?> CatalogRequest()
     {
         List<DO.Product?> products = new List<DO.Product?>();
@@ -344,6 +365,8 @@ public class BoProduct : BlApi.IProduct
                            select changeToBo2(p);
         return (IEnumerable<ProductItem?>)productItems;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<ProductItem?> catalogGrouping(IEnumerable<ProductItem?> productItems)
     {
         List<ProductItem?> productItems1 = new List<ProductItem?>();
@@ -359,7 +382,7 @@ public class BoProduct : BlApi.IProduct
         }
         return productItems1;
     }
-    
+
 
 
 
@@ -369,6 +392,8 @@ public class BoProduct : BlApi.IProduct
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public ProductItem RequestDetailsFromCostumer(int id)
     {
         try
@@ -401,6 +426,7 @@ public class BoProduct : BlApi.IProduct
             throw new BO.NotFoundException();
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public ProductForList GetProductForList(int productId)
    => changeToBo1(dal.Product.Get(productId));

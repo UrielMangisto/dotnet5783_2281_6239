@@ -61,7 +61,7 @@ namespace PL.Cart
             InitializeComponent();
 
 
-            MyCart.OrderItems;
+            //MyCart.OrderItems;
         }
         
 

@@ -1,0 +1,20 @@
+﻿<Window x:Class="PL.SimulatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
+        Closing="Window_Closing"
+        Title="SimulatorWindow" Height="640" Width="800">
+    <Grid>
+        <Button x:Name="endSmBtn" Content="Stop" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="99" Margin="600,300,0,0" Click="endSmBtn_Click" />
+        <Grid x:Name="BodyGrid" Width="400" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,250,150">
+            <Label HorizontalAlignment="Left" Margin="36,23,0,0"  Content="{Binding CurrentOrderHandle}" VerticalAlignment="Top" Width="120"/>
+            <Label HorizontalAlignment="Left" Margin="36,114,0,0"  Content="{Binding ExpectedOrderDetails}" VerticalAlignment="Top"/>
+        </Grid>
+        <Label x:Name="Timer" HorizontalAlignment="Left" Margin="601,102,0,0"  Content="{Binding ClockText}" VerticalAlignment="Top" />
+    </Grid>
+
+</Window>
