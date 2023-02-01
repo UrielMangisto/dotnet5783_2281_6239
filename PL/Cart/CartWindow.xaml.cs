@@ -24,23 +24,47 @@ namespace PL.Cart
     {
         private BlApi.IBl bl = Factory.Get();
 
-        public ObservableCollection<BO.OrderForList> Orders
+
+
+        public BO.Cart MyCart
         {
-            get { return (ObservableCollection<BO.OrderForList>)GetValue(OrdersProperty); }
-            set { SetValue(OrdersProperty, value); }
+            get { return (BO.Cart)GetValue(MyCartProperty); }
+            set { SetValue(MyCartProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty OrdersProperty =
-            DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList>), typeof(CartWindow));
+        // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyCartProperty =
+            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(CartWindow));
 
-        public CartWindow()
+
+
+        public ObservableCollection<BO.OrderItem> itemsList
+        {
+            get { return (ObservableCollection<BO.OrderItem>)GetValue( itemsListProperty); }
+            set { SetValue( itemsListProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for  itemsList.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty  itemsListProperty =
+            DependencyProperty.Register(" itemsList", typeof(ObservableCollection<BO.OrderItem>), typeof(CartWindow));
+
+
+
+
+
+
+
+
+
+        public CartWindow(BO.Cart c)
         {
             InitializeComponent();
 
 
-            Orders = new ObservableCollection<BO.OrderForList>(bl.Order.GetOrderList());
+            MyCart.OrderItems;
         }
+        
+
 
         private void lstCartOrders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

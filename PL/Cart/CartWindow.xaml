@@ -28,8 +28,8 @@
                   VerticalAlignment="Stretch"
                   Grid.Row="1" 
                   Background="WhiteSmoke"
-                  MouseDoubleClick="lstCartOrders_MouseDoubleClick"
-                  ItemsSource="{Binding Orders}">
+                  DataContext="{Binding MyCart.OrderItems}"
+                  MouseDoubleClick="lstCartOrders_MouseDoubleClick">
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Remove Product"
@@ -58,6 +58,14 @@
                                     Width="Auto" />
                 </GridView>
             </ListView.View>
+            <TabControl Height="2521" Width="9343">
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+            </TabControl>
         </ListView>
         <Button x:Name ="btnConfirmation" Content="Confirm" Grid.Row="1" Margin="300,524,400,10" />
     </Grid>

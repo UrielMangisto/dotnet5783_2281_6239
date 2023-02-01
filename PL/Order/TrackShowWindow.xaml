@@ -13,6 +13,7 @@
                   VerticalAlignment="Stretch"
                   Grid.Row="1" 
                   Background="WhiteSmoke"
+                  MouseDoubleClick="TracklstOrders_MouseDoubleClick"
                   ItemsSource="{Binding OrderTrackings}">
             <ListView.View>
                 <GridView>

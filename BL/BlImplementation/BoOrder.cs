@@ -203,7 +203,7 @@ public class BoOrder : BlApi.IOrder
             Dorder = dal.Order.Get(id);
             if (Dorder?.DeliveryDate != null || Dorder?.ShipDate == null || Dorder?.OrderDate == null)
             {
-                throw new DO.mayBeNullException();//NEED TO CHACK   
+                throw new DO.mayBeNullException();   
             }
             DO.Order updateOrder = Dorder ?? throw new DO.mayBeNullException();
             updateOrder.DeliveryDate = DateTime.Now;
