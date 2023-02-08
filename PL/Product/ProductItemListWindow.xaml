@@ -9,7 +9,7 @@
         Title="ProductItemListWindow" Height="640" Width="800">
     <Window.Resources>
         <Style TargetType="Button">
-            <Setter Property="Width" Value="80" />
+            <Setter Property="Width" Value="90" />
             <Setter Property="Height" Value="40" />
             <Setter Property="Margin" Value="10" />
             <Setter Property="FontSize" Value="14" />
@@ -25,9 +25,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Name="ProductItemsLable" Foreground="White" FontWeight="Bold" Content="Catalog" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"  Grid.Column="0"/>
-            <ComboBox Name="ItemsSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="ItemsSelector_SelectionChanged"/>
+            <ComboBox Name="ItemsSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="2" SelectionChanged="ItemsSelector_SelectionChanged"/>
+            <Button Name="GrupingBtn" Content="Grup" FontSize="20"  Foreground="Green" FontWeight="Bold" Grid.Column="1" Height="NaN" Margin="88,10,88,1" Click="GrupingBtn_Click" />
         </Grid>
         <ListView x:Name="ProductItemListView" 
                   HorizontalAlignment="Stretch"
@@ -52,10 +54,19 @@
                                     Header="Category"
                                     Width="Auto"
                                     />
-                    <GridViewColumn DisplayMemberBinding="{Binding Amount}"
+                    <GridViewColumn 
                                     Header="Amount"
-                                    Width="Auto"
-                                    />
+                                    Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="-" Click="Minus_Click" />
+                                    <TextBlock Text="{Binding Amount}" />
+                                    <Button Content="+" Click="Plus_Click" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding InStock}"
                                     Header="InStock"
                                     Width="Auto"

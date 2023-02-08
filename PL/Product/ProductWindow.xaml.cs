@@ -128,7 +128,6 @@ namespace PL
             {
                 if (add)
                 {
-
                     BO.Product newProduct = new BO.Product();
                     newProduct.ID = ID;
                     newProduct.Category = (BO.Enums.Category1)CategoryComboBox.SelectedItem;
@@ -143,11 +142,8 @@ namespace PL
                 {
                     product.Price = double.Parse(PriceBox.Text);
                     product.InStock = int.Parse(InStockBox.Text);
-
                     bl.Product.Update(product);
-
                     action?.Invoke(product.ID);
-
                     MessageBox.Show("Product updated succesfully!");
                 }
                 this.Close();

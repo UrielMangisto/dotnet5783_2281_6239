@@ -32,16 +32,16 @@ namespace Dal
             XElement product_root = XmlTools.LoadListFromXMLElement(ProductPath);
             if (entity.productID == 0)
             {
-                entity.productID = int.Parse(config.Element("orderID")!.Value) + 1;
-                XmlTools.SaveConfigXElement("orderID", entity.productID);
+                entity.productID = int.Parse(config.Element("productID")!.Value) + 1;
+                XmlTools.SaveConfigXElement("productID", entity.productID);
             }
             XElement? prod = (from st in product_root.Elements()
-                              where st.ToIntNullable("orderID") == entity.productID
+                              where st.ToIntNullable("productID") == entity.productID
                               select st).FirstOrDefault();
             if (prod != null)
-                throw new Exception("orderID already exist");
+                throw new Exception("ID already exist");
             product_root.Add(new XElement("Product",
-                                       new XElement("orderID", entity.productID),
+                                       new XElement("productID", entity.productID),
                                        new XElement("Name", entity.Name),
                                        new XElement("Category", entity.Category),
                                        new XElement("Price", entity.Price),
@@ -57,7 +57,7 @@ namespace Dal
 
             XElement? prod = (from st in product_root.Elements()
                               where (int?)st.Element("ProductID") == entity.productID
-                              select st).FirstOrDefault() ?? throw new Exception("Missing orderID");
+                              select st).FirstOrDefault() ?? throw new Exception("Missing ID");
             prod.Remove();  
 
             XmlTools.SaveListToXMLElement(product_root, ProductPath);

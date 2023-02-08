@@ -9,12 +9,28 @@
         Closing="Window_Closing"
         Title="SimulatorWindow" Height="640" Width="800">
     <Grid>
-        <Button x:Name="endSmBtn" Content="Stop" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="99" Margin="600,300,0,0" Click="endSmBtn_Click" />
-        <Grid x:Name="BodyGrid" Width="400" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,250,150">
-            <Label HorizontalAlignment="Left" Margin="36,23,0,0"  Content="{Binding CurrentOrderHandle}" VerticalAlignment="Top" Width="120"/>
-            <Label HorizontalAlignment="Left" Margin="36,114,0,0"  Content="{Binding ExpectedOrderDetails}" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="500*"/>
+        </Grid.RowDefinitions>
+        <Label Name="SimulatorLable" Grid.Row="0" Background="ForestGreen" Foreground="White" HorizontalContentAlignment="Center" FontWeight="Bold" Content="Simolator" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="30"/>
+        <Button x:Name="endSmBtn" Grid.Row="1" Content="Stop" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="99" Margin="600,300,0,0" Click="endSmBtn_Click" />
+        <Grid x:Name="BodyGrid" Grid.Row="1" Width="400" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,82,0,0" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <StackPanel Orientation="Vertical">
+            <Label HorizontalAlignment="Center" FontSize="20" Foreground="Green" Content="{Binding CurrentOrderHandle}" VerticalAlignment="Top"/>
+            <Label HorizontalAlignment="Left" FontSize="20" Foreground="Green" Content="{Binding ExpectedOrderDetails}" VerticalAlignment="Top"/>
+            </StackPanel>
         </Grid>
-        <Label x:Name="Timer" HorizontalAlignment="Left" Margin="601,102,0,0"  Content="{Binding ClockText}" VerticalAlignment="Top" />
+        <Label x:Name="Timer" Grid.Row="1" HorizontalAlignment="Left" Margin="595,124,0,0" Foreground="Green" Content="{Binding winClock}" VerticalAlignment="Top" Height="35" Width="105" />
+        <TextBox HorizontalAlignment="Left" Grid.Row="1" Margin="595,101,0,0" TextWrapping="Wrap" Text="Timer:" VerticalAlignment="Top" Width="120"/>
     </Grid>
 
 </Window>

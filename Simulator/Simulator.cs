@@ -4,52 +4,33 @@ namespace Simulator
 
     public static class Simulator
     {
-        /// <summary>
-        /// access bl
-        /// </summary>
+
         private static readonly BlApi.IBl? _bl = BlApi.Factory.Get();
-        /// <summary>
-        /// random number generator
-        /// </summary>
         private static Random _r = new Random(DateTime.Now.Millisecond);
 
-        /// <summary>
-        /// flag for escaping the thread
-        /// </summary>
-        private static volatile bool _isRunning;
+        private static volatile bool _isRunning;//in order to escape the threade
 
         /// <summary>
-        /// delegate to update event
+        /// in order to update event
         /// </summary>
-        /// <param name="OldStatus"></param>
-        /// <param name="StartTime"></param>
-        /// <param name="NewStatus"></param>
-        /// <param name="EndTime"></param>
-        /// <param name="ord"></param>
         public delegate void update(BO.Enums.OrderStatus OldStatus, DateTime StartTime,
             BO.Enums.OrderStatus NewStatus, int EndTime, BO.Order ord);
 
-        /// <summary>
-        /// update event
-        /// </summary>
-        public static event update? ScreenUpdate;
+        public static event update? WindowUpdate;//update the event
 
         /// <summary>
-        /// delegate for stop event
+        /// in order to stop the event
         /// </summary>
         public delegate void Stop();
 
-        /// <summary>
-        /// stop event
-        /// </summary>
-        public static event Stop? StopSim;
+        public static event Stop? simulationStop;//stop the event
 
         /// <summary>
-        /// activates the simulator 
+        /// in order to activate the simulation
         /// </summary>
         public static void Activate()
         {
-            _isRunning = true; // set the flag to true and start the thread
+            _isRunning = true; 
 
             new Thread(() =>
             {
@@ -65,12 +46,12 @@ namespace Simulator
                         BO.Enums.OrderStatus NewStatus = (Enums.OrderStatus)tmporder.Status;
                         DateTime StartTime = DateTime.Now;
                         DateTime EndTime = DateTime.Now.AddSeconds(RunTime);
-                        ScreenUpdate(OldStatus, StartTime, NewStatus, RunTime, tmporder);
+                        WindowUpdate(OldStatus, StartTime, NewStatus, RunTime, tmporder);
 
                         Thread.Sleep(1000 * RunTime);
                         if (tmporder.ShipDate == null)
                         {
-                            _bl?.Order.ShippingUpdate((int)OrderId); // need todo its random date
+                            _bl?.Order.ShippingUpdate((int)OrderId); 
                         }
                         else if (tmporder.DeliveryDate == null)
                         {
@@ -87,7 +68,7 @@ namespace Simulator
         }
 
         /// <summary>
-        /// deactivates the simulator on demand
+        /// in order to deactivate the simulation
         /// </summary>
         public static void DeActivate()
         {

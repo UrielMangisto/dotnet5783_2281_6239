@@ -45,28 +45,28 @@ public partial class SimulatorWindow : Window
     public static readonly DependencyProperty CurrentOrderHandleProperty =
         DependencyProperty.Register(nameof(CurrentOrderHandle), typeof(string), typeof(SimulatorWindow), new PropertyMetadata(null));
 
-    public string ClockText
+    public string winClock
     {
-        get => (string)GetValue(ClockTextProperty);
-        set => SetValue(ClockTextProperty, value);
+        get => (string)GetValue(winClockProperty);
+        set => SetValue(winClockProperty, value);
     }
     ///<summary>
-    /// Using a DependencyProperty as the backing store for ClockText.  This enables animation, styling, binding, etc...
+    /// Using a DependencyProperty as the backing store for winClock.  This enables animation, styling, binding, etc...
     /// </summary>
-    public static readonly DependencyProperty ClockTextProperty =
-        DependencyProperty.Register(nameof(ClockText), typeof(string), typeof(SimulatorWindow), new PropertyMetadata(null));
+    public static readonly DependencyProperty winClockProperty =
+        DependencyProperty.Register(nameof(winClock), typeof(string), typeof(SimulatorWindow), new PropertyMetadata(null));
 
 
     public SimulatorWindow()
     {
         InitializeComponent();
-        ClockText = "00:00:00"; //move to xaml
+        winClock = "00:00:00";
         _backgroundWorker.DoWork += Work;
         _backgroundWorker.ProgressChanged += UpdateScreen;
         _backgroundWorker.RunWorkerCompleted += closeHandler;
 
-        Simulator.Simulator.ScreenUpdate += Simulator_ScreenUpdate;//regester update screen and stop function to Simulator class event
-        Simulator.Simulator.StopSim += Simulator_StopSimu;
+        Simulator.Simulator.WindowUpdate += Simulator_ScreenUpdate;
+        Simulator.Simulator.simulationStop += Simulator_StopSimu;
 
         _backgroundWorker.WorkerReportsProgress = true;
         _backgroundWorker.WorkerSupportsCancellation = true;
@@ -92,12 +92,12 @@ public partial class SimulatorWindow : Window
             string endTime = (_stopWatch.Elapsed + TimeSpan.FromSeconds((double)(e?.ProgressPercentage))).ToString()[..8];
 
 
-            ExpectedOrderDetails = "Started at : " + timerText.ToString() + "\nExpected processing end time : " + endTime + "\nWill be " + (args.Item1.Status == BO.Enums.OrderStatus.Sent ? "Deliveried." : "Sent.");//update expected time & status of order after work will done
+            ExpectedOrderDetails = "Started at : " + timerText.ToString() + "\nSwitch time : " + endTime + "\nWill be " + (args.Item1.Status == BO.Enums.OrderStatus.Sent ? "Deliveried." : "Sent.");//update expected time & status of order after work will done
         }
         else if (e?.ProgressPercentage == 1)//clock update
         {
             string timerText = _stopWatch.Elapsed.ToString();
-            ClockText = timerText.Substring(0, 8);
+            winClock = timerText.Substring(0, 8);
         }
 
     }

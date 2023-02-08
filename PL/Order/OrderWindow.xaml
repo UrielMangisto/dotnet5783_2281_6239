@@ -70,8 +70,8 @@
 
             <TextBox x:Name="IdBox" Text="{Binding Id}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" FontSize="20" IsReadOnly="True"/>
             <TextBox x:Name="CostumerNameBox" Text="{Binding CostumerName}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"  FontSize="20" IsReadOnly="True"/>
-            <TextBox x:Name="CostumerEmailBox" Text="{Binding CostumerEmail}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" FontSize="20" />
-            <TextBox x:Name="CostumerAddressBox" Text="{Binding CostumerAddress}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" FontSize="20" />
+            <TextBox x:Name="CostumerEmailBox" Text="{Binding CostumerEmail}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" FontSize="20" IsReadOnly="True"/>
+            <TextBox x:Name="CostumerAddressBox" Text="{Binding CostumerAddress}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" FontSize="20" IsReadOnly="True"/>
             <TextBox x:Name="StatusBox" Text="{Binding Status}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"  FontSize="20" IsReadOnly="True"/>
             <TextBox x:Name="OrderDateBox" Text="{Binding OrderDate}" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"  FontSize="20" IsReadOnly="True"/>
             <TextBox x:Name="ShipDateBox" Text="{Binding ShipDate}" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center"  FontSize="20" IsReadOnly="True"/>

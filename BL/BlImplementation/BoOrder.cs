@@ -16,8 +16,8 @@ namespace BlImplementation;
 public class BoOrder : BlApi.IOrder
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     BO.OrderForList changeToBo1(DO.Order? dOrder)
     {
         int TotalAmount = 0;
@@ -143,8 +143,8 @@ public class BoOrder : BlApi.IOrder
     {
         return DetailsOfOrderForManager(id);
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order ShippingUpdate(int id)
     {
         try
@@ -350,8 +350,13 @@ public class BoOrder : BlApi.IOrder
         return bord.OrderItems ?? throw new BO.mayBeNullException();
     }
 
+    /// <summary>
+    /// An helper function for stage 7, returns the next order to show...
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="mayBeNullException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
-    public int? GetOrderForHandle()//An helper function for stage 7, returns the next order to show...
+    public int? GetOrderForHandle()
     {
         var list = dal?.Order.GetAll();
         if (list == null) return null;

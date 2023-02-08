@@ -23,7 +23,7 @@ namespace Dal
             if (listOrderItem.FirstOrDefault(x => x?.orderItemID == entity.orderItemID) != null)
                 throw new DO.AlreadyExistException("OrderItem Id is already exist");
 
-            entity.orderItemID = int.Parse(config.Element("orderID")!.Value) + 1;
+            entity.orderItemID = int.Parse(config.Element("orderItemID")!.Value) + 1;
             listOrderItem.Add(entity);
 
             XmlTools.SaveListToXMLSerializer(listOrderItem, OrderItemPath);
@@ -117,7 +117,6 @@ namespace Dal
             List<DO.OrderItem?> ListOrderItem = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(OrderItemPath);
             foreach (var p in ListOrderItem)
             {
-                //if (idOfProduct == p?.orderID && idOfOrder == p?.OrderID)
                 if (idOfProduct == p?.ProductID && idOfOrder == p?.OrderID)
                 {
                     return p;

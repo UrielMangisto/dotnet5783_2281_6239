@@ -9,7 +9,7 @@ namespace BlImplementation;
 /// <summary>
 /// the implementation of the dProduct
 /// </summary>
-/// 
+
 
 public class BoProduct : BlApi.IProduct
 {
@@ -94,13 +94,12 @@ public class BoProduct : BlApi.IProduct
             return blProducts;
         }
     }
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<ProductItem?> GetItemsByTerm(Func<BO.ProductItem?, bool>? selector = null)
     {
         List<DO.Product?> dalProducts = new List<DO.Product?>();
         dalProducts = dal.Product.GetAll().ToList();
-
 
         if (selector != null)
         {
@@ -108,7 +107,6 @@ public class BoProduct : BlApi.IProduct
             {
                 var blProducts = dalProducts.Select(Product => changeToBo2(Product)).Where(selector);
                 return blProducts;
-
             }
             catch (DO.NotFoundException)
             {
@@ -119,7 +117,6 @@ public class BoProduct : BlApi.IProduct
         {
             var blProducts = dalProducts.Select(Product => changeToBo2(Product));
             return blProducts;
-
         }
 
     }
@@ -127,7 +124,6 @@ public class BoProduct : BlApi.IProduct
     /// returns dProduct for manager
     /// </summary>
     /// <param name="id"></param>
-
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
 
@@ -168,7 +164,6 @@ public class BoProduct : BlApi.IProduct
     /// <param name="cart"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
-
     public ProductItem ProductDetailsForCostumer(int id, Cart cart)
     {
         try
@@ -222,7 +217,6 @@ public class BoProduct : BlApi.IProduct
     /// <param name="bProduct"></param>
     /// <exception cref="Exception"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
-
     public void Add(BO.Product bProduct)
     {
         try
@@ -266,7 +260,6 @@ public class BoProduct : BlApi.IProduct
     /// <param name="id"></param>
     /// <exception cref="Exception"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
-
     public void Delete(int id)
     {
         try
@@ -427,7 +420,6 @@ public class BoProduct : BlApi.IProduct
         }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
-
     public ProductForList GetProductForList(int productId)
    => changeToBo1(dal.Product.Get(productId));
 }

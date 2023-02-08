@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
 using BlApi;
 using BO;
 
@@ -148,11 +147,12 @@ namespace PL.Order
         #endregion
 
         private readonly IBl bl = Factory.Get();
+        private BO.Order porder = new BO.Order();
 
         public OrderWindow(int orderId)
         {
             InitializeComponent();
-            var porder = bl.Order.DetailsOfOrderForManager(orderId);
+            porder = bl.Order.DetailsOfOrderForManager(orderId);
             Id = porder.Id;
             CostumerName = porder.CostomerName;
             CostumerEmail = porder.CostomerEmail;
@@ -163,13 +163,11 @@ namespace PL.Order
             DeliveryDate= porder.DeliveryDate;
             Price = porder.TotalPrice;
             Items = new ObservableCollection<OrderItem?>(bl.Order.getItemListFromOrder(porder.Id));
-            //Title = $"Order id: {orderId}";
-            //lblOrderDetails.Text = bl.Order.DetailsOfOrderForManager(orderId)?.ToString();
         }
 
         private void UpdateOrderButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
     }
 }

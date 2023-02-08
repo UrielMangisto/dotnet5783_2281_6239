@@ -104,14 +104,13 @@ namespace PL.Product
         #endregion
         public ProductItemWindow(BO.ProductItem pi)
         {
+            InitializeComponent();
             ID = pi.Id;
             Name = pi.Name;
             Price= pi.Price;
             category= pi.Category;
             InStock = pi.InStock;
             Amount = pi.Amount;
-            
-            InitializeComponent();
         }
     }
 }
