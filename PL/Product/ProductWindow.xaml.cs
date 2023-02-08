@@ -24,7 +24,7 @@ namespace PL
         BlApi.IBl? bl = BlApi.Factory.Get();
         private bool add;//if false update mode
 
-        private BO.Product product = new BO.Product();
+        private BO.Product? product = new BO.Product();
 
         #region Depedency Properties
         public BO.ProductForList Product { get; set; }
@@ -128,7 +128,7 @@ namespace PL
             {
                 if (add)
                 {
-                    BO.Product newProduct = new BO.Product();
+                    BO.Product? newProduct = new BO.Product();
                     newProduct.ID = ID;
                     newProduct.Category = (BO.Enums.Category1)CategoryComboBox.SelectedItem;
                     newProduct.Name = Name;
@@ -153,6 +153,10 @@ namespace PL
             {
                 MessageBox.Show("Incorrect Data");
                 this.Close();
+            }
+            catch(Exception)//when the custumer dont write nothing
+            {
+                MessageBox.Show("you need to write something");
             }
         }
     }

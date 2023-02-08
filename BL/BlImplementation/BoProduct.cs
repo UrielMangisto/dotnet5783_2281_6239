@@ -322,7 +322,8 @@ public class BoProduct : BlApi.IProduct
                 throw new DO.InCorrectDataException();
             if (bProduct.InStock < 0)
                 throw new DO.InCorrectDataException();
-
+            if(bProduct.Price == null)
+                throw new DO.mayBeNullException();
             DO.Product dProduct = new DO.Product();
             //exceptions
 
@@ -337,6 +338,11 @@ public class BoProduct : BlApi.IProduct
         {
             throw new BO.InCorrectDataException();
         }
+        catch(DO.mayBeNullException)
+        {
+            throw new BO.mayBeNullException();
+        }
+
 
 
     }
