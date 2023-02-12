@@ -27,7 +27,7 @@ namespace PL.Product
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-
+        BO.Cart cart = new BO.Cart();
         public ObservableCollection<BO.ProductItem?> ProductItems
         {
             get { return (ObservableCollection<BO.ProductItem?>)GetValue(ProductItemsProperty); }
@@ -75,7 +75,6 @@ namespace PL.Product
 
         private void btnCartList_Click(object sender, RoutedEventArgs e)
         {
-            BO.Cart cart = new BO.Cart();
             var cartWindow = new CartWindow(cart);
             cartWindow.Show();
         }
@@ -96,19 +95,10 @@ namespace PL.Product
             {
                 Button button = sender as Button ?? throw new BO.mayBeNullException();
                 BO.ProductItem? product = button.DataContext as BO.ProductItem;
-                
-                foreach (var pi in ProductItems)
-                {
-                    if (pi?.Id == product.Id)
-                    {
-                        if (pi.Amount > 0)
-                        {
-                            pi.Amount--;
-                        }
-                        else
-                            throw new Exception("the amount is the minimal!");
-                    }
-                }
+                if (product.Amount > 0)
+                    product.Amount--;
+                else throw new Exception("The amount is the minimal!");
+                bl.Cart.Update(cart, product.Id, product.Amount);
                 ProductItems = new ObservableCollection<ProductItem?>(ProductItems);
 
             }
@@ -121,15 +111,8 @@ namespace PL.Product
         {
             Button button = sender as Button ?? throw new BO.mayBeNullException();
             BO.ProductItem? product = button.DataContext as BO.ProductItem;
-
-            foreach (var pi in ProductItems)
-            {
-                if (pi?.Id == product.Id)
-                {
-                    pi.Amount++;
-                    
-                }
-            }
+            product.Amount++;
+            bl.Cart.Add(cart, product.Id);
             ProductItems = new ObservableCollection<ProductItem?>(ProductItems);
         }
     }

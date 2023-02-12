@@ -32,4 +32,6 @@ public interface ICart
     /// </summary>
     /// <param name="C"></param>
     public void Confirmation(Cart C);
+    public IEnumerable<BO.OrderItem?> GetM(BO.Cart c);
+
 }

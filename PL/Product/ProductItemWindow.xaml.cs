@@ -23,11 +23,11 @@ namespace PL.Product
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        private BO.Product product = new BO.Product();
+        private BO.Product product { get; set;}
 
-        #region Depedency Properties
         public BO.ProductItem Product { get; set; }
 
+        #region Depedency Properties
 
         public BO.Enums.Category? category
         {

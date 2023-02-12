@@ -69,8 +69,6 @@ namespace PL.Order
             ID = porder.Id;
             Status = porder.Status;
             trackLst = new ObservableCollection<TrackLst>(bl.Order.getListOfTrack(porder));
-           
-
         }
 
     }

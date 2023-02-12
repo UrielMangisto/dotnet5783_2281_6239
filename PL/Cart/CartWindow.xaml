@@ -19,23 +19,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="lblTotalPrice" />
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock x:Name="lblTotalPrice" Grid.Row="0" Text="Total price:"/>
+            <Label Name="lblTprice" Content="{Binding CartTotalPrice}" Grid.Row="0"/>
+        </StackPanel>
         <ListView x:Name="lstCartOrders" 
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
-                  Grid.Row="1" 
+                  Grid.Row="1"
                   Background="WhiteSmoke"
-                  DataContext="{Binding MyCart.OrderItems}"
-                  MouseDoubleClick="lstCartOrders_MouseDoubleClick">
-            <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Remove Product"
-                              Click="MenuItem_Remove_Click" />
-                </ContextMenu>
-            </ListView.ContextMenu>
+                  ItemsSource="{Binding ItemLst}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" 
@@ -58,15 +59,29 @@
                                     Width="Auto" />
                 </GridView>
             </ListView.View>
-            <TabControl Height="2521" Width="9343">
-                <TabItem Header="TabItem">
-                    <Grid Background="#FFE5E5E5"/>
-                </TabItem>
-                <TabItem Header="TabItem">
-                    <Grid Background="#FFE5E5E5"/>
-                </TabItem>
-            </TabControl>
         </ListView>
-        <Button x:Name ="btnConfirmation" Content="Confirm" Grid.Row="1" Margin="300,524,400,10" />
+        <Grid x:Name="InputGrid" Grid.Row="1" Grid.Column="1">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Full Name:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" FontWeight="Bold" FontSize="20"/>
+            <TextBlock Text="Email:" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" FontWeight="Bold" FontSize="20"/>
+            <TextBlock Text="Adress:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" FontWeight="Bold" FontSize="20"/>
+
+            <TextBox x:Name="CostumerNameBox" Text="{Binding CostumerName}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"  FontSize="20" IsReadOnly="False"/>
+            <TextBox x:Name="CostumerEmailBox" Text="{Binding CostumerEmail}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="20" IsReadOnly="False"/>
+            <TextBox x:Name="CostumerAddressBox" Text="{Binding CostumerAddress}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" FontSize="20" IsReadOnly="False"/>
+
+        </Grid>
+        <Button Name ="btnConfirmation" Content="Confirm" Grid.Row="2"  Click="btnConfirmation_Click" Margin="150,10,150,0" Height="40" VerticalAlignment="Top"/>
     </Grid>
 </Window>

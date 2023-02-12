@@ -1,7 +1,4 @@
-﻿
-
-
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using BlApi;
 using BO;
 using DalApi;
@@ -23,7 +20,6 @@ public class BoCart : BlApi.ICart
                 throw new DO.NotExistInStockException();
             if (C.OrderItems == null)
             {
-
                 BO.OrderItem BorderItem1 = new BO.OrderItem();
                 Random randNum1 = new Random();
                 int nId1 = randNum1.Next(10000);
@@ -40,9 +36,10 @@ public class BoCart : BlApi.ICart
             }
             foreach (var pro in C.OrderItems)
             {
-                if (pro?.Id == id)
+                if (pro?.ProductId == id)
                 {
                     pro.Amount++;
+                    pro.TotalPrice += pro.Price;
                     C.TotalPrice += pro.Price;
                     return C;
                 }
@@ -111,7 +108,7 @@ public class BoCart : BlApi.ICart
             DO.Product Dproduct = new DO.Product();
             foreach (var pro in C.OrderItems)
             {
-                if (pro?.Id == ID)
+                if (pro?.ProductId == ID)
                 {
                     if (amount == 0)
                     {
@@ -123,7 +120,7 @@ public class BoCart : BlApi.ICart
                     if (diff > 0)
                     {
                         if (Dproduct.InStock < diff)
-                            throw new DO.NotExistInStockException();//there are no products in the stock
+                            throw new DO.NotExistInStockException();//there are not enough products in the stock
                         pro.Amount = amount;
                         C.TotalPrice += pro.Price * diff;
                         return C;
@@ -142,13 +139,9 @@ public class BoCart : BlApi.ICart
         {
             throw new BO.NotExistInStockException();
         }
-        
-         
-
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
-
     public void Confirmation(BO.Cart C)
     {
         try
@@ -173,7 +166,7 @@ public class BoCart : BlApi.ICart
             foreach (BO.OrderItem item in C.OrderItems)
             {
                 DO.Product? Dproduct = new DO.Product?();
-                Dproduct = dal.Product.Get(item.Id);
+                Dproduct = dal.Product.Get(item.ProductId);
                 if (Dproduct?.InStock <= 0)
                     throw new DO.NotvalidException();
                 if (item?.Amount <= 0)
@@ -183,7 +176,7 @@ public class BoCart : BlApi.ICart
             foreach (BO.OrderItem item in BorderItems)
             {
                 DO.Product product = new DO.Product();
-                product = dal.Product.Get(item.Id) ?? throw new DO.mayBeNullException();
+                product = dal.Product.Get(item.ProductId) ?? throw new DO.mayBeNullException();
                 DO.OrderItem tempItem = new DO.OrderItem();
                 tempItem.OrderID = Dorder.orderID;
                 dal.OrderItem.Add(tempItem);
@@ -202,6 +195,17 @@ public class BoCart : BlApi.ICart
         {
             throw new BO.mayBeNullException();
         }
-        
+    }
+
+    /// <summary>
+    /// an helper method for stage 5
+    /// </summary>
+    /// <param name="c"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.mayBeNullException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public IEnumerable<BO.OrderItem?> GetM(BO.Cart c)
+    {
+        return c.OrderItems ?? throw new BO.mayBeNullException(nameof(c));
     }
 }

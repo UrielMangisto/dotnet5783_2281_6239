@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
     <productID>769988</productID>
@@ -104,5 +104,19 @@
     <Category>Fantasy</Category>
     <Price>33</Price>
     <InStock>32</InStock>
+  </Product>
+  <Product>
+    <productID>333333</productID>
+    <Name>Bdika</Name>
+    <Category>Fantasy</Category>
+    <Price>12</Price>
+    <InStock>100</InStock>
+  </Product>
+  <Product>
+    <productID>777777</productID>
+    <Name>Bdika 2</Name>
+    <Category>Romanticism</Category>
+    <Price>34</Price>
+    <InStock>99</InStock>
   </Product>
 </ArrayOfProduct>
