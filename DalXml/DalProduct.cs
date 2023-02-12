@@ -47,6 +47,7 @@ namespace Dal
                                        new XElement("Price", entity.Price),
                                        new XElement("InStock", entity.InStock)
                                        ));
+            XmlTools.SaveConfigXElement("productID", entity.productID);
             XmlTools.SaveListToXMLElement(product_root, ProductPath);
             return entity.productID;
         }

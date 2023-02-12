@@ -30,9 +30,6 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Price" Width="Auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount" Width="Auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="TotalPrice" Width="Auto"/>
-
-
-
                 </GridView>
             </ListView.View>
         </ListView>

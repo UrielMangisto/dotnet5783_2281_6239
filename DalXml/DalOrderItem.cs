@@ -24,8 +24,8 @@ namespace Dal
                 throw new DO.AlreadyExistException("OrderItem Id is already exist");
 
             entity.orderItemID = int.Parse(config.Element("orderItemID")!.Value) + 1;
+            XmlTools.SaveConfigXElement("orderItemID", entity.orderItemID);
             listOrderItem.Add(entity);
-
             XmlTools.SaveListToXMLSerializer(listOrderItem, OrderItemPath);
 
             return entity.orderItemID;

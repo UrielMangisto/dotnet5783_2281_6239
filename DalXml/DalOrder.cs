@@ -23,9 +23,10 @@ namespace Dal
             List<DO.Order?> ListOrder = XmlTools.LoadListFromXMLSerializer<DO.Order>(OrderPath);
 
             if (ListOrder.FirstOrDefault(orderItem => orderItem?.orderID == entity.orderID) != null)
-                throw new Exception("id already exist");
+                throw new Exception("Id's already exist");
 
-            entity.orderID = int.Parse(config.Element("OrderID")!.Value) + 1;
+            entity.orderID = int.Parse(config.Element("orderID")!.Value) + 1;
+            XmlTools.SaveConfigXElement("orderID", entity.orderID);
             ListOrder.Add(entity);
 
             XmlTools.SaveListToXMLSerializer(ListOrder, OrderPath);
