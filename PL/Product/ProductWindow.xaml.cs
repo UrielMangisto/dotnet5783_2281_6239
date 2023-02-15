@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BO;
 
 namespace PL
 {
@@ -126,9 +126,12 @@ namespace PL
         {
             try
             {
+                
                 if (add)
                 {
-                    BO.Product newProduct = new BO.Product();
+                    if (CategoryComboBox.SelectedItem == null)
+                        throw new BO.mayBeNullException();
+                    BO.Product? newProduct = new BO.Product();
                     newProduct.ID = ID;
                     newProduct.Category = (BO.Enums.Category1)CategoryComboBox.SelectedItem;
                     newProduct.Name = Name;
@@ -154,6 +157,16 @@ namespace PL
                 MessageBox.Show("Incorrect Data");
                 this.Close();
             }
+            catch(BO.mayBeNullException) 
+            {
+                MessageBox.Show("enter data please");
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show("enter data please");
+            }
+            
+            
         }
     }
 }

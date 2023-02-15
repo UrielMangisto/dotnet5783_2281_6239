@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using PL.Order;
 using PL.Product;
 using System;
@@ -57,9 +58,6 @@ namespace PL.Cart
         public static readonly DependencyProperty CostumerNameProperty =
             DependencyProperty.Register("CostumerName", typeof(string), typeof(CartWindow));
 
-
-
-
         public string CostumerEmail
         {
             get { return (string)GetValue(CostumerEmailProperty); }
@@ -87,26 +85,73 @@ namespace PL.Cart
         {
             InitializeComponent();
             cart = c;
-            //lstCartOrders.ItemsSource = new ObservableCollection<BO.OrderItem?>(bl.Cart.GetM(c));
-            ItemLst = new ObservableCollection<BO.OrderItem?>(bl.Cart.GetM(c)!);
-            CartTotalPrice= c.TotalPrice;
-            //ItemsList = new ObservableCollection<BO.OrderItem?>(c.OrderItems!);
-        }
-        
-
-        private void MenuItem_Remove_Click(object sender, RoutedEventArgs e)
-        {
-
+            ItemLst = new ObservableCollection<BO.OrderItem?>(bl.Cart.GetTheItems(c)!);
+            CartTotalPrice = c.TotalPrice;
         }
 
         private void btnConfirmation_Click(object sender, RoutedEventArgs e)
         {
-            cart.CostumerName = CostumerNameBox.Text;
-            cart.CostumerAddress = CostumerAddressBox.Text;
-            cart.CostumerEmail = CostumerEmailBox.Text;
-            bl.Cart.Confirmation(cart);
-            MessageBox.Show("Your order was confirmed successfuly!!");
-            this.Close();
+            try
+            {
+                cart.CostumerName = CostumerNameBox.Text;
+                cart.CostumerAddress = CostumerAddressBox.Text;
+                cart.CostumerEmail = CostumerEmailBox.Text;
+                bl.Cart.Confirmation(cart);
+                if (cart.OrderItems.Count == 0)
+                {
+                    throw new BO.NotvalidException();
+                }
+                MessageBox.Show("Your order was confirmed successfuly!!");
+
+                this.Close();
+            }
+            catch(BO.mayBeNullException) 
+            {
+                MessageBox.Show("Please enter data.");
+            }
+            catch(BO.NotvalidException)
+            {
+                MessageBox.Show("order must have at least one product");
+            }
+        }
+        private void Minus_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button ?? throw new BO.mayBeNullException();
+                BO.OrderItem? item = button.DataContext as BO.OrderItem;
+                if (item.Amount > 0)
+                {
+                    item.Amount--;
+                    item.TotalPrice -= item.Price;
+                }
+                else throw new Exception("The amount is the minimal!");
+                cart = bl.Cart.Update(cart, item.ProductId, item.Amount);
+                ItemLst = new ObservableCollection<OrderItem?>(ItemLst);
+            }
+            catch (BO.NotExistInStockException) 
+            {
+                MessageBox.Show("There isnt enough items");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+        private void Plus_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button ?? throw new BO.mayBeNullException();
+                BO.OrderItem? item = button.DataContext as BO.OrderItem;
+                bl.Cart.Add(cart, item.ProductId);
+                ItemLst = new ObservableCollection<OrderItem?>(ItemLst);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -1,32 +1,32 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
     <productID>769988</productID>
     <Name>Harry Poter 1</Name>
     <Category>Kids</Category>
     <Price>130</Price>
-    <InStock>48</InStock>
+    <InStock>453</InStock>
   </Product>
   <Product>
     <productID>784848</productID>
     <Name>Harry Poter 2</Name>
     <Category>Kids</Category>
     <Price>120</Price>
-    <InStock>50</InStock>
+    <InStock>504</InStock>
   </Product>
   <Product>
     <productID>939345</productID>
     <Name>Harry Poter 3</Name>
     <Category>Kids</Category>
     <Price>110</Price>
-    <InStock>57</InStock>
+    <InStock>355</InStock>
   </Product>
   <Product>
     <productID>923844</productID>
     <Name>Harry Poter 4</Name>
     <Category>Kids</Category>
     <Price>110</Price>
-    <InStock>70</InStock>
+    <InStock>165</InStock>
   </Product>
   <Product>
     <productID>493934</productID>
@@ -40,70 +40,70 @@
     <Name>Harry Poter 6</Name>
     <Category>Kids</Category>
     <Price>100</Price>
-    <InStock>60</InStock>
+    <InStock>605</InStock>
   </Product>
   <Product>
     <productID>759329</productID>
     <Name>Harry Poter 7</Name>
     <Category>Kids</Category>
     <Price>90</Price>
-    <InStock>12</InStock>
+    <InStock>125</InStock>
   </Product>
   <Product>
     <productID>843902</productID>
     <Name>Harry Poter 8</Name>
     <Category>Kids</Category>
     <Price>160</Price>
-    <InStock>40</InStock>
+    <InStock>450</InStock>
   </Product>
   <Product>
     <productID>123455</productID>
     <Name>Spiderman</Name>
     <Category>Comics</Category>
     <Price>120</Price>
-    <InStock>52</InStock>
+    <InStock>552</InStock>
   </Product>
   <Product>
     <productID>541235</productID>
     <Name>Superman</Name>
     <Category>Comics</Category>
     <Price>70</Price>
-    <InStock>18</InStock>
+    <InStock>550</InStock>
   </Product>
   <Product>
     <productID>548735</productID>
     <Name>Bon</Name>
     <Category>Comics</Category>
     <Price>80</Price>
-    <InStock>50</InStock>
+    <InStock>550</InStock>
   </Product>
   <Product>
     <productID>847565</productID>
     <Name>Black List</Name>
     <Category>Action</Category>
     <Price>233</Price>
-    <InStock>55</InStock>
+    <InStock>555</InStock>
   </Product>
   <Product>
     <productID>154323</productID>
     <Name>Alice In Wonderland</Name>
     <Category>Fantasy</Category>
     <Price>43</Price>
-    <InStock>55</InStock>
+    <InStock>555</InStock>
   </Product>
   <Product>
     <productID>765432</productID>
     <Name>Ami And Tami</Name>
     <Category>Fantasy</Category>
     <Price>23</Price>
-    <InStock>54</InStock>
+    <InStock>540</InStock>
   </Product>
   <Product>
     <productID>565758</productID>
     <Name>Red Kipa</Name>
     <Category>Fantasy</Category>
     <Price>33</Price>
-    <InStock>32</InStock>
+    <InStock>320</InStock>
   </Product>
   <Product>
     <productID>333333</productID>
@@ -117,6 +117,20 @@
     <Name>Bdika 2</Name>
     <Category>Romanticism</Category>
     <Price>34</Price>
-    <InStock>99</InStock>
+    <InStock>100</InStock>
+  </Product>
+  <Product>
+    <productID>888888</productID>
+    <Name>Another Check</Name>
+    <Category>Action</Category>
+    <Price>23</Price>
+    <InStock>160</InStock>
+  </Product>
+  <Product>
+    <productID>1</productID>
+    <Name>asa</Name>
+    <Category>Action</Category>
+    <Price>15</Price>
+    <InStock>12</InStock>
   </Product>
 </ArrayOfProduct>

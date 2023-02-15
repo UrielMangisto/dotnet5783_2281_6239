@@ -69,4 +69,10 @@ public interface IOrder
     /// </summary>
     /// <returns></returns>
     public int? GetOrderForHandle();
+    /// <summary>
+    /// updating an order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
+    public void Update(Order order);
 }

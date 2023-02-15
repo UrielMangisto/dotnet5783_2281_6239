@@ -8,6 +8,8 @@ using BlApi;
 using BO;
 using Dal;
 using DalApi;
+using DO;
+using System.Data;
 /// <summary>
 /// The implementation of the Order
 /// </summary>
@@ -73,7 +75,7 @@ public class BoOrder : BlApi.IOrder
 
     [MethodImpl(MethodImplOptions.Synchronized)]
 
-    public Order DetailsOfOrderForManager(int id)
+    public BO.Order DetailsOfOrderForManager(int id)
     {
         try
         {
@@ -85,9 +87,9 @@ public class BoOrder : BlApi.IOrder
                 Dorder = dal.Order.Get(id) ?? throw new DO.mayBeNullException();
 
                 Border.Id = id;
-                Border.CostomerName = Dorder?.CostumerName;
-                Border.CostomerEmail = Dorder?.CostumerEmail;
-                Border.CostomerAdress = Dorder?.CostumerAddress;
+                Border.CostumerName = Dorder?.CostumerName;
+                Border.CostumerEmail = Dorder?.CostumerEmail;
+                Border.CostumerAddress = Dorder?.CostumerAddress;
                 Border.DeliveryDate = Dorder?.DeliveryDate;
                 Border.ShipDate = Dorder?.ShipDate;
                 Border.OrderDate = Dorder?.OrderDate;
@@ -102,7 +104,7 @@ public class BoOrder : BlApi.IOrder
 
                 List<DO.OrderItem?> DorderItems = new List<DO.OrderItem?>();
                 DorderItems = dal.OrderItem.GetItemsByOrder(id).ToList();
-                Border.OrderItems = new List<OrderItem?>();
+                Border.OrderItems = new List<BO.OrderItem?>();
                 foreach (DO.OrderItem? item in DorderItems)
                 {
                     BO.OrderItem item2 = new BO.OrderItem();
@@ -139,13 +141,13 @@ public class BoOrder : BlApi.IOrder
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
 
-    public Order DetailsOfOrderForCustomer(int id)
+    public BO.Order DetailsOfOrderForCustomer(int id)
     {
         return DetailsOfOrderForManager(id);
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
-    public Order ShippingUpdate(int id)
+    public BO.Order ShippingUpdate(int id)
     {
         try
         {
@@ -160,11 +162,11 @@ public class BoOrder : BlApi.IOrder
             updateOrder.ShipDate = DateTime.Now;
             dal.Order.Update(updateOrder);
             BO.Order Border = new BO.Order();
-            Border.OrderItems = new List<OrderItem?>();
+            Border.OrderItems = new List<BO.OrderItem?>();
             Border.Id = id;
-            Border.CostomerName = Dorder?.CostumerName;
-            Border.CostomerEmail = Dorder?.CostumerEmail;
-            Border.CostomerAdress = Dorder?.CostumerAddress;
+            Border.CostumerName = Dorder?.CostumerName;
+            Border.CostumerEmail = Dorder?.CostumerEmail;
+            Border.CostumerAddress = Dorder?.CostumerAddress;
             Border.DeliveryDate = Dorder?.DeliveryDate;
             Border.ShipDate = Dorder?.ShipDate;
             Border.OrderDate = Dorder?.OrderDate;
@@ -203,7 +205,7 @@ public class BoOrder : BlApi.IOrder
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
 
-    public Order UpdateDelivery(int id)
+    public BO.Order UpdateDelivery(int id)
     {
         try
         {
@@ -218,9 +220,9 @@ public class BoOrder : BlApi.IOrder
             dal.Order.Update(updateOrder); ;
             BO.Order Border = new BO.Order();
             Border.Id = id;
-            Border.CostomerName = Dorder?.CostumerName;
-            Border.CostomerEmail = Dorder?.CostumerEmail;
-            Border.CostomerAdress = Dorder?.CostumerAddress;
+            Border.CostumerName = Dorder?.CostumerName;
+            Border.CostumerEmail = Dorder?.CostumerEmail;
+            Border.CostumerAddress = Dorder?.CostumerAddress;
             Border.DeliveryDate = Dorder?.DeliveryDate;
             Border.ShipDate = Dorder?.ShipDate;
             Border.OrderDate = Dorder?.OrderDate;
@@ -312,7 +314,7 @@ public class BoOrder : BlApi.IOrder
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
 
-    public void changeamountformnanager(int newAmount, OrderItem orderItem, Order order)
+    public void changeamountformnanager(int newAmount, BO.OrderItem orderItem, BO.Order order)
     {
         try
         {
@@ -343,11 +345,11 @@ public class BoOrder : BlApi.IOrder
     }
 
     [MethodImpl(MethodImplOptions.Synchronized)]
-    public IEnumerable<OrderItem?> getItemListFromOrder(int orderId)
+    public IEnumerable<BO.OrderItem?> getItemListFromOrder(int orderId)
     {
         BO.Order bord = new BO.Order();
         bord = DetailsOfOrderForManager(orderId);
-        return bord.OrderItems ?? throw new BO.mayBeNullException();
+        return bord.OrderItems ?? throw new DO.mayBeNullException();
     }
 
     /// <summary>
@@ -360,22 +362,81 @@ public class BoOrder : BlApi.IOrder
     {
         var list = dal?.Order.GetAll();
         if (list == null) return null;
-        DO.Order orderToHandle = list.FirstOrDefault() ?? throw new mayBeNullException();
+        DO.Order orderToHandle = list.FirstOrDefault() ?? throw new DO.mayBeNullException();
         foreach (var order in dal.Order.GetAll())
         {
             if (order?.DeliveryDate == null)
             {
                 if (orderToHandle.ShipDate < order?.ShipDate)
                 {
-                    orderToHandle = order?? throw new mayBeNullException();
+                    orderToHandle = order?? throw new DO.mayBeNullException();
                 }
                 if (orderToHandle.OrderDate < order?.OrderDate)
                 {
-                    orderToHandle = order ?? throw new mayBeNullException();
+                    orderToHandle = order ?? throw new DO.mayBeNullException();
                 }
             }
         }
         return orderToHandle.orderID;
+    }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public void Update(BO.Order? order)
+    {
+        try
+        {
+            DO.Order temp = new DO.Order();
+            if (order.Status != Enums.OrderStatus.Confirmed)
+                throw new DO.NotvalidException();
+            temp.orderID = order.Id;
+            temp.CostumerName = order.CostumerName;
+            temp.CostumerAddress = order.CostumerAddress;
+            temp.CostumerEmail = order.CostumerEmail;
+            temp.OrderDate = order.OrderDate;
+            temp.ShipDate = null;
+            temp.DeliveryDate = null;
+            DO.OrderItem testItem = new DO.OrderItem();
+            DO.Product dproduct = new();
+            foreach(BO.OrderItem? it in order?.OrderItems)
+            {
+                dproduct = (DO.Product)dal.Product.Get(it.ProductId);
+                testItem = (DO.OrderItem)dal.OrderItem.Get(it.Id);
+                int diff = it?.Amount - testItem.Amount ?? throw new DO.mayBeNullException();
+                if (it?.Amount == 0)
+                {
+                    order.OrderItems.Remove(it);
+                    order.TotalPrice -= it.Price * it.Amount;
+                    dproduct.InStock += diff;
+                }
+                else
+                {
+                    if (diff > 0)
+                    {
+                        if (dproduct.InStock < diff)
+                            throw new DO.NotExistInStockException();//there are not enough products in the stock
+                        order.TotalPrice += diff*it.Price;
+                    }
+                    else
+                    {
+                        order.TotalPrice += diff*it.Price;
+                    }
+                }
+                DO.OrderItem dit = new DO.OrderItem();
+                dit.OrderID = order.Id;
+                dit.Price = it.Price;
+                dit.ProductID = it.ProductId;
+                dit.Amount = it.Amount;
+                dit.orderItemID = it.Id;
+                dal.OrderItem.Update(dit);
+            }
+            dal.Product.Update(dproduct);
+            dal.Order.Update(temp);
+        }
+        catch(DO.NotvalidException)
+        {
+            throw new BO.NotvalidException();
+        }
+
+
     }
 }
 

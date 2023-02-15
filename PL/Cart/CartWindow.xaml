@@ -20,7 +20,6 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
-
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -48,9 +47,19 @@
                     <GridViewColumn DisplayMemberBinding="{Binding ItemName}"
                                     Header="ItemName"
                                     Width="Auto" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Amount}"
-                                    Header="Amount Of Items"
-                                    Width="Auto" />
+                    <GridViewColumn 
+                                    Header="Amount"
+                                    Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="-"  Height="20" Width="13" Click="Minus_Button_Click"/>
+                                    <TextBlock Text="{Binding Amount}" />
+                                    <Button Content="+" Height="20" Width="13" Click="Plus_Button_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Price}"
                                     Header="Price"
                                     Width="Auto" />

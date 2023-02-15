@@ -148,9 +148,9 @@ namespace PL.Order
             InitializeComponent();
             var porder = bl.Order.DetailsOfOrderForManager(trackID);
             Id = porder.Id;
-            CostumerName = porder.CostomerName;
-            CostumerEmail = porder.CostomerEmail;
-            CostumerAddress = porder.CostomerAdress;
+            CostumerName = porder.CostumerName;
+            CostumerEmail = porder.CostumerEmail;
+            CostumerAddress = porder.CostumerAddress;
             Status = porder.Status.ToString();
             OrderDate = porder.OrderDate;
             ShipDate = porder.ShipDate;

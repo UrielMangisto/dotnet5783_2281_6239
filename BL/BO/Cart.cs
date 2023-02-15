@@ -11,10 +11,25 @@ namespace BO;
 
 public class Cart
 {
+    /// <summary>
+    /// the name of the cotumer
+    /// </summary>
     public string? CostumerName { get; set; }
+    /// <summary>
+    /// the email of the costumer
+    /// </summary>
     public string? CostumerEmail { get; set; }
+    /// <summary>
+    /// the address of the costumer 
+    /// </summary>
     public string? CostumerAddress { get; set; }
+    /// <summary>
+    /// the list of the orderitem
+    /// </summary>
     public List<OrderItem?>? OrderItems { get; set; }// = new List<OrderItem?>();
+    /// <summary>
+    /// the total price of the cart
+    /// </summary>
     public double TotalPrice { get; set; }
     public override string ToString() { string str = $@"
     Costumer Name  :  {CostumerName}, 

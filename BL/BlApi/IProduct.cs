@@ -75,6 +75,16 @@ public interface IProduct
     /// <param name="id"></param>
     /// <returns></returns>
     public ProductItem RequestDetailsFromCostumer(int id);
+    /// <summary>
+    /// change product to pruduct for list 
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <returns></returns>
     ProductForList GetProductForList(int productId);
+    /// <summary>
+    /// grouping the catalog by category
+    /// </summary>
+    /// <param name="productItems"></param>
+    /// <returns></returns>
     public IEnumerable<ProductItem?> catalogGrouping(IEnumerable<ProductItem?> productItems);
 }

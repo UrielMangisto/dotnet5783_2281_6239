@@ -61,21 +61,21 @@
     <ProductID>541235</ProductID>
     <OrderID>100004</OrderID>
     <Price>70</Price>
-    <Amount>8</Amount>
+    <Amount>13</Amount>
   </OrderItem>
   <OrderItem>
     <orderItemID>100009</orderItemID>
     <ProductID>939345</ProductID>
     <OrderID>100004</OrderID>
     <Price>110</Price>
-    <Amount>7</Amount>
+    <Amount>10</Amount>
   </OrderItem>
   <OrderItem>
     <orderItemID>100010</orderItemID>
     <ProductID>923844</ProductID>
     <OrderID>100004</OrderID>
     <Price>110</Price>
-    <Amount>8</Amount>
+    <Amount>7</Amount>
   </OrderItem>
   <OrderItem>
     <orderItemID>100011</orderItemID>
@@ -145,14 +145,14 @@
     <ProductID>923844</ProductID>
     <OrderID>100011</OrderID>
     <Price>110</Price>
-    <Amount>7</Amount>
+    <Amount>8</Amount>
   </OrderItem>
   <OrderItem>
     <orderItemID>100021</orderItemID>
     <ProductID>939345</ProductID>
     <OrderID>100012</OrderID>
     <Price>110</Price>
-    <Amount>5</Amount>
+    <Amount>4</Amount>
   </OrderItem>
   <OrderItem>
     <orderItemID>100022</orderItemID>
@@ -247,44 +247,9 @@
   </OrderItem>
   <OrderItem>
     <orderItemID>100035</orderItemID>
-    <ProductID>769988</ProductID>
-    <OrderID>100020</OrderID>
-    <Price>130</Price>
+    <ProductID>784848</ProductID>
+    <OrderID>100021</OrderID>
+    <Price>120</Price>
     <Amount>1</Amount>
-  </OrderItem>
-  <OrderItem>
-    <orderItemID>100036</orderItemID>
-    <ProductID>0</ProductID>
-    <OrderID>100021</OrderID>
-    <Price>0</Price>
-    <Amount>0</Amount>
-  </OrderItem>
-  <OrderItem>
-    <orderItemID>100036</orderItemID>
-    <ProductID>0</ProductID>
-    <OrderID>100021</OrderID>
-    <Price>0</Price>
-    <Amount>0</Amount>
-  </OrderItem>
-  <OrderItem>
-    <orderItemID>100037</orderItemID>
-    <ProductID>0</ProductID>
-    <OrderID>100022</OrderID>
-    <Price>0</Price>
-    <Amount>0</Amount>
-  </OrderItem>
-  <OrderItem>
-    <orderItemID>100037</orderItemID>
-    <ProductID>0</ProductID>
-    <OrderID>100022</OrderID>
-    <Price>0</Price>
-    <Amount>0</Amount>
-  </OrderItem>
-  <OrderItem>
-    <orderItemID>100038</orderItemID>
-    <ProductID>0</ProductID>
-    <OrderID>100023</OrderID>
-    <Price>0</Price>
-    <Amount>0</Amount>
   </OrderItem>
 </ArrayOfOrderItem>

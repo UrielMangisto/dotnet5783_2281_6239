@@ -101,7 +101,6 @@ namespace Dal
             }
             else
             {
-
                 var specificItems = ListOrderItem.Where(chacking).Where(selector);
                 if (specificItems == null)
                 {

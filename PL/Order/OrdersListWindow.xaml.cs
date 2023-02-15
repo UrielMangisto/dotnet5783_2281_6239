@@ -42,18 +42,15 @@ namespace PL.Order
 
         public OrdersListWindow()
         {
-            InitializeComponent();
-            Orders = new ObservableCollection<BO.OrderForList>(bl.Order.GetOrderList());
-
-            /*try
+            try
             {
-                //lstOrders.ItemsSource = Orders;
-                LoadOrders();
+                InitializeComponent();
+                Orders = new ObservableCollection<BO.OrderForList>(bl.Order.GetOrderList());
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
-            }*/
+
+            }
         }
 
         private void LoadOrders()
@@ -68,8 +65,21 @@ namespace PL.Order
 
         private void lstOrders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var orderWindow = new OrderWindow(((BO.OrderForList)((ListView)sender).SelectedItem).Id);
-            orderWindow.ShowDialog();
+            try 
+            {
+                if ((BO.OrderForList)((ListView)sender).SelectedItem == null)
+                    throw new BO.mayBeNullException();
+                var orderWindow = new OrderWindow(((BO.OrderForList)((ListView)sender).SelectedItem).Id);
+                orderWindow.ShowDialog();
+            }
+            catch(BO.mayBeNullException)
+            {
+                MessageBox.Show("Please choose an order to show");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void MenuItem_SendOrder_Click(object sender, RoutedEventArgs e)

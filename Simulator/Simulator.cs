@@ -57,7 +57,6 @@ namespace Simulator
                         {
                             _bl?.Order.UpdateDelivery((int)OrderId);
                         }
-
                     }
                     else
                     {

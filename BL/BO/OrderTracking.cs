@@ -8,8 +8,17 @@ namespace BO;
 
 public class OrderTracking
 {
+    /// <summary>
+    /// the ID of the order
+    /// </summary>
     public int Id { get; set; }
+    /// <summary>
+    /// the status of the order
+    /// </summary>
     public Enums.OrderStatus? Status { get; set; }
+    /// <summary>
+    /// the list of  all the dates the status changed 
+    /// </summary>
     public List<TrackLst>? TrackList { get; set; } = new List<TrackLst>();
 
     public override string ToString()

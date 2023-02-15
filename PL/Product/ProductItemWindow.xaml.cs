@@ -104,13 +104,19 @@ namespace PL.Product
         #endregion
         public ProductItemWindow(BO.ProductItem pi)
         {
+            if (pi == null)
+            {
+                throw new BO.mayBeNullException("Please click once!");
+            }
             InitializeComponent();
             ID = pi.Id;
             Name = pi.Name;
-            Price= pi.Price;
-            category= pi.Category;
+            Price = pi.Price;
+            category = pi.Category;
             InStock = pi.InStock;
             Amount = pi.Amount;
+
+
         }
     }
 }

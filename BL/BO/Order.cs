@@ -8,23 +8,53 @@ namespace BO;
 
 public class Order
 {
+    /// <summary>
+    /// the ID of the order
+    /// </summary>
     public int Id { get; set; }
-    public string? CostomerName { get; set; }
-    public string? CostomerEmail { get; set; }
-    public string? CostomerAdress { get; set; }
+    /// <summary>
+    /// the name of cosotumer
+    /// </summary>
+    public string? CostumerName { get; set; }
+    /// <summary>
+    /// the email of costumer
+    /// </summary>
+    public string? CostumerEmail { get; set; }
+    /// <summary>
+    /// the addres of costumer
+    /// </summary>
+    public string? CostumerAddress { get; set; }
+    /// <summary>
+    /// the status of the order
+    /// </summary>
     public Enums.OrderStatus? Status { get; set; }
+    /// <summary>
+    /// the date the cart bocame order
+    /// </summary>
     public DateTime? OrderDate { get; set; }
+    /// <summary>
+    /// the date the cart shiped
+    /// </summary>
     public DateTime? ShipDate { get; set; }
+    /// <summary>
+    /// the date the cart deliverd
+    /// </summary>
     public DateTime? DeliveryDate { get; set; }
+    /// <summary>
+    /// the list of orderItem
+    /// </summary>
     public List<OrderItem?>? OrderItems { get; set; } = new List<OrderItem?>();
+    /// <summary>
+    /// the total price of order
+    /// </summary>
     public double TotalPrice { get; set; }
     public override string ToString()
     {
         string str = $@"
     Id: {Id} 
-    Costomer Name: {CostomerName}
-    Costomer Email: {CostomerEmail}
-    CostomerAdress: {CostomerAdress}
+    Costomer Name: {CostumerName}
+    Costomer Email: {CostumerEmail}
+    CostumerAddress: {CostumerAddress}
     Status: {Status}
     Order Date: {OrderDate}   
     Ship Date: {ShipDate}

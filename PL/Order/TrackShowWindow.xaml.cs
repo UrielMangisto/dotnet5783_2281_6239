@@ -44,8 +44,18 @@ namespace PL.Order
         }
         private void TracklstOrders_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var orderWindow = new OrderFromOrderTrackingWindow(((BO.OrderTracking)((ListView)sender).SelectedItem).Id);
-            orderWindow.ShowDialog();
+            try 
+            {
+                if (((BO.OrderTracking)((ListView)sender).SelectedItem) == null)
+                    throw new BO.mayBeNullException();
+                var orderWindow = new OrderFromOrderTrackingWindow(((BO.OrderTracking)((ListView)sender).SelectedItem).Id);
+                orderWindow.ShowDialog();
+            } 
+            catch(BO.mayBeNullException)
+            {
+                MessageBox.Show("Choose an order to track");
+            }
+            
         }
     }
 }

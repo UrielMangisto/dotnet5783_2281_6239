@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
-        Title="OrderWindow" Height="640" Width="800">
+        Title="OrderWindow" Height="640" Width="850">
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -28,7 +28,19 @@
                     <GridViewColumn DisplayMemberBinding="{Binding ProductId}" Header="ProductId" Width="Auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding ItemName}" Header="ItemName" Width="Auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Price" Width="Auto"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount" Width="Auto"/>
+                    <GridViewColumn 
+                                    Header="Amount"
+                                    Width="Auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Content="-"  Height="20" Width="13" Click="Minus_Button_Click"/>
+                                                <TextBlock Text="{Binding Amount}" />
+                                                <Button Content="+" Height="20" Width="13" Click="Plus_Button_Click"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="TotalPrice" Width="Auto"/>
                 </GridView>
             </ListView.View>
@@ -66,9 +78,9 @@
             <TextBlock Text="Total Price:" Grid.Column="0" Grid.Row="8" VerticalAlignment="Center" FontWeight="Bold" FontSize="30"/>
 
             <TextBox x:Name="IdBox" Text="{Binding Id}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" FontSize="20" IsReadOnly="True"/>
-            <TextBox x:Name="CostumerNameBox" Text="{Binding CostumerName}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"  FontSize="20" IsReadOnly="True"/>
-            <TextBox x:Name="CostumerEmailBox" Text="{Binding CostumerEmail}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" FontSize="20" IsReadOnly="True"/>
-            <TextBox x:Name="CostumerAddressBox" Text="{Binding CostumerAddress}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" FontSize="20" IsReadOnly="True"/>
+            <TextBox x:Name="CostumerNameBox" Text="{Binding CostumerName}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"  FontSize="20" IsReadOnly="{Binding JustConfirmed}"/>
+            <TextBox x:Name="CostumerEmailBox" Text="{Binding CostumerEmail}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" FontSize="20" IsReadOnly="{Binding JustConfirmed}"/>
+            <TextBox x:Name="CostumerAddressBox" Text="{Binding CostumerAddress}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" FontSize="20" IsReadOnly="{Binding JustConfirmed}"/>
             <TextBox x:Name="StatusBox" Text="{Binding Status}" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"  FontSize="20" IsReadOnly="True"/>
             <TextBox x:Name="OrderDateBox" Text="{Binding OrderDate}" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"  FontSize="20" IsReadOnly="True"/>
             <TextBox x:Name="ShipDateBox" Text="{Binding ShipDate}" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center"  FontSize="20" IsReadOnly="True"/>

@@ -1,14 +1,15 @@
 ﻿using System.Runtime.CompilerServices;
 using BlApi;
 using BO;
+using Dal;
 using DalApi;
 /// <summary>
 /// the implementation of the cart
 /// </summary>
+namespace BlImplementation;
 public class BoCart : BlApi.ICart
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
-
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Add(BO.Cart C, int id) 
     {
@@ -120,7 +121,8 @@ public class BoCart : BlApi.ICart
                     if (diff > 0)
                     {
                         if (Dproduct.InStock < diff)
-                            throw new DO.NotExistInStockException();//there are not enough products in the stock
+                            //if there are not enough products in the stock:
+                            throw new DO.NotExistInStockException();
                         pro.Amount = amount;
                         C.TotalPrice += pro.Price * diff;
                         return C;
@@ -147,14 +149,13 @@ public class BoCart : BlApi.ICart
         try
         {
             if (C.CostumerName == null)
-                throw new DO.InCorrectDataException();
+                throw new DO.mayBeNullException();
             if (C.CostumerEmail == null || !C.CostumerEmail.Contains('@'))
-                throw new DO.InCorrectDataException();
+                throw new DO.mayBeNullException();
             if (C.CostumerAddress == null)
-                throw new DO.InCorrectDataException();
+                throw new DO.mayBeNullException();
 
             DO.Order Dorder = new DO.Order();
-            //Dorder.orderID = dal.Order.GetAll().Last().orderID + 1;
             Dorder.CostumerName = C.CostumerName;
             Dorder.CostumerEmail = C.CostumerEmail;
             Dorder.CostumerAddress = C.CostumerAddress;
@@ -179,8 +180,12 @@ public class BoCart : BlApi.ICart
                 product = dal.Product.Get(item.ProductId) ?? throw new DO.mayBeNullException();
                 DO.OrderItem tempItem = new DO.OrderItem();
                 tempItem.OrderID = Dorder.orderID;
+                tempItem.Amount = item.Amount;
+                tempItem.Price = item.Price;
+                tempItem.ProductID = item.ProductId;
                 dal.OrderItem.Add(tempItem);
                 product.InStock -= item.Amount;
+                dal.Product.Update(product);
             }
         }
         catch (DO.NotvalidException)
@@ -204,7 +209,7 @@ public class BoCart : BlApi.ICart
     /// <returns></returns>
     /// <exception cref="BO.mayBeNullException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
-    public IEnumerable<BO.OrderItem?> GetM(BO.Cart c)
+    public IEnumerable<BO.OrderItem?> GetTheItems(BO.Cart c)
     {
         return c.OrderItems ?? throw new BO.mayBeNullException(nameof(c));
     }

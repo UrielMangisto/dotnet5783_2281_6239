@@ -52,8 +52,7 @@
                                     Width="Auto"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Category}"
                                     Header="Category"
-                                    Width="Auto"
-                                    />
+                                    Width="Auto"/>
                     <GridViewColumn 
                                     Header="Amount"
                                     Width="Auto">

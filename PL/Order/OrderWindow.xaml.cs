@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using BO;
+using DO;
 
 namespace PL.Order
 {
@@ -132,15 +133,27 @@ namespace PL.Order
 
 
 
-        public ObservableCollection<OrderItem?> Items
+        public ObservableCollection<BO.OrderItem?> Items
         {
-            get { return (ObservableCollection<OrderItem?>)GetValue(ItemsProperty); }
+            get { return (ObservableCollection<BO.OrderItem?>)GetValue(ItemsProperty); }
             set { SetValue(ItemsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register("Items", typeof(ObservableCollection<OrderItem?>), typeof(OrderWindow));
+            DependencyProperty.Register("Items", typeof(ObservableCollection<BO.OrderItem?>), typeof(OrderWindow));
+
+
+
+        public bool JustConfirmed
+        {
+            get { return (bool)GetValue(JustConfirmedProperty); }
+            set { SetValue(JustConfirmedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for JustConfirmed.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty JustConfirmedProperty =
+            DependencyProperty.Register("JustConfirmed", typeof(bool), typeof(OrderWindow));
 
 
 
@@ -148,26 +161,81 @@ namespace PL.Order
 
         private readonly IBl bl = Factory.Get();
         private BO.Order porder = new BO.Order();
-
         public OrderWindow(int orderId)
         {
             InitializeComponent();
             porder = bl.Order.DetailsOfOrderForManager(orderId);
             Id = porder.Id;
-            CostumerName = porder.CostomerName;
-            CostumerEmail = porder.CostomerEmail;
-            CostumerAddress = porder.CostomerAdress;
+            CostumerName = porder.CostumerName;
+            CostumerEmail = porder.CostumerEmail;
+            CostumerAddress = porder.CostumerAddress;
             Status = porder.Status.ToString();
             OrderDate = porder.OrderDate;
             ShipDate = porder.ShipDate;
             DeliveryDate= porder.DeliveryDate;
             Price = porder.TotalPrice;
-            Items = new ObservableCollection<OrderItem?>(bl.Order.getItemListFromOrder(porder.Id));
+            Items = new ObservableCollection<BO.OrderItem?>(bl.Order.getItemListFromOrder(porder.Id));
+            JustConfirmed = !(porder.Status == Enums.OrderStatus.Confirmed);
         }
 
         private void UpdateOrderButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            foreach (var item in Items) 
+            {
+                foreach(var it in porder.OrderItems ??throw new Exception())
+                {
+                    if(it.Id == item.Id)
+                    {
+                        it.Amount = item.Amount;
+                    }
+                }
+            }
+            porder.CostumerName = CostumerNameBox.Text;
+            porder.CostumerEmail= CostumerEmailBox.Text;
+            porder.CostumerAddress= CostumerAddressBox.Text;
+            bl.Order.Update(porder);
+            MessageBox.Show("Order was updated successfuly!");
+            var lstWin = new OrdersListWindow();
+            this.Close();
+            lstWin.Show();
+        }
+
+        private void Minus_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button ?? throw new BO.mayBeNullException();
+                BO.OrderItem? item = button.DataContext as BO.OrderItem;
+
+                foreach (var it in Items)
+                {
+                    if (it.Id == item.Id)
+                    {
+                        if (it.Amount > 0)
+                            it.Amount--;
+                        else throw new Exception("The amount is the minimal!");
+                    }
+                }
+                Items = new ObservableCollection<BO.OrderItem?>(Items);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Plus_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button ?? throw new BO.mayBeNullException();
+            BO.OrderItem? item = button.DataContext as BO.OrderItem;
+            foreach (var it in Items)
+            {
+                if (it.Id == item.Id)
+                {
+                    it.Amount++;
+                }
+            }
+            Items = new ObservableCollection<BO.OrderItem?>(Items);
         }
     }
 }

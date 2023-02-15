@@ -75,14 +75,28 @@ namespace PL.Product
 
         private void btnCartList_Click(object sender, RoutedEventArgs e)
         {
-            var cartWindow = new CartWindow(cart);
-            cartWindow.Show();
+            try
+            {
+                var cartWindow = new CartWindow(cart);
+                cartWindow.Show();
+            }
+            catch(mayBeNullException) 
+            {
+                MessageBox.Show("please select at least one product");
+            }
         }
 
         private void ProductItemListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var Item = new ProductItemWindow(((BO.ProductItem)((ListView)sender).SelectedItem));
-            Item.ShowDialog();
+            try 
+            {
+                var Item = new ProductItemWindow(((BO.ProductItem)((ListView)sender).SelectedItem));
+                Item.ShowDialog();
+            }
+            catch (BO.mayBeNullException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void GrupingBtn_Click(object sender, RoutedEventArgs e)
@@ -100,7 +114,6 @@ namespace PL.Product
                 else throw new Exception("The amount is the minimal!");
                 bl.Cart.Update(cart, product.Id, product.Amount);
                 ProductItems = new ObservableCollection<ProductItem?>(ProductItems);
-
             }
             catch (Exception ex)
             {
@@ -109,11 +122,18 @@ namespace PL.Product
         }
         private void Plus_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button ?? throw new BO.mayBeNullException();
-            BO.ProductItem? product = button.DataContext as BO.ProductItem;
-            product.Amount++;
-            bl.Cart.Add(cart, product.Id);
-            ProductItems = new ObservableCollection<ProductItem?>(ProductItems);
+            try
+            {
+                Button button = sender as Button ?? throw new BO.mayBeNullException();
+                BO.ProductItem? product = button.DataContext as BO.ProductItem;
+                product.Amount++;
+                bl.Cart.Add(cart, product.Id);
+                ProductItems = new ObservableCollection<ProductItem?>(ProductItems);
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

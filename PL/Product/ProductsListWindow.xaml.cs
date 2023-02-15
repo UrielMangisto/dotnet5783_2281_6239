@@ -73,14 +73,38 @@ namespace PL
 
         private void updateProductForList(int productId)
         {
-            int index = ProductListView.SelectedIndex;
-            ProductForLists[index] = bl.Product.GetProductForList(productId);
+            try
+            {
+                int index = ProductListView.SelectedIndex;
+                ProductForLists[index] = bl.Product.GetProductForList(productId);
+            }
+            catch(BO.mayBeNullException) 
+            {
+                MessageBox.Show("It's Empty...");
+            }
+            finally
+            {
+                MessageBox.Show("ERROR");
+            }
         }
 
         private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var prod = (BO.ProductForList)ProductListView.SelectedItem;
-            new ProductWindow(prod, updateProductForList).Show();
+            try
+            {
+                
+                var prod = (BO.ProductForList)ProductListView.SelectedItem;
+                if (prod == null)
+                {
+                    throw new BO.mayBeNullException();
+                }
+                new ProductWindow(prod, updateProductForList).Show();
+            }
+            catch(BO.mayBeNullException) 
+            {
+                MessageBox.Show("You cannot display a product that is not exist...");
+            }
+            
         }
     }
 }

@@ -17,23 +17,42 @@ public class BoProduct : BlApi.IProduct
 
     BO.ProductForList changeToBo1(DO.Product? dalProduct)
     {
-        BO.ProductForList blProduct = new BO.ProductForList();
-        blProduct.Id = dalProduct?.productID ?? throw new DO.mayBeNullException();
-        blProduct.Name = dalProduct?.Name ?? throw new DO.mayBeNullException();
-        blProduct.Price = dalProduct?.Price ?? throw new DO.mayBeNullException();
-        blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new DO.mayBeNullException());
-        return blProduct;
+        try
+        {
+            BO.ProductForList blProduct = new BO.ProductForList();
+            blProduct.Id = dalProduct?.productID ?? throw new DO.mayBeNullException();
+            blProduct.Name = dalProduct?.Name ?? throw new DO.mayBeNullException();
+            blProduct.Price = dalProduct?.Price ?? throw new DO.mayBeNullException();
+            blProduct.Category = (BO.Enums.Category)(dalProduct?.Category ?? throw new DO.mayBeNullException());
+            return blProduct;
+        }
+        catch(DO.mayBeNullException) 
+        {
+            throw new BO.mayBeNullException();
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("ERROR");
+        }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
     BO.ProductItem changeToBo2(DO.Product? dProduct)
     {
-        BO.ProductItem productItem = new BO.ProductItem();
-        productItem.Id = dProduct?.productID ?? throw new BO.mayBeNullException();
-        productItem.Name = dProduct?.Name;
-        productItem.Price = dProduct?.Price ?? throw new BO.mayBeNullException();
-        productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new BO.mayBeNullException());
-        productItem.InStock = dProduct?.InStock > 0;
-        return productItem;
+        try
+        {
+            BO.ProductItem productItem = new BO.ProductItem();
+            productItem.Id = dProduct?.productID ?? throw new DO.mayBeNullException();
+            productItem.Name = dProduct?.Name;
+            productItem.Price = dProduct?.Price ?? throw new DO.mayBeNullException();
+            productItem.Category = (BO.Enums.Category)(dProduct?.Category ?? throw new DO.mayBeNullException());
+            productItem.InStock = dProduct?.InStock > 0;
+            return productItem;
+        }
+        catch(DO.mayBeNullException)
+        {
+            throw new BO.mayBeNullException();
+        }
+        catch { throw new Exception("ERROR"); }
     }
     DalApi.IDal? dal = DalApi.Factory.Get();
 
@@ -221,9 +240,9 @@ public class BoProduct : BlApi.IProduct
     {
         try
         {
+            if (bProduct.Name == null || bProduct.Category == null || bProduct.ID == null || bProduct.InStock == null || bProduct.Price==null)
+                throw new DO.mayBeNullException();
             if (bProduct.ID <= 0)
-                throw new DO.InCorrectDataException();
-            if (bProduct.Name == null)
                 throw new DO.InCorrectDataException();
             if (bProduct.Price <= 0)
                 throw new DO.InCorrectDataException();
@@ -246,6 +265,10 @@ public class BoProduct : BlApi.IProduct
         catch (DO.InCorrectDataException)
         {
             throw new BO.InCorrectDataException();
+        }
+        catch(DO.mayBeNullException)
+        {
+            throw new BO.mayBeNullException();
         }
         catch
         {
@@ -337,6 +360,10 @@ public class BoProduct : BlApi.IProduct
         {
             throw new BO.InCorrectDataException();
         }
+        catch (DO.NotFoundException)
+        {
+            throw new BO.NotFoundException();
+        }
 
 
     }
@@ -421,5 +448,19 @@ public class BoProduct : BlApi.IProduct
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
     public ProductForList GetProductForList(int productId)
-   => changeToBo1(dal.Product.Get(productId));
+    {
+        try
+        {
+            return changeToBo1(dal.Product.Get(productId));
+        }
+        catch(DO.mayBeNullException)
+        {
+            throw new BO.NotFoundException();
+        }
+        finally
+        {
+            throw new Exception();
+        }
+        
+    }
 }

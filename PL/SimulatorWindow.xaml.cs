@@ -25,6 +25,7 @@ public partial class SimulatorWindow : Window
     private Stopwatch _stopWatch = new();
     private volatile bool _isTimerRun;
     private BackgroundWorker _backgroundWorker = new();
+    #region
     public string ExpectedOrderDetails
     {
         get => (string)GetValue(ExpectedOrderDetailsProperty);
@@ -56,7 +57,7 @@ public partial class SimulatorWindow : Window
     public static readonly DependencyProperty winClockProperty =
         DependencyProperty.Register(nameof(winClock), typeof(string), typeof(SimulatorWindow), new PropertyMetadata(null));
 
-
+    #endregion
     public SimulatorWindow()
     {
         InitializeComponent();
