@@ -97,6 +97,7 @@ namespace PL.Order
             {
                 MessageBox.Show("already sent!");
             }
+            
         }
 
         private void MenuItem_OrderDelivery_Click(object sender, RoutedEventArgs e)

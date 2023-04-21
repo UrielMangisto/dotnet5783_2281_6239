@@ -24,7 +24,7 @@ namespace PL
         BlApi.IBl? bl = BlApi.Factory.Get();
         private bool add;//if false update mode
 
-        private BO.Product product = new BO.Product();
+        private BO.Product? product = new BO.Product();
 
         #region Depedency Properties
         public BO.ProductForList Product { get; set; }
